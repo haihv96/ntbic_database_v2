@@ -1,53 +1,97 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Terms in database ntbic
 
-## About Laravel
+### Profiles (Chuyên gia khoa học công nghệ)
+| Eng  | Vi |
+| ------------- | ------------- |
+| name | Họ và tên |
+| acadamic title | Học hàm/ học vị |
+| birthday | Năm sinh |
+| specialization | Chuyên ngành |
+| agency | Cơ quan công tác |
+| agency address | Địa chỉ cơ quan |
+| research for | Hướng nghiên cứu |
+| image | hình ảnh |
+| studies or papers | số lượng công trình bài báo |
+| path | đường dẫn |
+| province id | tỉnh thành phố |
+| research joined | Danh sách công trình nghiên cứu tham gia |
+| research results | Danh sách kết quả nghiên cứu đã công bố |
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Patents (Bắng phát minh sáng chế)
+| Eng  | Vi |
+| ------------- | ------------- |
+| name  | Tên sáng chế, phát minh, giải pháp  |
+| patent code  | Số bằng, ký hiệu  |
+| technology category | Thuộc lĩnh vực KH&CN |
+| public date | Ngày công bố |
+| provide date | Ngày cấp |
+| owner | Chủ sở hữu chính |
+| author | Tác giả |
+| highlights | Điểm nổi bật |
+| description | mô tả sáng chế, phát minh, giải pháp |
+| transfer description | Nội dung có thể chuyển giao |
+| market application | Thị trường ứng dụng |
+| image | Hình ảnh minh họa |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Projects (đề tài dự án các cấp)
+| Eng  | Vi |
+| ------------- | ------------- |
+| name | Tên đề tài, đề án các cấp |
+| project code | Mã số, ký hiệu |
+| technology category| Thuộc lĩnh vực KH&CN |
+| start_date_invest | Năm bắt đầu tài trợ |
+| close_date | Năm kết thúc |
+| operator | Cơ quan chủ trì |
+| author | Chủ nhiệm đề tài |
+| highlights | Điểm nổi bật |
+| description | Mô tả chung về đề tài dự án KH&CN |
+| transfer description | Mô tả quy trình chuyển giao |
+| results | Kết quả thực hiện và khả năng ứng dụng |
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+### Products (sản phẩm công nghệ mới)
+| Eng  | Vi |
+| ------------- | ------------- |
+| name | tên |
+| technology category | lĩnh vực khoa học công nghệ |
+| highlights | điểm nổi bật |
+| description | mô tả chung |
+| transfer description | quy trình chuyểng giao |
+| results | kết quả ứng dụng |
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
-
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### Company (Doanh nghiệp)
+| Eng  | Vi |
+| ------------- | ------------- |
+| name | Tên doanh nghiệp KH&CN |
+| last updated | Cập nhât thông tin |
+| technology category | Lĩnh vực KH&CN |
+| province | Tỉnh/thành phố |
+| headquarters | Địa chỉ trụ sở chính |
+| email | Email |
+| phone | Phone |
+| fax | Fax |
+| website | Website |
+| company code | Mã số doanh nghiệp |
+| tax code | Mã số thuế |
+| type | Loại hình |
+| founded | Ngày đăng ký thành lập |
+| founder | Tên người đại diện theo pháp luật |
+| founder_phone | Số điện thoại |
+| founder_email | Email |
+| founder_address | Địa chỉ |
+| industry | Ngành nghề kinh doanh chính |
+| tax information | Thông tin đăng ký thuế |
+| company branch | Các chi nhánh của Doanh nghiệp |
+| representative office | Các văn phòng đại diện của doanh nghiệp |
+| technology registration certificate | TRC (Đăng ký, Chứng nhận DN, tổ chức KH&CN) |
+| TRC_number | Số quyết định |
+| TRC_date | Thời gian đăng ký |
+| TRC_place | Nơi cấp |
+| technology rank | Xếp hạng trình độ công nghệ |
+| research for | Hướng nghiên cứu KH&CN |
+| number of employees research | Số lượng cán bộ nghiên cứu khoa học |
+| technology highlight | Công nghệ nổi bật |
+| technology using | Sử dụng công nghệ |
+| technology transfer | Chuyển giao KH&CN? |
+| results | Kết quả KH&CN thuộc quyền sở hữu hợp pháp |
+| products | Danh mục các sản phẩm hàng hóa hình thành từ kết quả KH&CN |
