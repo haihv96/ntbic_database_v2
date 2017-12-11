@@ -31,12 +31,13 @@ class CrawlProfiles extends Command
     protected function parseProfiles($url)
     {
         $profilesXpath = $this->crawlRequestService->getXpath($url);
-        $profiles = $profilesXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody[1]/tr');
+        $profiles = $profilesXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody/tr');
         foreach ($profiles as $profile) {
             $profileUrl = trim($profilesXpath->query('./td[5]/a/@href', $profile)->item(0)->nodeValue);
             $province = trim($profilesXpath->query('./td[8]', $profile)->item(0)->nodeValue);
             $profileInfo = $this->parseProfile($profileUrl);
-            print_r($profileInfo);
+            $profileInfo['province'] = $province;
+            RawProfile::create($profileInfo);
         }
     }
 
@@ -89,9 +90,9 @@ class CrawlProfiles extends Command
         $specialization = json_encode($specialization, JSON_UNESCAPED_UNICODE);
         $research_joined = json_encode($research_joined, JSON_UNESCAPED_UNICODE);
         $research_results = json_encode($research_results, JSON_UNESCAPED_UNICODE);
-        RawProfile::create(compact('url', 'studies_or_papers', 'name', 'acadamic_title',
+        return compact('url', 'studies_or_papers', 'name', 'acadamic_title',
             'birthday', 'specialization', 'agency', 'agency_address',
-            'research_for', 'research_joined', 'research_results', 'image'));
+            'research_for', 'research_joined', 'research_results', 'image');
     }
 
 }

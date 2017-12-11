@@ -21,8 +21,8 @@ class CrawlCompanies extends Command
     public function handle()
     {
         $start = $this->crawlRequestService->getXpath('http://khoahoctot.vn/index.php?lg=vi&com=business&fun=search&q=');
-        $pages = $start->query('(//div[@class="pages"]/a)[last()]')->item(0)->nodeValue * 30;
-        for ($index = 0; $index <= $pages; $index += 30) {
+        $pages = $start->query('(//div[@class="pages"]/a)[last()]')->item(0)->nodeValue * 15;
+        for ($index = 0; $index <= $pages; $index += 15) {
             $url = "http://khoahoctot.vn/?com=business&fun=search&catid=0&fieldid=0&disnt=0&type=&rate=&transfer=&field=0&q=&page=$index";
             $this->parseCompanies($url);
         }
@@ -31,7 +31,7 @@ class CrawlCompanies extends Command
     protected function parseCompanies($url)
     {
         $companiesXpath = $this->crawlRequestService->getXpath($url);
-        $companyUrls = $companiesXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody[1]/tr/td[5]/a/@href');
+        $companyUrls = $companiesXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody/tr/td[5]/a/@href');
         foreach ($companyUrls as $url) {
             $url = $url->nodeValue;
             $companyXpath = $this->crawlRequestService->getXpath($url);
