@@ -28,19 +28,34 @@
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-diamond"></i>
-                    <span class="title">Users</span>
+                    <span class="title">Crawl Data</span>
                     <span class="selected"></span>
                     <span class="arrow open"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
                         <a href="#" class="nav-link ">
-                            <span class="title">New</span>
+                            <span class="title">Raw Profiles</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link ">
-                            <span class="title">List users</span>
+                            <span class="title">Raw Projects</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link ">
+                            <span class="title">Raw Patents</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link ">
+                            <span class="title">Raw Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link ">
+                            <span class="title">Raw Companies</span>
                         </a>
                     </li>
                 </ul>

@@ -6,14 +6,23 @@ use App;
 
 use Illuminate\Support\ServiceProvider;
 
-use App\Repositories\User\UserInterface;
-use App\Repositories\User\UserRepository;
-
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
 use App\Services\CrawlRequest\CrawlRequestService;
-
 use App\Services\GuzzleHttp\AuthorizeRequestServiceInterface;
 use App\Services\GuzzleHttp\AuthorizeRequestService;
+
+use App\Repositories\User\UserInterface;
+use App\Repositories\User\UserRepository;
+use App\Repositories\RawProject\RawProjectInterface;
+use App\Repositories\RawProject\RawProjectRepository;
+use App\Repositories\RawProfile\RawProfileInterface;
+use App\Repositories\RawProfile\RawProfileRepository;
+use App\Repositories\RawPatent\RawPatentInterface;
+use App\Repositories\RawPatent\RawPatentRepository;
+use App\Repositories\RawProduct\RawProductInterface;
+use App\Repositories\RawProduct\RawProductRepository;
+use App\Repositories\RawCompany\RawCompanyInterface;
+use App\Repositories\RawCompany\RawCompanyRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +35,11 @@ class AppServiceProvider extends ServiceProvider
     {
         App::bind(CrawlRequestServiceInterface::class, CrawlRequestService::class);
         App::bind(AuthorizeRequestServiceInterface::class, AuthorizeRequestService::class);
+        App::bind(UserInterface::class, UserRepository::class);
+        App::bind(RawProductInterface::class, RawProductRepository::class);
+        App::bind(RawProfileInterface::class, RawProfileRepository::class);
+        App::bind(RawPatentInterface::class, RawPatentRepository::class);
+        App::bind(RawProjectInterface::class, RawProjectRepository::class);
+        App::bind(RawCompanyInterface::class, RawCompanyRepository::class);
     }
 }
