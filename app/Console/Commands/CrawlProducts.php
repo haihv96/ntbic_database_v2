@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\RawProduct;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
@@ -36,8 +37,7 @@ class CrawlProducts extends Command
             $url = $productsXpath->query('./td[5]/a/@href', $product)->item(0)->nodeValue;
             $thumbPath = trim($productsXpath->query('./td[4]/img/@src', $product)->item(0)->nodeValue);
             if ($thumbPath != '/images/nophoto.jpg') {
-                $thumb = 'public/crawl/products/thumb/' . last(explode('/', $thumbPath));
-                $this->crawlRequestService->saveImage("http://khoahoctot.vn/$thumbPath", $thumb);
+                $thumb = 'http://khoahoctot.vn/' . $thumbPath;
             } else {
                 $thumb = null;
             }
@@ -51,10 +51,19 @@ class CrawlProducts extends Command
             $transfer_description = convertHtmlToText($productXpath->query('./tr[5]/td/div[2]', $body)->item(0));
             $results = convertHtmlToText($productXpath->query('./tr[6]/td/div[2]', $body)->item(0));
 
-            RawProduct::create(
-                compact('url', 'thumb', 'name', 'technology_category', 'highlights',
-                    'description', 'transfer_description', 'results')
-            );
+            try {
+                DB::beginTransaction();
+                $rawProduct = RawProduct::create(
+                    compact('url', 'name', 'technology_category', 'highlights',
+                        'description', 'transfer_description', 'results')
+                );
+                $thumb ? $rawProduct->addMediaFromUrl($thumb)->toMediaCollection('thumb') : null;
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                throw new \Exception($e->getMessage());
+            }
+
         }
     }
 

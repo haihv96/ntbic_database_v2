@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\RawProfile;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
@@ -37,7 +38,17 @@ class CrawlProfiles extends Command
             $province = trim($profilesXpath->query('./td[8]', $profile)->item(0)->nodeValue);
             $profileInfo = $this->parseProfile($profileUrl);
             $profileInfo['province'] = $province;
-            RawProfile::create($profileInfo);
+            $image = $profileInfo['image'];
+            unset($profileInfo['image']);
+            try {
+                DB::beginTransaction();
+                $rawProfile = RawProfile::create($profileInfo);
+                $image ? $rawProfile->addMediaFromUrl($image)->toMediaCollection('avatar') : null;
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                throw new \Exception($e->getMessage());
+            }
         }
     }
 
@@ -47,8 +58,7 @@ class CrawlProfiles extends Command
         $header = $profileXpath->query('//table[@class="archives_list"][1]/tr')->item(0);
         $imagePath = $profileXpath->query('./td[1]/img/@src', $header)->item(0)->nodeValue;
         if ($imagePath != '/images/anon_user.png') {
-            $image = 'public/crawl/profiles/' . last(explode('/', $imagePath));
-            $this->crawlRequestService->saveImage("http://khoahoctot.vn/$imagePath", $image);
+            $image = 'http://khoahoctot.vn' . $imagePath;
         } else {
             $image = null;
         }

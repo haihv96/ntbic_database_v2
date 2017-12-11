@@ -26,7 +26,6 @@ class CreateRawProfilesTable extends Migration
             $table->text('research_for');
             $table->text('research_joined');
             $table->text('research_results');
-            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\RawPatent;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
@@ -61,13 +62,21 @@ class CrawlPatents extends Command
             $image = null;
             if ($imagePath) {
                 $imagePath = trim($imagePath->nodeValue);
-                $image = 'public/crawl/patents/' . last(explode('/', $imagePath));
-                $this->crawlRequestService->saveImage("http://khoahoctot.vn/$imagePath", $image);
+                $image = 'http://khoahoctot.vn/' . $imagePath;
+            }
+            try {
+                DB::beginTransaction();
+                $rawPatent = RawPatent::create(
+                    compact('url', 'name', 'patent_code', 'technology_category', 'public_date',
+                        'provide_date', 'owner', 'author', 'highlights', 'description',
+                        'content_can_be_transferred', 'market_application')
+                );
+                $image ? $rawPatent->addMediaFromUrl($image)->toMediaCollection('image') : null;
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
             }
 
-            RawPatent::create(compact('url', 'name', 'patent_code', 'technology_category', 'public_date',
-                'provide_date', 'owner', 'author', 'highlights', 'description',
-                'content_can_be_transferred', 'market_application', 'image'));
         }
     }
 }

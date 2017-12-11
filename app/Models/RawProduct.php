@@ -3,11 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class RawProduct extends Model
+class RawProduct extends Model implements HasMedia
 {
-    protected $table = 'raw_products';
+    use HasMediaTrait;
 
-    protected $fillable = ['url', 'thumb', 'name', 'technology_category', 'highlights',
-        'description', 'transfer_description', 'results'];
+    protected $table = 'raw_products';
+    protected $fillable = [
+        'url',
+        'name',
+        'technology_category',
+        'highlights',
+        'description',
+        'transfer_description',
+        'results'
+    ];
 }

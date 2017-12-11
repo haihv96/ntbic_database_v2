@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\RawCompany;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
@@ -38,8 +39,7 @@ class CrawlCompanies extends Command
             $body1 = $companyXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[2]')->item(0);
             $imagePath = $companyXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[1]/tbody/tr/td[1]/img/@src')->item(0)->nodeValue;
             if ($imagePath != '/images/no_logo.png') {
-                $image = 'public/crawl/companies/' . last(explode('/', $imagePath));
-                $this->crawlRequestService->saveImage("http://khoahoctot.vn/$imagePath", $image);
+                $image = 'http://khoahoctot.vn/' . $imagePath;
             } else {
                 $image = null;
             }
@@ -86,7 +86,10 @@ class CrawlCompanies extends Command
             $number_of_employees_research = trim($companyXpath->query('./tbody[7]/tr/td[2]', $body6)->item(0)->nodeValue);
             $technology_highlight = trim($companyXpath->query('./tbody[8]/tr/td[2]', $body6)->item(0)->nodeValue);
             $technology_using = trim($companyXpath->query('./tbody[9]/tr/td[2]', $body6)->item(0)->nodeValue);
-            $technology_transfer = trim($companyXpath->query('./tbody[10]/tr/td[2]/input[@checked="checked"]/@value', $body6)->item(0)->nodeValue);
+            $technology_transfer = trim(
+                $companyXpath->query('./tbody[10]/tr/td[2]/input[@checked="checked"]/@value', $body6)
+                    ->item(0)->nodeValue
+            );
             $technology_transfer = $this->transferTech($technology_transfer);
             $body7 = $companyXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[8]')->item(0);
             $results = trim($companyXpath->query('./tbody[1]/tr/td', $body7)->item(0)->nodeValue);
@@ -94,13 +97,23 @@ class CrawlCompanies extends Command
             $body8 = $companyXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[9]')->item(0);
             $products = trim($companyXpath->query('./tbody[1]/tr/td', $body8)->item(0)->nodeValue);
 
-            RawCompany::create(compact('url', 'image', 'name', 'last_update', 'technology_category', 'province',
-                'headquarters', 'email', 'phone', 'fax', 'website', 'company_code', 'tax_code', 'type', 'founded',
-                'founder', 'founder_phone', 'founder_email', 'founder_address', 'industry',
-                'tax_information', 'company_branch', 'representative_office', 'TRC_number',
-                'TRC_date', 'TRC_place', 'technology_rank', 'research_for',
-                'number_of_employees_research', 'technology_highlight', 'technology_using',
-                'technology_transfer', 'results', 'products'));
+            try {
+                DB::beginTransaction();
+                $rawCompany = RawCompany::create(
+                    compact('url', 'image', 'name', 'last_update', 'technology_category', 'province',
+                        'headquarters', 'email', 'phone', 'fax', 'website', 'company_code', 'tax_code', 'type', 'founded',
+                        'founder', 'founder_phone', 'founder_email', 'founder_address', 'industry',
+                        'tax_information', 'company_branch', 'representative_office', 'TRC_number',
+                        'TRC_date', 'TRC_place', 'technology_rank', 'research_for',
+                        'number_of_employees_research', 'technology_highlight', 'technology_using',
+                        'technology_transfer', 'results', 'products')
+                );
+                $image ? $rawCompany->addMediaFromUrl($image)->toMediaCollection('logo') : null;
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+            }
+
         }
     }
 
