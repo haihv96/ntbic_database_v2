@@ -1,1 +1,2 @@
-require('./custom');
+require('./settings');
+require('./profiles');

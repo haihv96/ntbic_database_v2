@@ -1,0 +1,28 @@
+@import "variables";
+
+.loading-area-background {
+  background: $opacity-grey;
+  height: 100%;
+  left: 0;
+  opacity: .3;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.loading-area {
+  background-image: url('../media/default.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.ajax-table {
+  position: relative;
+}

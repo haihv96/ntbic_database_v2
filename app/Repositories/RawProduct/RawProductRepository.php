@@ -5,7 +5,7 @@ namespace App\Repositories\RawProduct;
 use App\Repositories\BaseRepository;
 use App\Models\RawProduct;
 
-class RawRepository extends BaseRepository implements RawProductInterface
+class RawProductRepository extends BaseRepository implements RawProductInterface
 {
     public function __construct(RawProduct $rawProduct)
     {

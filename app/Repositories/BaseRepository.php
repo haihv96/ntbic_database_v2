@@ -50,23 +50,17 @@ abstract class BaseRepository implements BaseInterface
     public function whereIn($column, $values)
     {
         $values = is_array($values) ? $values : [$values];
-        $this->model->whereIn($column, $values);
-
-        return $this;
+        return $this->model->whereIn($column, $values);
     }
 
     public function orWhere($column, $operator = null, $value = null)
     {
-        $this->model->orWhere($column, $operator, $value);
-
-        return $this;
+        return $this->model->orWhere($column, $operator, $value);
     }
 
     public function where($conditions, $operator = null, $value = null)
     {
-        $this->model->where($conditions, $operator, $value);
-
-        return $this;
+        return $this->model->where($conditions, $operator, $value);
     }
 
     public function create($input)

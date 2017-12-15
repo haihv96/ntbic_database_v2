@@ -3,15 +3,20 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('dashboards.index')}}">
                         @yield('linkage.heading.first')</a>
+                </li>
+                <li>
                     <i class="fa fa-circle"></i>
+                    <a href="@yield('linkage.heading.second.link')">
+                        <span>@yield('linkage.heading.second')</span>
+                    </a>
                 </li>
                 <li>
-                    <span>@yield('linkage.heading.second')</span>
-                </li>
-                <li>
-                    <span>@yield('linkage.heading.third')</span>
+                    <i class="fa fa-circle"></i>
+                    <a href="@yield('linkage.heading.third.link')">
+                        <span>@yield('linkage.heading.third')</span>
+                    </a>
                 </li>
             </ul>
             <div class="page-toolbar">
