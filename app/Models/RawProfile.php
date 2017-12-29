@@ -34,4 +34,21 @@ class RawProfile extends Model implements HasMediaConversions
             ->sharpen(10)
             ->performOnCollections('avatar');
     }
+
+    public function attrNames()
+    {
+        return [
+            'url' => 'Source url',
+            'studies_or_papers' => 'Studies or papers',
+            'name' => 'Name',
+            'acadamic_title' => 'Academic_title',
+            'birthday' => 'Birthday',
+            'specialization' => 'Specialization',
+            'agency' => 'Agency',
+            'agency_address' => 'Agency address',
+            'research_for' => 'Research for',
+            'research_joined' => 'Research joined',
+            'research_results' => 'Research results'
+        ];
+    }
 }

@@ -12,7 +12,7 @@ $(document).ready(function () {
 toastr.options = {
     'closeButton': true,
     'debug': false,
-    'positionClass': 'toast-bottom-right',
+    'positionClass': 'toast-top-right',
     'onclick': null,
     'showDuration': '1000',
     'hideDuration': '1000',
@@ -23,3 +23,7 @@ toastr.options = {
     'showMethod': 'fadeIn',
     'hideMethod': 'fadeOut'
 };
+
+tinymce.init({
+    selector: '#tinymce'
+});

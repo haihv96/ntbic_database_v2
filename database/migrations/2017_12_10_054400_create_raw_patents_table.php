@@ -19,15 +19,14 @@ class CreateRawPatentsTable extends Migration
             $table->text('name');
             $table->string('patent_code');
             $table->text('technology_category');
-            $table->string('public_date');
-            $table->string('provide_date');
+            $table->string('public_date')->nullable();
+            $table->string('provide_date')->nullable();
             $table->string('owner');
             $table->string('author');
-            $table->text('highlights');
-            $table->mediumText('description');
-            $table->text('content_can_be_transferred');
-            $table->text('market_application');
-            $table->string('image')->nullable();
+            $table->text('highlights')->nullable();
+            $table->mediumText('description')->nullable();
+            $table->text('content_can_be_transferred')->nullable();
+            $table->text('market_application')->nullable();
             $table->timestamps();
         });
     }

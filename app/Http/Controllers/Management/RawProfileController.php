@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Management;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\RawProfile\RawProfileInterface;
-use App\Http\Resources\RawProfileResource;
+use App\Http\Requests\UpdateRawProfile;
+use Mockery\Exception;
 
 class RawProfileController extends Controller
 {
@@ -20,42 +21,68 @@ class RawProfileController extends Controller
     {
         $search = $request->get('search');
         if ($request->ajax()) {
-            return json_encode([
-                'error' => false,
-                'data' => view('management.profiles.list', [
+            return response()->json([
+                'data' => view('management.raw-profiles.list', [
                     'rawProfiles' => $this->rawProfileRepository->where('name', 'like', "%$search%")->paginate(10)
                 ])->render(),
-                'status' => 200
-            ]);
+            ], 200);
         } else {
-            return view('management.profiles.index', [
+            return view('management.raw-profiles.index', [
                 'rawProfiles' => $this->rawProfileRepository->paginate(10)
             ]);
         }
     }
 
-    public function create()
+    public function show(Request $request, $id)
     {
+        return response()->json([
+            'data' => view('management.raw-profiles.show', [
+                'rawProfile' => $this->rawProfileRepository->find($id)
+            ])->render(),
+        ], 200);
     }
 
-    public function store(Request $request)
+    public function edit(Request $request, $id)
     {
+        return response()->json([
+            'data' => view('management.raw-profiles.edit', [
+                'rawProfile' => $this->rawProfileRepository->find($id)
+            ])->render(),
+        ], 200);
     }
 
-    public function show($id)
+    public function update(UpdateRawProfile $request, $id)
     {
+        try {
+            $rawProfile = $this->rawProfileRepository->update($id, $request->all());
+            return response()->json([
+                'data' => view('management.raw-profiles.item', [
+                    'rawProfile' => $rawProfile
+                ])->render(),
+                'message' => 'Update raw profile successful!'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => null,
+                'message' => 'Update raw profile error!'
+            ], 500);
+        }
     }
 
-    public function edit($id)
+    public function destroy($ids)
     {
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
+        $ids = json_decode($ids);
+        try {
+            $this->rawProfileRepository->delete($ids);
+            return response()->json([
+                'data' => null,
+                'message' => 'Delete raw profile successful!'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => null,
+                'message' => 'Delete raw profile error!'
+            ], 500);
+        }
     }
 }

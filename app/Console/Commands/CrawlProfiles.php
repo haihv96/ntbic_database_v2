@@ -73,7 +73,7 @@ class CrawlProfiles extends Command
         $specialization = explode("<br>", $specialization);
         $specialization = array_filter(
             array_map(function ($item) {
-                return trim($item);
+                return str_replace('-', '', trim($item));
             }, $specialization)
         );
         $agency = trim($profileXpath->query('./tr[5]/td[3]', $body)->item(0)->nodeValue);

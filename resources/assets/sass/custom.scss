@@ -21,8 +21,38 @@
   top: 0;
   width: 100%;
   z-index: 2;
+  opacity: 0.5;
 }
 
 .ajax-table {
   position: relative;
+}
+
+.modal-loadable .modal-container {
+  min-height: 300px;
+}
+
+li.dash{
+  list-style-type: none;
+  &:before {
+    content: '-'
+  }
+}
+
+.modal-long .modal-body {
+  max-height: 450px;
+  overflow-y: scroll;
+}
+
+.toolkit {
+  margin-bottom: 15px;
+  height: 30px;
+}
+
+.display-none {
+  display: none;
+}
+
+.form-search-in-table {
+  float: right;
 }

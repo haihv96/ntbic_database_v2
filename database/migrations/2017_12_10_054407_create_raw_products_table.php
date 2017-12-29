@@ -16,13 +16,12 @@ class CreateRawProductsTable extends Migration
         Schema::create('raw_products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url', 500)->unique();
-            $table->text('thumb')->nullable();
             $table->text('name');
             $table->text('technology_category');
-            $table->text('highlights');
-            $table->text('description');
-            $table->text('transfer_description');
-            $table->text('results');
+            $table->text('highlights')->nullable();
+            $table->text('description')->nullable();
+            $table->text('transfer_description')->nullable();
+            $table->text('results')->nullable();
             $table->timestamps();
         });
     }

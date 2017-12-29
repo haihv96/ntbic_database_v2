@@ -1,171 +1,165 @@
-export const AppElement = function (element) {
-    this.app_element = element;
-    this.html = element.html();
+export class AppElement {
+    constructor(element) {
+        this.appElement = element;
+        this.html = element.html()
+    }
 
-    this.loading = function (html_append) {
-        this.app_element.html(html_append);
+    loading(htmlAppend) {
+        this.appElement.html(htmlAppend);
         this.disable();
     };
 
-    this.disable = function () {
-        this.app_element.prop('disabled', true);
+    disable() {
+        this.appElement.prop('disabled', true);
     };
 
-    this.enable = function () {
-        this.app_element.prop('disabled', false);
+    enable() {
+        this.appElement.prop('disabled', false);
     };
 
-    this.reset = function () {
-        this.app_element.html(this.html);
+    reset() {
+        this.appElement.html(this.html);
         this.enable();
     };
 
-    this.default_loading = function () {
-        this.app_element.html('<i class="fa fa-spinner fa-spin"></i> ' +
+    defaultLoading() {
+        this.appElement.html('<i class="fa fa-spinner fa-spin"></i> ' +
             'Loading...');
         this.disable();
     };
 
-    this.only_icon_loading = function () {
-        this.app_element.html('<i class="fa fa-spinner fa-spin"></i>');
+    onlyIconLoading() {
+        this.appElement.html('<i class="fa fa-spinner fa-spin"></i>');
         this.disable();
     };
 
-    this.default_loading_gif = function () {
-        this.app_element.html('<img width="40px" src="/assets/gif/loading.gif">');
+    defaultLoadingGif() {
+        this.appElement.html('<img width="40px" src="/assets/gif/loading.gif">');
         this.disable();
     };
 
-    this.loading_area = function () {
-        this.app_element.append('<div class="loading-area-background"></div> ' +
+    loadingArea() {
+        this.appElement.append('<div class="loading-area-background"></div> ' +
             '<div class="loading-area"></div>');
     };
 
-    this.remove_loading_area = function () {
-        this.app_element.find('.loading-area-background').remove();
-        this.app_element.find('.loading-area').remove();
+    removeLoadingArea() {
+        this.appElement.find('.loading-area-background').remove();
+        this.appElement.find('.loading-area').remove();
     };
+
+    empty() {
+        this.appElement.html('');
+    }
 };
 
-export const Form = function (form) {
-    this.element = form;
+export class Form {
+    constructor(form) {
+        this.element = form;
+    }
 
-    this.method = function () {
-        var method = null;
-        if (this.element.attr('method').length) {
-            method = this.element.attr('method');
-        } else {
+    method() {
+        let method = null;
+        if (this.element.children('input[name="_method"]').length) {
             method = this.element.children('input[name="_method"]').val();
+        } else {
+            method = this.element.attr('method');
         }
         return method;
     };
 
-    this.params = function () {
+    params() {
         return this.element.serialize();
     };
 
-    this.action = function () {
+    action() {
         return this.element.attr('action');
     };
 
-    this.clear_error = function () {
+    clearError() {
         this.element.find('.form-group').removeClass('has-error');
         this.element.find('span.error-class').remove();
         this.element.find('div.error-class').remove();
     };
 
-    this.bootstrap_show_error = function (model, error_messages) {
-        var number_errors = 0;
-        var form_element = this.element;
-        $.each(error_messages, function (key, values) {
-            var input_element = form_element.find('#' + model + '_' + key);
-            input_element.closest('.form-group').addClass('has-error');
-            input_element.closest('.form-group').find('label')
+    bootstrapShowError(errorMessages) {
+        let numberErrors = 0;
+        let formElement = this.element;
+        console.log(errorMessages);
+        for (let attr in errorMessages) {
+            let inputElement = formElement.find('#' + attr);
+            inputElement.closest('.form-group').addClass('has-error');
+            inputElement.closest('.form-group').find('label')
                 .addClass('help-block error-class');
-            $.each(values, function (index, value) {
-                number_errors++;
-                input_element.after('<span class="help-block error-class">' +
-                    '<div>' + key.replace('_', ' ') + ' field ' + value + '</div> ' +
-                    '</span>');
-            });
-        });
-        form_element.find('.form-group').first().before('' +
+            for (let value of errorMessages[attr]) {
+                numberErrors++;
+                inputElement.after(`<span class="help-block error-class">${value}</div></span>`);
+            }
+        }
+        formElement.find('.form-group').first().before('' +
             '<div class="alert alert-danger fade in alert-dismissable error-class">' +
             ' <a href="#" class="close" data-dismiss="alert" ' +
             'aria-label="close" title="close">×' +
-            '</a>you have <strong>' + number_errors + ' errors</strong> </div>');
+            '</a>you have <strong>' + numberErrors + ' errors</strong> </div>');
     };
 
-    this.clear_password_field = function () {
+    clearPasswordField() {
         this.element.find('input[type="password"]').val(null);
     };
 
-    this.clear_input = function () {
+    clearInput() {
         this.element.find('input').val(null);
-        if (tinyMCE.activeEditor != null) {
-            tinyMCE.activeEditor.setContent('');
-        }
+        tinyMCE.activeEditor != null ? tinyMCE.activeEditor.setContent('') : null;
     };
 
-    this.undo_input = function (form_for_model, method, url_ajax) {
-        var form_element = this.element;
+    undoInput(formForModel, method, urlAjax) {
+        var formElement = this.element;
         $.ajax({
             type: method,
-            url: url_ajax,
+            url: urlAjax,
             data: {get_data_only: true},
             dataType: 'json',
             success: function (response) {
-                if (response.status == 'success') {
-                    $.each(response.object, function (key, value) {
-                        var input = form_element.find('#' + form_for_model + '_' + key);
-                        if (input.prop('tagName') == 'TEXTAREA') {
-                            tinyMCE.activeEditor.setContent(value);
-                        } else {
-                            input.val(value);
-                        }
-                    });
-                }
+                $.each(response.object, function (key, value) {
+                    var input = formElement.find('#' + formForModel + '_' + key);
+                    input.prop('tagName') == 'TEXTAREA' ?
+                        tinyMCE.activeEditor.setContent(value) : input.val(value);
+                });
             }
         });
         return false;
     };
-};
+}
 
-export const AjaxFormRequest = function (datatype, form_object) {
-    this.datatype = datatype;
+export class AjaxFormRequest {
+    constructor(datatype, formObject) {
+        this.datatype = datatype;
+        this.formObject = formObject;
+    }
 
-    this.request = function (start, success, warning, error, complete, show_notice) {
-        start();
+    request(start, success, error, complete, showNotice) {
+        start ? start() : null;
         $.ajax({
-            type: form_object.method(),
-            url: form_object.action(),
-            data: form_object.params(),
+            type: this.formObject.method(),
+            url: this.formObject.action(),
+            data: this.formObject.params(),
             dataType: this.datatype,
             success: function (response) {
-                if (show_notice) {
-                    toastr[response.status](response.message);
-                }
-                switch (response.status) {
-                    case 'success':
-                        if (success != null) {
-                            success(response);
-                        }
-                        break;
-                    case 'warning':
-                        if (warning != null) {
-                            warning(response);
-                        }
-                        break;
-                    default:
-                        if (error != null) {
-                            error(response);
-                        }
-                }
-            },
+                this.formObject.clearError();
+                showNotice ? toastr['success'](response.message) : null;
+                success ? success(response) : null;
+            }.bind(this),
+            error: function (response) {
+                response.hasOwnProperty('responseJSON') ? response = response.responseJSON : null;
+                this.formObject.clearError();
+                this.formObject.bootstrapShowError(response.errors);
+                showNotice ? toastr['error'](response.message) : null;
+                error ? error(response) : null;
+            }.bind(this),
             complete: function (response) {
-                complete(response);
-            }
+                complete ? complete(response) : null;
+            }.bind(this)
         });
         return false;
-    };
-};
+    }
+}
