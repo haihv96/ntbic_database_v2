@@ -1,10 +1,10 @@
 {!! Form::open([
-    'route'=>['raw-profiles.update', $rawProfile->id],
+    'route'=>['raw-profiles.update', $record->id],
     'method'=>'patch',
     'class' => 'form-ajax'
 ])!!}
 <div class="modal-body">
-    @foreach($rawProfile->attrNames() as $key => $value)
+    @foreach($record->attrNames() as $key => $value)
         <div class="form-group">
             {!! Form::label($key, $value, ['class' => 'bold']) !!}
             @include('management.raw-profiles.helpers.edit')

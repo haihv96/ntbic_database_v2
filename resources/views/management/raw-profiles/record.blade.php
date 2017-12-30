@@ -1,34 +1,34 @@
-<tr id="record-{{$rawProfile->id}}">
+<tr id="record-{{$record->id}}">
     <td>
         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-            <input type="checkbox" class="checkboxes" value="{{$rawProfile->id}}">
+            <input type="checkbox" class="checkboxes" value="{{$record->id}}">
             <span></span>
         </label>
     </td>
     <td width="30%">
         <a href="#show-record" data-toggle="modal" class="send-request bold"
-           data-url="{{route('raw-profiles.show', ['id' => $rawProfile->id])}}"
+           data-url="{{route('raw-profiles.show', ['id' => $record->id])}}"
            data-method="GET">
-            {{$rawProfile->acadamic_title.'.'.$rawProfile->name}}
+            {{$record->acadamic_title.'.'.$record->name}}
         </a>
     </td>
-    <td> {{$rawProfile->agency}}</td>
-    <td> {{$rawProfile->birthday}}</td>
+    <td> {{$record->agency}}</td>
+    <td> {{$record->birthday}}</td>
     <td>
-        @foreach(json_decode($rawProfile->specialization) as $specialization)
+        @foreach(json_decode($record->specialization) as $specialization)
             <li class="dash">{{$specialization}}</li>
         @endforeach
     </td>
     <td>
         <a href="#show-record" data-toggle="modal" class="send-request font-dark btn-sm"
-           data-url="{{route('raw-profiles.show', ['id' => $rawProfile->id])}}"
+           data-url="{{route('raw-profiles.show', ['id' => $record->id])}}"
            data-method="GET">
             <i class="fa fa-eye"></i>
         </a>
     </td>
     <td>
         <a href="#edit-record" data-toggle="modal" class="send-request font-green-junger btn-sm"
-           data-url="{{route('raw-profiles.edit', ['id' => $rawProfile->id])}}"
+           data-url="{{route('raw-profiles.edit', ['id' => $record->id])}}"
            data-method="GET">
             <i class="fa fa-pencil"></i>
         </a>
@@ -38,10 +38,10 @@
             <i class="fa fa-trash"></i>
             <div class="modal-content" hidden>
                 @component('management.raw-profiles.helpers.form_delete', [
-                    'ids' => $rawProfile->id
+                    'ids' => $record->id
                 ])
                     @slot('body')
-                        Do you sure delete <span class="bold font-red">"{{$rawProfile->name}}"</span> ?
+                        Do you sure delete <span class="bold font-red">"{{$record->name}}"</span> ?
                     @endslot
                 @endcomponent
             </div>

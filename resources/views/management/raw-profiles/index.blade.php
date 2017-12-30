@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div id="records" class="ajax-table">
-                    @include('management.raw-profiles.list', ['rawProfiles' => $rawProfiles])
+                    @include('management.raw-profiles.records', ['records' => $records])
                 </div>
             </div>
         </div>

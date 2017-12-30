@@ -1,9 +1,9 @@
 @if($key == 'url')
-    <a href="{{$rawProfile[$key]}}" target="_blank">
-        {!! Form::text($key, $rawProfile[$key], ['class'=>'form-control', 'disabled' => true]) !!}
+    <a href="{{$record[$key]}}" target="_blank">
+        {!! Form::text($key, $record[$key], ['class'=>'form-control', 'disabled' => true]) !!}
     </a>
 @elseif(in_array($key, ['specialization', 'research_joined', 'research_results']))
-    {!! Form::textarea($key, $rawProfile[$key], ['class'=>'form-control tinymce']) !!}
+    {!! Form::textarea($key, $record[$key], ['class'=>'form-control tinymce']) !!}
 @else
-    {!! Form::text($key, $rawProfile[$key], ['class'=>'form-control']) !!}
+    {!! Form::text($key, $record[$key], ['class'=>'form-control']) !!}
 @endif

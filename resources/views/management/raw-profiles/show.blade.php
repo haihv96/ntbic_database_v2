@@ -1,7 +1,7 @@
 <div class="modal-body">
     <table class="table table-striped table-bordered table-advance table-hover">
         <tbody>
-            @foreach($rawProfile->attrNames() as $key => $value)
+            @foreach($record->attrNames() as $key => $value)
                 <tr>
                     <td class="highlight active bold" width="25%">
                         {{$value}}
