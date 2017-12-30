@@ -48,7 +48,6 @@ $(document).ready(function () {
     // Search ajax in table
     BODY.on('keyup', '.search-in-table input', function () {
         const loadableObject = new AppElement($('#search-loadable'));
-        loadableObject.onlyIconLoading();
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
@@ -60,7 +59,6 @@ $(document).ready(function () {
                 $('#records').html(response.data);
             },
             complete: function () {
-                loadableObject.empty();
             }
         }).bind(this);
     });
@@ -104,6 +102,7 @@ $(document).ready(function () {
                 if (formObject.element.data().hasOwnProperty('reloadable')) {
                     new AppElement($('#records')).empty();
                     loadTableFromUrl($('#current-page-url').val())
+                    $('#button-delete-selected').hide();
                 } else {
                     const id = formObject.action().split('/').splice(-1)[0];
                     $(`#record-${id}`).hide(function () {

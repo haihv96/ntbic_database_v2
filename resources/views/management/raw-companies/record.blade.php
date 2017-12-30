@@ -6,33 +6,35 @@
         </label>
     </td>
     <td>
-        <img class="avatar" src="{{asset($record->getFirstMediaUrl('avatar') ?
-        $record->getFirstMediaUrl('avatar') : 'images/anon_user.png')}}"/>
+        <img class="company-logo" src="{{asset($record->getFirstMedia('logo') ?
+        $record->getFirstMediaUrl('logo') : asset('images/no_logo.png'))}}"/>
     </td>
     <td width="30%">
         <a href="#show-record" data-toggle="modal" class="send-request bold"
-           data-url="{{route('raw-profiles.show', ['id' => $record->id])}}"
+           data-url="{{route('raw-companies.show', ['id' => $record->id])}}"
            data-method="GET">
-            {{$record->acadamic_title.'.'.$record->name}}
+            {{$record->name}}
         </a>
     </td>
-    <td> {{$record->agency}}</td>
-    <td> {{$record->birthday}}</td>
     <td>
-        @foreach(json_decode($record->specialization) as $specialization)
-            <li class="dash">{{$specialization}}</li>
-        @endforeach
+        {{$record->technology_category}}
+    </td>
+    <td>
+        {{$record->headquarters}}
+    </td>
+    <td>
+        {{$record->province}}
     </td>
     <td>
         <a href="#show-record" data-toggle="modal" class="send-request font-dark btn-sm"
-           data-url="{{route('raw-profiles.show', ['id' => $record->id])}}"
+           data-url="{{route('raw-companies.show', ['id' => $record->id])}}"
            data-method="GET">
             <i class="fa fa-eye"></i>
         </a>
     </td>
     <td>
         <a href="#edit-record" data-toggle="modal" class="send-request font-green-junger btn-sm"
-           data-url="{{route('raw-profiles.edit', ['id' => $record->id])}}"
+           data-url="{{route('raw-companies.edit', ['id' => $record->id])}}"
            data-method="GET">
             <i class="fa fa-pencil"></i>
         </a>
@@ -41,7 +43,7 @@
         <a href="#delete-record" data-toggle="modal" class="request-client-modal font-red btn-sm">
             <i class="fa fa-trash"></i>
             <div class="modal-content" hidden>
-                @component('management.raw-profiles.helpers.form_delete', [
+                @component('management.raw-companies.helpers.form_delete', [
                     'ids' => $record->id
                 ])
                     @slot('body')

@@ -13,7 +13,6 @@ class RawCompany extends Model implements HasMedia
     protected $table = 'raw_companies';
     protected $fillable = [
         'url',
-        'image',
         'name',
         'last_update',
         'technology_category',
@@ -47,4 +46,43 @@ class RawCompany extends Model implements HasMedia
         'results',
         'products'
     ];
+
+    public function attrNames()
+    {
+        return [
+            'url' => 'Source url',
+            'name' => 'Name',
+            'last_update' => 'Last update',
+            'technology_category' => 'Technology category',
+            'province' => 'Province',
+            'headquarters' => 'Headquarters',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'fax' => 'Fax',
+            'website' => 'Website',
+            'company_code' => 'Company code',
+            'tax_code' => 'Tax code',
+            'type' => 'Type',
+            'founded' => 'Founded',
+            'founder' => 'Founder',
+            'founder_phone' => 'Founder phone',
+            'founder_email' => 'Founder email',
+            'founder_address' => 'Founder address',
+            'industry' => 'Industry',
+            'tax_information' => 'Tax information',
+            'company_branch' => 'Company branch',
+            'representative_office' => 'Representative office',
+            'TRC_number' => 'Technology registration certificate number',
+            'TRC_date' => 'Technology registration certificate date',
+            'TRC_place' => 'Technology registration certificate place',
+            'technology_rank' => 'Technology rank',
+            'research_for' => 'Research for',
+            'number_of_employees_research' => 'Number of employees research',
+            'technology_highlight' => 'Technology highlight',
+            'technology_using' => 'Technology using',
+            'technology_transfer' => 'Technology transfer',
+            'results' => 'Results',
+            'products' => 'Products'
+        ];
+    }
 }

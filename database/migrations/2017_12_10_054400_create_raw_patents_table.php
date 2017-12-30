@@ -17,12 +17,12 @@ class CreateRawPatentsTable extends Migration
             $table->increments('id');
             $table->string('url', 500)->unique();
             $table->text('name');
-            $table->string('patent_code');
-            $table->text('technology_category');
+            $table->string('patent_code')->nullable();
+            $table->text('technology_category')->nullable();
             $table->string('public_date')->nullable();
             $table->string('provide_date')->nullable();
-            $table->string('owner');
-            $table->string('author');
+            $table->string('owner')->nullable();
+            $table->string('author')->nullable();
             $table->text('highlights')->nullable();
             $table->mediumText('description')->nullable();
             $table->text('content_can_be_transferred')->nullable();

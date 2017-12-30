@@ -25,7 +25,7 @@ class CreateRawCompaniesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('fax')->nullable();
             $table->string('website')->nullable();
-            $table->text('company_code');
+            $table->text('company_code')->nullable();
             $table->text('tax_code')->nullable();
             $table->string('type')->nullable();
             $table->string('founded')->nullable();

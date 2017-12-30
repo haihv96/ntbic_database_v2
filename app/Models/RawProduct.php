@@ -21,4 +21,17 @@ class RawProduct extends Model implements HasMedia
         'transfer_description',
         'results'
     ];
+
+    public function attrNames()
+    {
+        return [
+            'url' => 'Source url',
+            'name' => 'Name',
+            'technology_category' => 'Technology category',
+            'highlights' => 'Highlights',
+            'description' => 'Description',
+            'transfer_description' => 'Transfer description',
+            'results' => 'Results'
+        ];
+    }
 }
