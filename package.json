@@ -22,9 +22,6 @@
         "simple-line-icons": "^2.4.1"
     },
     "dependencies": {
-        "datatables.net": "^1.10.16",
-        "datatables.net-bs": "^1.10.16",
-        "tinymce": "^4.7.4",
         "toastr": "^2.1.4"
     }
 }
