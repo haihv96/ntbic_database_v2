@@ -163,3 +163,19 @@ export class AjaxFormRequest {
         return false;
     }
 }
+
+export const loadTinymce = () => {
+    tinymce.remove();
+    tinyMCE.init({
+        selector: '.tinymce',
+        plugins: [
+            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern codesample',
+            'fullpage toc spellchecker imagetools help'
+        ],
+        toolbar: 'insertfile undo redo | styleselect | bold italic strikethrough | alignleft aligncenter alignright alignjustify | ltr rtl | bullist numlist outdent indent removeformat formatselect| link image media | emoticons charmap | code codesample | forecolor backcolor',
+        branding: false
+    });
+};

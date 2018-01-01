@@ -97,9 +97,9 @@ class CrawlProfiles extends Command
             $colNum = $profileXpath->query("./tr[$col]/td[1]", $body)->item(0);
         }
 
-        $specialization = json_encode($specialization, JSON_UNESCAPED_UNICODE);
-        $research_joined = json_encode($research_joined, JSON_UNESCAPED_UNICODE);
-        $research_results = json_encode($research_results, JSON_UNESCAPED_UNICODE);
+        $specialization = json_encode($specialization, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $research_joined = json_encode($research_joined, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $research_results = json_encode($research_results, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         return compact('url', 'studies_or_papers', 'name', 'acadamic_title',
             'birthday', 'specialization', 'agency', 'agency_address',
             'research_for', 'research_joined', 'research_results', 'image');

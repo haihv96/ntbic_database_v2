@@ -29,5 +29,6 @@
             @yield('content')
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('tinymce/js/tinymce/tinymce.min.js') }}"></script>
     </body>
 </html>

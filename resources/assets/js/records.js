@@ -1,4 +1,4 @@
-import {AppElement, AjaxFormRequest, Form} from './custom';
+import {AppElement, AjaxFormRequest, Form, loadTinymce} from './custom';
 
 $(document).ready(function () {
     const BODY = $('body');
@@ -74,7 +74,9 @@ $(document).ready(function () {
             type: $(this).data('method'),
             dataType: 'JSON',
             success: function (response) {
-                modalContainer.html(response.data);
+                modalContainer.html(response.data).ready(function () {
+                    loadTinymce();
+                });
             }
         });
     });

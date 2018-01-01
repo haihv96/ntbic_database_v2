@@ -17,6 +17,7 @@ mix.scripts([
         'public/themes/metronic/assets/js/quick-sidebar.min.js',
         'public/themes/metronic/assets/js/quick-nav.min.js',
         'public/themes/metronic/assets/js/toastr.min.js',
+        'public/tinymce/js/tinymce/tinymce.min.js',
         'public/js/main.js'
     ],
     'public/js/app.js')

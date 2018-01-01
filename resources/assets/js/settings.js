@@ -1,3 +1,5 @@
+import {loadTinymce} from './custom';
+
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -7,23 +9,5 @@ $(document).ready(function () {
     $('.alert').delay(6000).slideUp(200, function () {
         $(this).alert('close');
     });
-});
-
-toastr.options = {
-    'closeButton': true,
-    'debug': false,
-    'positionClass': 'toast-top-right',
-    'onclick': null,
-    'showDuration': '1000',
-    'hideDuration': '1000',
-    'timeOut': '5000',
-    'extendedTimeOut': '1000',
-    'showEasing': 'swing',
-    'hideEasing': 'linear',
-    'showMethod': 'fadeIn',
-    'hideMethod': 'fadeOut'
-};
-
-tinymce.init({
-    selector: '#tinymce'
+    loadTinymce();
 });

@@ -8,6 +8,7 @@
         <meta content="Preview page of Metronic Admin Theme #1 for Metronic's custom grid system" name="description"/>
         <meta content="" name="author"/>
         {!! Html::style('css/app.css') !!}
+        <script src="{{asset('js/tinymce/tinymce.min.js')}}"></script>
     </head>
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
         <div class="page-wrapper">
@@ -17,6 +18,7 @@
                 @include('layouts.dashboards.container')
             </div>
             @include('layouts.dashboards.footer')
+        </div>
         {!! Html::script('js/app.js') !!}
     </body>
 </html>
