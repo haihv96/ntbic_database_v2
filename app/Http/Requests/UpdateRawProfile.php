@@ -25,9 +25,14 @@ class UpdateRawProfile extends FormRequest
     {
         return [
             'name' => 'required',
-            'specialization' => 'required|json',
-            'research_joined' => 'required|json',
-            'research_results' => 'required|json',
         ];
     }
+
+//    protected function getValidatorInstance()
+//    {
+//        $params = $this->all();
+//        $params['specialization'] = 'sdfsdf';
+//        $this->getInputSource()->replace($params);
+//        return parent::getValidatorInstance();
+//    }
 }

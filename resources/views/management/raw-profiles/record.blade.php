@@ -19,9 +19,7 @@
     <td> {{$record->agency}}</td>
     <td> {{$record->birthday}}</td>
     <td>
-        @foreach(json_decode($record->specialization) as $specialization)
-            <li class="dash">{{$specialization}}</li>
-        @endforeach
+        {!!$record->specialization!!}
     </td>
     <td>
         <a href="#show-record" data-toggle="modal" class="send-request font-dark btn-sm"

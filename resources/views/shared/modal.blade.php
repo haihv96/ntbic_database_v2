@@ -1,12 +1,12 @@
 <div class="modal fade shared-modal" id="{{$id}}" aria-hidden="true">
     <div class="modal-dialog {{isset($class) ? $class : null}}">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-{{isset($titleBg) ? $titleBg : null}}">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 </button>
                 <h4 class="modal-title">
                     <div class="caption">
-                        <span class="caption-subject font-{{$titleColor}} bold uppercase">
+                        <span class="caption-subject font-white bold uppercase">
                             <i class="fa fa-cogs"></i>
                             {{$title}}
                         </span>
@@ -18,4 +18,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

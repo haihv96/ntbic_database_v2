@@ -2,7 +2,7 @@
     <a href="{{$record[$key]}}" target="_blank">
         {!! Form::text($key, $record[$key], ['class'=>'form-control', 'disabled' => true]) !!}
     </a>
-@elseif(in_array($key, []))
+@elseif(in_array($key, ['highlights', 'description', 'results']))
     {!! Form::textarea($key, $record[$key], ['class'=>'form-control tinymce']) !!}
 @else
     {!! Form::text($key, $record[$key], ['class'=>'form-control']) !!}

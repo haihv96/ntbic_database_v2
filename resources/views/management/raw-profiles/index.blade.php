@@ -59,19 +59,19 @@
     @include('shared.modal', [
         'id' => 'show-record',
         'title' => 'View Raw Profile',
-        'titleColor' => 'blue-dark',
+        'titleBg' => 'blue-dark',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'edit-record',
         'title' => 'Edit Raw Profile',
-        'titleColor' => 'blue-steel',
+        'titleBg' => 'blue-steel',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'delete-record',
         'title' => 'Delete Raw Profile',
-        'titleColor' => 'red-haze',
+        'titleBg' => 'red-haze',
         'class' => 'modal-dialog'
     ])
 @endsection

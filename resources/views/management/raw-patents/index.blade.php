@@ -59,19 +59,19 @@
     @include('shared.modal', [
         'id' => 'show-record',
         'title' => 'View Raw Patent',
-        'titleColor' => 'blue-dark',
+        'titleBg' => 'blue-dark',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'edit-record',
         'title' => 'Edit Raw Patent',
-        'titleColor' => 'blue-steel',
+        'titleBg' => 'blue-steel',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'delete-record',
         'title' => 'Delete Raw Patent',
-        'titleColor' => 'red-haze',
+        'titleBg' => 'red-haze',
         'class' => 'modal-dialog'
     ])
 @endsection

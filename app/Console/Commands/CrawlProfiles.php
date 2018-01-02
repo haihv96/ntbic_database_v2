@@ -71,10 +71,13 @@ class CrawlProfiles extends Command
         $birthday = trim($profileXpath->query('./tr[3]/td[3]', $body)->item(0)->nodeValue);
         $specialization = convertHtmlToText($profileXpath->query('./tr[4]/td[3]', $body)->item(0));
         $specialization = explode("<br>", $specialization);
-        $specialization = array_filter(
-            array_map(function ($item) {
-                return str_replace('-', '', trim($item));
-            }, $specialization)
+        $specialization = join(
+            '<br/>',
+            array_filter(
+                array_map(function ($item) {
+                    return trim($item);
+                }, $specialization)
+            )
         );
         $agency = trim($profileXpath->query('./tr[5]/td[3]', $body)->item(0)->nodeValue);
         $agency_address = trim($profileXpath->query('./tr[6]/td[3]', $body)->item(0)->nodeValue);
@@ -83,7 +86,7 @@ class CrawlProfiles extends Command
         $research_joined = [];
         $colNum = trim($profileXpath->query("./tr[$col]/td[1]", $body)->item(0)->nodeValue);
         while ($colNum != '[8]' && $colNum != null) {
-            $research_joined[] = convertHtmlToText($profileXpath->query("./tr[$col]/td[2]", $body)->item(0));
+            $research_joined[] = '- ' . convertHtmlToText($profileXpath->query("./tr[$col]/td[2]", $body)->item(0));
             $col++;
             $colNum = trim($profileXpath->query("./tr[$col]/td[1]", $body)->item(0)->nodeValue);
         }
@@ -92,14 +95,15 @@ class CrawlProfiles extends Command
         $research_results = [];
         $colNum = $profileXpath->query("./tr[$col]/td[1]", $body)->item(0);
         while ($colNum != null) {
-            $research_results[] = convertHtmlToText($profileXpath->query("./tr[$col]/td[2]", $body)->item(0));
+            $research_results[] = '- ' . convertHtmlToText($profileXpath->query("./tr[$col]/td[2]", $body)->item(0));
             $col++;
             $colNum = $profileXpath->query("./tr[$col]/td[1]", $body)->item(0);
         }
-
-        $specialization = json_encode($specialization, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        $research_joined = json_encode($research_joined, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        $research_results = json_encode($research_results, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $research_joined = join('<br/>', $research_joined);
+        $research_results = join('<br/>', $research_results);
+//        $specialization = json_encode($specialization, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+//        $research_joined = json_encode($research_joined, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+//        $research_results = json_encode($research_results, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         return compact('url', 'studies_or_papers', 'name', 'acadamic_title',
             'birthday', 'specialization', 'agency', 'agency_address',
             'research_for', 'research_joined', 'research_results', 'image');
