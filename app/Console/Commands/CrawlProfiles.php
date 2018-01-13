@@ -67,7 +67,7 @@ class CrawlProfiles extends Command
         $studies_or_papers = (int)last(explode(' ', $studies_or_papers_string));
         $body = $profileXpath->query('//table[@class="archives_list"][2]')->item(0);
         $name = trim($profileXpath->query('./tr[1]/td[3]/strong', $body)->item(0)->nodeValue);
-        $acadamic_title = trim($profileXpath->query('./tr[2]/td[3]', $body)->item(0)->nodeValue);
+        $academic_title = trim($profileXpath->query('./tr[2]/td[3]', $body)->item(0)->nodeValue);
         $birthday = trim($profileXpath->query('./tr[3]/td[3]', $body)->item(0)->nodeValue);
         $specialization = convertHtmlToText($profileXpath->query('./tr[4]/td[3]', $body)->item(0));
         $specialization = explode("<br>", $specialization);
@@ -104,7 +104,7 @@ class CrawlProfiles extends Command
 //        $specialization = json_encode($specialization, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 //        $research_joined = json_encode($research_joined, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 //        $research_results = json_encode($research_results, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        return compact('url', 'studies_or_papers', 'name', 'acadamic_title',
+        return compact('url', 'studies_or_papers', 'name', 'academic_title',
             'birthday', 'specialization', 'agency', 'agency_address',
             'research_for', 'research_joined', 'research_results', 'image');
     }

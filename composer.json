@@ -29,8 +29,7 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Helpers/XpathHelper.php",
-            "app/Helpers/ViewHelper.php"
+            "app/Helpers/App.php"
         ]
     },
     "autoload-dev": {

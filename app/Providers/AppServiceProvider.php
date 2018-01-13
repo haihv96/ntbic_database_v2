@@ -24,6 +24,15 @@ use App\Repositories\RawProduct\RawProductRepository;
 use App\Repositories\RawCompany\RawCompanyInterface;
 use App\Repositories\RawCompany\RawCompanyRepository;
 
+use App\Repositories\Profile\ProfileInterface;
+use App\Repositories\Profile\ProfileRepository;
+
+use App\Repositories\AcademicTitle\AcademicTitleInterface;
+use App\Repositories\AcademicTitle\AcademicTitleRepository;
+
+use App\Repositories\Province\ProvinceInterface;
+use App\Repositories\Province\ProvinceRepository;
+
 class AppServiceProvider extends ServiceProvider
 {
     public function boot()
@@ -41,5 +50,10 @@ class AppServiceProvider extends ServiceProvider
         App::bind(RawPatentInterface::class, RawPatentRepository::class);
         App::bind(RawProjectInterface::class, RawProjectRepository::class);
         App::bind(RawCompanyInterface::class, RawCompanyRepository::class);
+
+        App::bind(ProfileInterface::class, ProfileRepository::class);
+
+        App::bind(AcademicTitleInterface::class, AcademicTitleRepository::class);
+        App::bind(ProvinceInterface::class, ProvinceRepository::class);
     }
 }

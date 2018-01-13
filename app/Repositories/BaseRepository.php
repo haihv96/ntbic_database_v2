@@ -38,7 +38,8 @@ abstract class BaseRepository implements BaseInterface
         return $this->model->find($id, $columns);
     }
 
-    public function findBy($column, $value){
+    public function findBy($column, $value)
+    {
         return $this->model->where($column, $value)->first();
     }
 
@@ -105,8 +106,18 @@ abstract class BaseRepository implements BaseInterface
         return $this->model->whereIn('id', $ids)->delete();
     }
 
+    public function truncate()
+    {
+        return $this->model->truncate();
+    }
+
     public function __call($method, $args)
     {
         return call_user_func_array([$this->model, $method], $args);
+    }
+
+    public function newModel()
+    {
+        return $this->model;
     }
 }

@@ -3,38 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\Media;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class RawProfile extends Model implements HasMediaConversions
+class Profile extends Model
 {
     use HasMediaTrait;
 
-    protected $table = 'raw_profiles';
+    protected $table = 'profiles';
     protected $fillable = [
         'url',
         'studies_or_papers',
         'name',
-        'academic_title',
+        'province_id',
+        'academic_title_id',
         'birthday',
         'specialization',
         'agency',
         'agency_address',
-        'province',
         'research_for',
         'research_joined',
         'research_results'
     ];
-
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion('thumb')
-            ->width(368)
-            ->height(232)
-            ->sharpen(10)
-            ->performOnCollections('avatar');
-    }
 
     public function attrNames()
     {
@@ -42,7 +31,6 @@ class RawProfile extends Model implements HasMediaConversions
             'url' => 'Source url',
             'studies_or_papers' => 'Studies or papers',
             'name' => 'Name',
-            'province' => 'Province',
             'academic_title' => 'Academic_title',
             'birthday' => 'Birthday',
             'specialization' => 'Specialization',
@@ -52,5 +40,15 @@ class RawProfile extends Model implements HasMediaConversions
             'research_joined' => 'Research joined',
             'research_results' => 'Research results'
         ];
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id');
+    }
+
+    public function academicTitle()
+    {
+        return $this->belongsTo(AcademicTitle::class, 'academic_title_id');
     }
 }

@@ -11,7 +11,8 @@ return [
                 'Research for',
                 'view',
                 'edit',
-                'update'
+                'delete',
+                'transfer'
             ]
         ],
         'raw-companies' => [
@@ -23,7 +24,8 @@ return [
                 'Province',
                 'view',
                 'edit',
-                'update'
+                'delete',
+                'transfer'
             ]
         ],
         'raw-projects' => [
@@ -35,7 +37,8 @@ return [
                 'Close date',
                 'view',
                 'edit',
-                'update'
+                'delete',
+                'transfer'
             ]
         ],
         'raw-patents' => [
@@ -47,7 +50,8 @@ return [
                 'Public date',
                 'view',
                 'edit',
-                'update'
+                'delete',
+                'transfer'
             ]
         ],
         'raw-products' => [
@@ -58,7 +62,8 @@ return [
                 'Highlights',
                 'view',
                 'edit',
-                'update'
+                'delete',
+                'transfer'
             ]
         ]
     ]

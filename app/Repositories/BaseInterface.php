@@ -3,6 +3,8 @@ namespace App\Repositories;
 
 interface BaseInterface
 {
+    public function newModel();
+
     public function all();
 
     public function lists($column, $key = null);
@@ -32,4 +34,6 @@ interface BaseInterface
     public function multiUpdate($column, $value, $input);
 
     public function delete($id);
+
+    public function truncate();
 }

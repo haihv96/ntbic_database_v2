@@ -5,7 +5,7 @@
 | Eng  | Vi |
 | ------------- | ------------- |
 | name | Họ và tên |
-| acadamic title | Học hàm/ học vị |
+| academic title | Học hàm/ học vị |
 | birthday | Năm sinh |
 | specialization | Chuyên ngành |
 | agency | Cơ quan công tác |

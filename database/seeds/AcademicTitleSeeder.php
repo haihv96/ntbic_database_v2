@@ -13,10 +13,10 @@ class AcademicTitleSeeder extends Seeder
     public function run()
     {
         $names = ['GS', 'GS.TSKH', 'GS.TS', 'PGS', 'PGS.TSKH', 'PGS.TS',
-            'TSKH', 'TS', 'NCS', 'Ths', 'CN', 'KS'];
+            'TSKH', 'TS', 'NCS', 'Ths', 'CN', 'KS', 'Khác'];
 
         foreach ($names as $name) {
-            AcademicTitle::create(['name' => $name]);
+            AcademicTitle::create(['name' => $name, 'normalize' => strNormalize($name)]);
         }
     }
 }

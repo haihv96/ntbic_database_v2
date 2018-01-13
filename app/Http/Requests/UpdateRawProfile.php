@@ -27,12 +27,4 @@ class UpdateRawProfile extends FormRequest
             'name' => 'required',
         ];
     }
-
-//    protected function getValidatorInstance()
-//    {
-//        $params = $this->all();
-//        $params['specialization'] = 'sdfsdf';
-//        $this->getInputSource()->replace($params);
-//        return parent::getValidatorInstance();
-//    }
 }

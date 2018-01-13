@@ -13,7 +13,7 @@
         <a href="#show-record" data-toggle="modal" class="send-request bold"
            data-url="{{route('raw-profiles.show', ['id' => $record->id])}}"
            data-method="GET">
-            {{$record->acadamic_title.'.'.$record->name}}
+            {{$record->academic_title.'.'.$record->name}}
         </a>
     </td>
     <td> {{$record->agency}}</td>
@@ -48,5 +48,8 @@
                 @endcomponent
             </div>
         </a>
+    </td>
+    <td>
+        @include('management.raw-profiles.transfer', ['ids' => $record->id])
     </td>
 </tr>

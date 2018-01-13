@@ -24,9 +24,9 @@ class ProvinceSeeder extends Seeder
             'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên Huế',
             'Tiền Giang', 'TP. HCM', 'TP. Nha trang', 'Trà Vinh', 'Tuyên Quang',
             'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái', 'Đà Nẵng', 'Đắk Lắc',
-            'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp'];
+            'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Khác'];
         foreach ($names as $name) {
-            Province::create(['name' => $name]);
+            Province::create(['name' => $name, 'normalize' => strNormalize($name)]);
         }
     }
 }

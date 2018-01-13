@@ -16,6 +16,7 @@ class CreateAcademicTitleTable extends Migration
         Schema::create('academic_titles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('normalize')->unique();
             $table->string('en_description')->nullable();
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ class CreateAcademicTitleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('academic_title');
+        Schema::dropIfExists('academic_titles');
     }
 }

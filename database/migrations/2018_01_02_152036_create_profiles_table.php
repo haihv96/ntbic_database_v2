@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRawProfilesTable extends Migration
+class CreateProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,24 @@ class CreateRawProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('raw_profiles', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-
+            $table->integer('academic_title_id')->unsigned();
+            $table->integer('province_id')->unsigned();
             $table->string('url', 500)->unique();
+            $table->string('path', 500)->unique();
             $table->string('name');
-            $table->string('province')->nullable();
             $table->integer('studies_or_papers')->nullable();
-            $table->string('academic_title')->nullable();
+            $table->foreign('academic_title_id')
+                ->references('id')
+                ->on('academic_titles')
+                ->onDelete('cascade')->nullable();
+            $table->foreign('province_id')
+                ->references('id')
+                ->on('provinces')
+                ->onDelete('cascade')->nullable();
             $table->string('birthday')->nullable();
-            $table->text('specialization')->nullable();
+            $table->text('specialization');
             $table->text('agency')->nullable();
             $table->text('agency_address')->nullable();
             $table->text('research_for')->nullable();
@@ -39,6 +47,6 @@ class CreateRawProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('raw_profiles');
+        Schema::dropIfExists('profiles');
     }
 }
