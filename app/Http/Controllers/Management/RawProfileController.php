@@ -67,7 +67,7 @@ class RawProfileController extends RecordController
             $this->academicTitleRepository->findBy('normalize', strNormalize('Khác'))
         );
 
-        $transferTo->path = strToPath($record->name) . '-' . $record->id;
+        $transferTo->path = strToPath($record->name);
 
         return $transferTo;
     }

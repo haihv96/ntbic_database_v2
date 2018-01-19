@@ -3,18 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class RawProduct extends Model implements HasMedia
+class Project extends Model
 {
-    use HasMediaTrait;
+    protected $table = 'projects';
 
-    protected $table = 'raw_products';
     protected $fillable = [
         'url',
         'name',
-        'technology_category',
+        'project_code',
+        'technology_category_id',
+        'start_date_invest',
+        'close_date',
+        'operator',
+        'author',
         'highlights',
         'description',
         'transfer_description',
@@ -26,11 +28,21 @@ class RawProduct extends Model implements HasMedia
         return [
             'url' => 'Source url',
             'name' => 'Name',
+            'project_code' => 'Project code',
             'technology_category' => 'Technology category',
+            'start_date_invest' => 'Start date invest',
+            'close_date' => 'Close date',
+            'operator' => 'Operator',
+            'author' => 'Author',
             'highlights' => 'Highlights',
             'description' => 'Description',
             'transfer_description' => 'Transfer description',
             'results' => 'Results'
         ];
+    }
+
+    public function specialization()
+    {
+        return $this->belongsTo(Specialization::class);
     }
 }

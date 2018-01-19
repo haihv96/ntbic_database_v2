@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class RawProduct extends Model implements HasMedia
+class Product extends Model implements HasMedia
 {
     use HasMediaTrait;
 
-    protected $table = 'raw_products';
+    protected $table = 'products';
     protected $fillable = [
         'url',
         'name',
-        'technology_category',
+        'base_technology_category_id',
         'highlights',
         'description',
         'transfer_description',
@@ -32,5 +32,10 @@ class RawProduct extends Model implements HasMedia
             'transfer_description' => 'Transfer description',
             'results' => 'Results'
         ];
+    }
+
+    public function baseTechnologyCategory()
+    {
+        return $this->belongsTo(BaseTechnologyCategory::class);
     }
 }

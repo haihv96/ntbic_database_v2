@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AcademicTitle extends Model
+class BaseTechnologyCategory extends Model
 {
-    protected $table = 'academic_titles';
+    protected $table = 'base_technology_categories';
     protected $fillable = [
         'name',
-        'en_description',
         'normalize'
     ];
 }

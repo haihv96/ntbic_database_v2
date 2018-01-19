@@ -26,12 +26,16 @@ use App\Repositories\RawCompany\RawCompanyRepository;
 
 use App\Repositories\Profile\ProfileInterface;
 use App\Repositories\Profile\ProfileRepository;
-
 use App\Repositories\AcademicTitle\AcademicTitleInterface;
 use App\Repositories\AcademicTitle\AcademicTitleRepository;
-
 use App\Repositories\Province\ProvinceInterface;
 use App\Repositories\Province\ProvinceRepository;
+use App\Repositories\TechnologyCategory\TechnologyCategoryInterface;
+use App\Repositories\TechnologyCategory\TechnologyCategoryRepository;
+use App\Repositories\Specialization\SpecializationInterface;
+use App\Repositories\Specialization\SpecializationRepository;
+use App\Repositories\BaseTechnologyCategory\BaseTechnologyCategoryInterface;
+use App\Repositories\BaseTechnologyCategory\BaseTechnologyCategoryRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -55,5 +59,8 @@ class AppServiceProvider extends ServiceProvider
 
         App::bind(AcademicTitleInterface::class, AcademicTitleRepository::class);
         App::bind(ProvinceInterface::class, ProvinceRepository::class);
+        App::bind(TechnologyCategoryInterface::class, TechnologyCategoryRepository::class);
+        App::bind(SpecializationInterface::class, SpecializationRepository::class);
+        App::bind(BaseTechnologyCategoryInterface::class, BaseTechnologyCategoryRepository::class);
     }
 }

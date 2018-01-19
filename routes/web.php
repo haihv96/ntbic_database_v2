@@ -5,7 +5,11 @@ Route::group(['prefix' => 'management', 'namespace' => 'Management'], function (
     Route::resource('raw-profiles', 'RawProfileController');
     Route::post('raw-profiles/transfer/{ids}', 'RawProfileController@transfer')->name('raw-profiles.transfer');
     Route::resource('raw-companies', 'RawCompanyController');
+    Route::post('raw-companies/transfer/{ids}', 'RawCompanyController@transfer')->name('raw-companies.transfer');
     Route::resource('raw-products', 'RawProductController');
+    Route::post('raw-products/transfer/{ids}', 'RawProductController@transfer')->name('raw-products.transfer');
     Route::resource('raw-patents', 'RawPatentController');
+    Route::post('raw-patents/transfer/{ids}', 'RawPatentController@transfer')->name('raw-patents.transfer');
     Route::resource('raw-projects', 'RawProjectController');
+    Route::get('raw-projects/transfer/{ids}', 'RawProjectController@transfer')->name('raw-projects.transfer');
 });
