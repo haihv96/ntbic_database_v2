@@ -12,7 +12,7 @@ class Project extends Model
         'url',
         'name',
         'project_code',
-        'technology_category_id',
+        'specialization_id',
         'start_date_invest',
         'close_date',
         'operator',
