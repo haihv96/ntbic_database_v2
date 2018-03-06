@@ -18,7 +18,7 @@ class CreateRawPatentsTable extends Migration
             $table->string('url', 500)->unique();
             $table->text('name');
             $table->string('patent_code')->nullable();
-            $table->text('technology_category')->nullable();
+            $table->text('base_technology_category')->nullable();
             $table->string('public_date')->nullable();
             $table->string('provide_date')->nullable();
             $table->string('owner')->nullable();

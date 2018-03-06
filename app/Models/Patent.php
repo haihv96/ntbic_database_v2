@@ -31,7 +31,7 @@ class Patent extends Model implements HasMedia
             'url' => 'Source url',
             'name' => 'Name',
             'patent_code' => 'Patent code',
-            'technology_category' => 'Technology category',
+            'base_technology_category' => 'Base Technology category',
             'public_date' => 'Public date',
             'provide_date' => 'Provide date',
             'owner' => 'Owner',

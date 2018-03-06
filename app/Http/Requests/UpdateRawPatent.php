@@ -25,9 +25,6 @@ class UpdateRawPatent extends FormRequest
     {
         return [
             'name' => 'required',
-            'specialization' => 'required|json',
-            'research_joined' => 'required|json',
-            'research_results' => 'required|json',
         ];
     }
 }

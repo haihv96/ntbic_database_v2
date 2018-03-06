@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Management;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Management\RecordController;
 use App\Repositories\RawProject\RawProjectInterface;
 use App\Repositories\Specialization\SpecializationInterface;
 use App\Repositories\TechnologyCategory\TechnologyCategoryInterface;
