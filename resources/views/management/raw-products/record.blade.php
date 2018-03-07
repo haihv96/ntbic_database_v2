@@ -50,4 +50,7 @@
             </div>
         </a>
     </td>
+    <td>
+        @include('management.raw-products.transfer', ['ids' => $record->id])
+    </td>
 </tr>

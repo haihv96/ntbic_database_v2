@@ -17,28 +17,20 @@
             </div>
         </div>
         <div class="portlet-body table-list">
-            <input id="current-page-url" hidden/>
+            <input id="current-page-url" hidden />
             <div class="no-footer">
                 <div class="row toolkit">
                     <div class="col-xs-6">
-                        <a href="#delete-record" data-toggle="modal" class="request-client-modal font-red btn-sm">
-                            <button id="button-delete-selected" class="btn red display-none">Delete</button>
-                            <div class="modal-content" hidden>
-                                @component('management.raw-products.helpers.form_delete', [
-                                    'id' => 'form-delete-selected',
-                                ])
-                                    @slot('body')
-                                        Do you sure delete
-                                        <span class="bold font-red">
-                                            <span id="records-checked"></span>
-                                            SELECTED RAW PROFILES
-                                        </span> ?
-                                    @endslot
-                                @endcomponent
-                            </div>
-                        </a>
+                        <div class="row">
+                            @include('management.raw-products.helpers.delete_selected')
+                            @include('management.raw-products.helpers.transfer_selected')
+                        </div>
                     </div>
                     <div class="col-xs-6">
+                        @if($records->count())
+                            @include('management.raw-products.helpers.delete_all')
+                            @include('management.raw-products.helpers.transfer_all')
+                        @endif
                         <div class="form-search-in-table">
                             {!! Form::open(['route' => 'raw-products.index', 'method' => 'get', 'class'=> 'search-in-table']) !!}
                             {!! Form::token() !!}
@@ -72,6 +64,12 @@
         'id' => 'delete-record',
         'title' => 'Delete Raw Product',
         'titleBg' => 'red-haze',
+        'class' => 'modal-dialog'
+    ])
+    @include('shared.modal', [
+        'id' => 'transfer-record',
+        'title' => 'Transfer Raw Product',
+        'titleBg' => 'blue-steel',
         'class' => 'modal-dialog'
     ])
 @endsection
