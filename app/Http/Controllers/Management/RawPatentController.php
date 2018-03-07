@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers\Management;
 
+use App\Models\Patent;
 use App\Repositories\RawPatent\RawPatentInterface;
+use App\Repositories\PatentType\PatentTypeInterface;
 use App\Repositories\BaseTechnologyCategory\BaseTechnologyCategoryInterface;
 use App\Http\Requests\UpdateRawPatent;
 
 class RawPatentController extends RecordController
 {
-    protected $baseTechnologyCategoryRepository;
+    protected $baseTechnologyCategoryRepository,
+        $patentTypeRepository;
 
     public function __construct(
         RawPatentInterface $rawProfileRepository,
+        PatentTypeInterface $patentTypeRepository,
         BaseTechnologyCategoryInterface $baseTechnologyCategoryRepository
     )
     {
         $this->baseTechnologyCategoryRepository = $baseTechnologyCategoryRepository;
         $this->recordRepository = $rawProfileRepository;
+        $this->patentTypeRepository = $patentTypeRepository;
         $this->viewIndex = 'management.raw-patents.index';
         $this->viewRecords = 'management.raw-patents.records';
         $this->viewShow = 'management.raw-patents.show';
@@ -29,7 +34,12 @@ class RawPatentController extends RecordController
         return $this->updateRecord($validUpdateRequest, $id);
     }
 
-    public function transferToRecordModel($record, $transferTo)
+    public function transfer($ids)
+    {
+        return $this->transferRecord($ids);
+    }
+
+    public function transferToRecordModel($record)
     {
         $transferTo = assignObject([
             'url',
@@ -43,10 +53,15 @@ class RawPatentController extends RecordController
             'description',
             'content_can_be_transferred',
             'market_application'
-        ], $record, $transferTo);
+        ], $record, new Patent);
 
-        $transferTo->province()->associate(
-            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize($record->province))
+        $btcNormalize = strNormalize($record->base_technology_category);
+        $transferTo->baseTechnologyCategory()->associate(
+            $this->baseTechnologyCategoryRepository->whereRaw("INSTR('$btcNormalize',normalize)<>0")->first()
+        );
+
+        $transferTo->patentType()->associate(
+            $this->patentTypeRepository->whereRaw("INSTR('$btcNormalize',normalize)<>0")->first()
         );
         $transferTo->path = strToPath($record->name);
         return $transferTo;

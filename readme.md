@@ -23,6 +23,7 @@
 | ------------- | ------------- |
 | name  | Tên sáng chế, phát minh, giải pháp  |
 | patent code  | Số bằng, ký hiệu  |
+| patent type  | Loại sáng chế  |
 | technology category | Thuộc lĩnh vực KH&CN |
 | public date | Ngày công bố |
 | provide date | Ngày cấp |

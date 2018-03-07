@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Mockery\Exception;
 use Illuminate\Support\Facades\DB;
-use Mockery\Matcher\Closure;
 
 class RecordController extends Controller
 {
@@ -98,7 +97,7 @@ class RecordController extends Controller
         }
     }
 
-    public function transferRecord($ids, $transferTo)
+    public function transferRecord($ids)
     {
         $records = ($ids === 'all' ?
             $this->recordRepository->all() :
@@ -106,7 +105,7 @@ class RecordController extends Controller
         foreach ($records as $record) {
             try {
                 DB::beginTransaction();
-                $transferTo = $this->transferToRecordModel($record, $transferTo);
+                $transferTo = $this->transferToRecordModel($record);
                 $transferTo->save();
                 $record->delete();
                 DB::commit();

@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AcademicTitleSeeder::class);
         $this->call(TechnologyCategorySeeder::class);
         $this->call(BaseTechnologyCategorySeeder::class);
+        $this->call(PatentTypeSeeder::class);
     }
 }

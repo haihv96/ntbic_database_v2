@@ -20,10 +20,16 @@ class CreatePatentsTable extends Migration
                 ->references('id')
                 ->on('base_technology_categories')
                 ->onDelete('cascade');
+            $table->integer('patent_type_id')->unsigned();
+            $table->foreign('patent_type_id')
+                ->references('id')
+                ->on('patent_types')
+                ->onDelete('cascade');
             $table->string('url', 500)->unique();
             $table->text('name');
             $table->string('path');
             $table->string('patent_code')->nullable();
+            $table->string('patent_type')->nullable();
             $table->string('public_date')->nullable();
             $table->string('provide_date')->nullable();
             $table->string('owner')->nullable();

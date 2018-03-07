@@ -47,4 +47,9 @@ class Patent extends Model implements HasMedia
     {
         return $this->belongsTo(BaseTechnologyCategory::class);
     }
+
+    public function patentType()
+    {
+        return $this->belongsTo(PatentType::class);
+    }
 }

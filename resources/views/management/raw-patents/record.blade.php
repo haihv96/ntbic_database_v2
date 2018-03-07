@@ -52,4 +52,7 @@
             </div>
         </a>
     </td>
+    <td>
+        @include('management.raw-patents.transfer', ['ids' => $record->id])
+    </td>
 </tr>

@@ -36,10 +36,10 @@ class RawProjectController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids, new Project);
+        return $this->transferRecord($ids);
     }
 
-    public function transferToRecordModel($record, $transferTo)
+    public function transferToRecordModel($record)
     {
         $transferTo = assignObject([
             'url',
@@ -48,7 +48,7 @@ class RawProjectController extends RecordController
             'description',
             'transfer_description',
             'results'
-        ], $record, $transferTo);
+        ], $record, new Project);
 
         $tcNormalize = strNormalize($record->technology_category);
         $transferTo->specialization()->associate(

@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="portlet-body table-list">
-            <input id="current-page-url" hidden/>
+            <input id="current-page-url" hidden />
             <div class="no-footer">
                 <div class="row toolkit">
                     <div class="col-xs-6">

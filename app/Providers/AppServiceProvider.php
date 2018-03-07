@@ -36,6 +36,9 @@ use App\Repositories\Specialization\SpecializationInterface;
 use App\Repositories\Specialization\SpecializationRepository;
 use App\Repositories\BaseTechnologyCategory\BaseTechnologyCategoryInterface;
 use App\Repositories\BaseTechnologyCategory\BaseTechnologyCategoryRepository;
+use App\Repositories\PatentType\PatentTypeInterface;
+use App\Repositories\PatentType\PatentTypeRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -62,5 +65,6 @@ class AppServiceProvider extends ServiceProvider
         App::bind(TechnologyCategoryInterface::class, TechnologyCategoryRepository::class);
         App::bind(SpecializationInterface::class, SpecializationRepository::class);
         App::bind(BaseTechnologyCategoryInterface::class, BaseTechnologyCategoryRepository::class);
+        App::bind(PatentTypeInterface::class, PatentTypeRepository::class);
     }
 }

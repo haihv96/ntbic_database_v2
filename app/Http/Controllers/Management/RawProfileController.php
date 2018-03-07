@@ -39,10 +39,10 @@ class RawProfileController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids, new Profile);
+        return $this->transferRecord($ids);
     }
 
-    public function transferToRecordModel($record, $transferTo)
+    public function transferToRecordModel($record)
     {
         $transferTo = assignObject([
             'url',
@@ -55,7 +55,7 @@ class RawProfileController extends RecordController
             'research_for',
             'research_joined',
             'research_results'
-        ], $record, $transferTo);
+        ], $record, new Profile);
 
         $transferTo->province()->associate(
             $this->provinceRepository->findBy('normalize', strNormalize($record->province)) ??

@@ -39,7 +39,7 @@ class CrawlPatents extends Command
             $name = trim($patentXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[1]/tbody/tr/td/div[2]')->item(0)->nodeValue);
             $body = $patentXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[2]/tbody')->item(0);
             $patent_code = trim($patentXpath->query('./tr[1]/td[2]', $body)->item(0)->nodeValue);
-            $technology_category = trim($patentXpath->query('./tr[2]/td[2]', $body)->item(0)->nodeValue);
+            $base_technology_category = trim($patentXpath->query('./tr[2]/td[2]', $body)->item(0)->nodeValue);
             $public_date = trim($patentXpath->query('./tr[3]/td[2]', $body)->item(0)->nodeValue);
             $provide_date = trim($patentXpath->query('./tr[4]/td[2]', $body)->item(0)->nodeValue);
             $owner = trim($patentXpath->query('./tr[5]/td[2]', $body)->item(0)->nodeValue);
@@ -67,7 +67,7 @@ class CrawlPatents extends Command
             try {
                 DB::beginTransaction();
                 $rawPatent = RawPatent::create(
-                    compact('url', 'name', 'patent_code', 'technology_category', 'public_date',
+                    compact('url', 'name', 'patent_code', 'base_technology_category', 'public_date',
                         'provide_date', 'owner', 'author', 'highlights', 'description',
                         'content_can_be_transferred', 'market_application')
                 );
