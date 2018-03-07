@@ -45,7 +45,7 @@ class CrawlProducts extends Command
             $productXpath = $this->crawlRequestService->getXpath($url);
             $body = $productXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table/tbody')->item(0);
             $name = $this->getContent($productXpath->query('./tr[1]/td', $body)->item(0));
-            $technology_category = $this->getContent($productXpath->query('./tr[2]/td', $body)->item(0));
+            $base_technology_category = $this->getContent($productXpath->query('./tr[2]/td', $body)->item(0));
             $highlights = convertHtmlToText($productXpath->query('./tr[3]/td/div[2]', $body)->item(0));
             $description = convertHtmlToText($productXpath->query('./tr[4]/td/div[2]', $body)->item(0));
             $transfer_description = convertHtmlToText($productXpath->query('./tr[5]/td/div[2]', $body)->item(0));
@@ -54,7 +54,7 @@ class CrawlProducts extends Command
             try {
                 DB::beginTransaction();
                 $rawProduct = RawProduct::create(
-                    compact('url', 'name', 'technology_category', 'highlights',
+                    compact('url', 'name', 'base_technology_category', 'highlights',
                         'description', 'transfer_description', 'results')
                 );
                 $thumb ? $rawProduct->addMediaFromUrl($thumb)->toMediaCollection('thumb') : null;

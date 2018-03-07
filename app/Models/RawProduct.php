@@ -14,7 +14,7 @@ class RawProduct extends Model implements HasMedia
     protected $fillable = [
         'url',
         'name',
-        'technology_category',
+        'base_technology_category',
         'highlights',
         'description',
         'transfer_description',
@@ -26,7 +26,7 @@ class RawProduct extends Model implements HasMedia
         return [
             'url' => 'Source url',
             'name' => 'Name',
-            'technology_category' => 'Technology category',
+            'base_technology_category' => 'Base Technology category',
             'highlights' => 'Highlights',
             'description' => 'Description',
             'transfer_description' => 'Transfer description',

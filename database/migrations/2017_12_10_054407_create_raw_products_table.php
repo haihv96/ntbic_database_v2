@@ -17,7 +17,7 @@ class CreateRawProductsTable extends Migration
             $table->increments('id');
             $table->string('url', 500)->unique();
             $table->text('name');
-            $table->text('technology_category')->nullable();
+            $table->text('base_technology_category')->nullable();
             $table->text('highlights')->nullable();
             $table->text('description')->nullable();
             $table->text('transfer_description')->nullable();
