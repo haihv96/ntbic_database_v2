@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Management;
 
 use App\Models\Profile;
-use App\Repositories\Profile\ProfileInterface;
 use App\Repositories\Province\ProvinceInterface;
 use App\Repositories\AcademicTitle\AcademicTitleInterface;
 use App\Repositories\RawProfile\RawProfileInterface;
@@ -11,17 +10,14 @@ use App\Http\Requests\UpdateRawProfile;
 
 class RawProfileController extends RecordController
 {
-    protected $profileRepository;
     protected $academicTitleRepository;
     protected $provinceRepository;
 
     public function __construct(
         RawProfileInterface $rawProfileRepository,
-        ProfileInterface $profileRepository,
         ProvinceInterface $provinceRepository,
         AcademicTitleInterface $academicTitleRepository)
     {
-        $this->profileRepository = $profileRepository;
         $this->academicTitleRepository = $academicTitleRepository;
         $this->provinceRepository = $provinceRepository;
         $this->recordRepository = $rawProfileRepository;

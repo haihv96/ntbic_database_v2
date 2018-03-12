@@ -1,10 +1,10 @@
 {!! Form::open([
-    'route'=>['raw-projects.transfer', isset($ids) ? $ids : null],
+    'route'=>['raw-companies.transfer', isset($ids) ? $ids : null],
     'method'=>'post',
     'ids' => (isset($ids) ? $ids : null),
     'class' => 'form-ajax '.(isset($class) ? $class : null),
     'hidden' => isset($hidden) ? $hidden : false,
-    'data-model-url' => route('raw-projects.index'),
+    'data-model-url' => route('raw-companies.index'),
     'data-reloadable' => true
     ])
 !!}

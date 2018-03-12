@@ -2,7 +2,7 @@
     'route'=>['raw-products.destroy', isset($ids) ? $ids : null],
     'method'=>'delete',
     'id' => (isset($id) ? $id : null),
-    'class' => 'form-ajax form-delete'.(isset($class) ? $class : null),
+    'class' => 'form-ajax form-delete '.(isset($class) ? $class : null),
     'hidden' => isset($hidden) ? $hidden : false,
     'data-model-url' => route('raw-products.index'),
     'data-reloadable' => true

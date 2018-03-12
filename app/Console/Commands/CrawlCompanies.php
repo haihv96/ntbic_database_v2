@@ -45,7 +45,7 @@ class CrawlCompanies extends Command
             }
             $name = trim($companyXpath->query('./tbody[1]/tr/td[2]', $body1)->item(0)->nodeValue);
             $last_update = trim($companyXpath->query('./tbody[2]/tr/td[2]', $body1)->item(0)->nodeValue);
-            $technology_category = trim($companyXpath->query('./tbody[3]/tr/td[2]', $body1)->item(0)->nodeValue);
+            $base_technology_category = trim($companyXpath->query('./tbody[3]/tr/td[2]', $body1)->item(0)->nodeValue);
             $province = trim($companyXpath->query('./tbody[4]/tr/td[2]', $body1)->item(0)->nodeValue);
             $headquarters = trim($companyXpath->query('./tbody[5]/tr/td[2]', $body1)->item(0)->nodeValue);
             $email = trim($companyXpath->query('./tbody[6]/tr/td[2]', $body1)->item(0)->nodeValue);
@@ -100,7 +100,7 @@ class CrawlCompanies extends Command
             try {
                 DB::beginTransaction();
                 $rawCompany = RawCompany::create(
-                    compact('url', 'image', 'name', 'last_update', 'technology_category', 'province',
+                    compact('url', 'image', 'name', 'last_update', 'base_technology_category', 'province',
                         'headquarters', 'email', 'phone', 'fax', 'website', 'company_code', 'tax_code', 'type', 'founded',
                         'founder', 'founder_phone', 'founder_email', 'founder_address', 'industry',
                         'tax_information', 'company_branch', 'representative_office', 'TRC_number',

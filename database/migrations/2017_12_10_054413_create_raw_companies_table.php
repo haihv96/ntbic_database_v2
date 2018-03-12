@@ -18,7 +18,7 @@ class CreateRawCompaniesTable extends Migration
             $table->string('url', 500)->unique();
             $table->text('name');
             $table->string('last_update')->nullable();
-            $table->text('technology_category')->nullable();
+            $table->text('base_technology_category')->nullable();
             $table->string('province')->nullable();
             $table->text('headquarters')->nullable();
             $table->string('email')->nullable();

@@ -53,7 +53,7 @@ class Company extends Model implements HasMedia
             'url' => 'Source url',
             'name' => 'Name',
             'last_update' => 'Last update',
-            'technology_category' => 'Technology category',
+            'base_technology_category_id' => 'Base Technology category',
             'province' => 'Province',
             'headquarters' => 'Headquarters',
             'email' => 'Email',

@@ -53,4 +53,7 @@
             </div>
         </a>
     </td>
+    <td>
+        @include('management.raw-companies.transfer', ['ids' => $record->id])
+    </td>
 </tr>
