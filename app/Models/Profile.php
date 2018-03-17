@@ -68,13 +68,17 @@ class Profile extends Model implements HasMediaConversions
     {
         return Province::select('id', 'name')->get()->mapWithKeys(function ($entry) {
             return [$entry->id => $entry->name];
-        })->toArray();
+        })->sortBy(function ($value, $key) {
+            return $key;
+        })->all();
     }
 
     public function getAcademicTitlesAttribute()
     {
         return AcademicTitle::select('id', 'name')->get()->mapWithKeys(function ($entry) {
             return [$entry->id => $entry->name];
-        })->toArray();
+        })->sortBy(function ($value, $key) {
+            return $key;
+        })->all();
     }
 }
