@@ -12,4 +12,9 @@ Route::group(['prefix' => 'management', 'namespace' => 'Management'], function (
     Route::post('raw-patents/transfer/{ids}', 'RawPatentController@transfer')->name('raw-patents.transfer');
     Route::resource('raw-projects', 'RawProjectController');
     Route::post('raw-projects/transfer/{ids}', 'RawProjectController@transfer')->name('raw-projects.transfer');
+    Route::resource('profiles', 'ProfileController');
+    Route::resource('patents', 'PatentController');
+    Route::resource('projects', 'ProjectController');
+    Route::resource('products', 'ProductController');
+    Route::resource('companies', 'CompanyController');
 });

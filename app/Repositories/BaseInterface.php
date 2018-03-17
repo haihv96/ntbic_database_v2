@@ -1,10 +1,9 @@
 <?php
+
 namespace App\Repositories;
 
 interface BaseInterface
 {
-    public function newModel();
-
     public function all();
 
     public function lists($column, $key = null);
@@ -36,4 +35,6 @@ interface BaseInterface
     public function delete($id);
 
     public function truncate();
+
+    public function join(...$params);
 }

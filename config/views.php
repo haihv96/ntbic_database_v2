@@ -65,6 +65,18 @@ return [
                 'delete',
                 'transfer'
             ]
+        ],
+        'profiles' => [
+            'ths' => [
+                'Image',
+                'Name',
+                'Agency',
+                'Birthday',
+                'Research for',
+                'view',
+                'edit',
+                'delete',
+            ]
         ]
     ]
 ];

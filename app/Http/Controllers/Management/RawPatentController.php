@@ -14,13 +14,13 @@ class RawPatentController extends RecordController
         $patentTypeRepository;
 
     public function __construct(
-        RawPatentInterface $rawProfileRepository,
+        RawPatentInterface $rawPatentRepository,
         PatentTypeInterface $patentTypeRepository,
         BaseTechnologyCategoryInterface $baseTechnologyCategoryRepository
     )
     {
         $this->baseTechnologyCategoryRepository = $baseTechnologyCategoryRepository;
-        $this->recordRepository = $rawProfileRepository;
+        $this->recordRepository = $rawPatentRepository;
         $this->patentTypeRepository = $patentTypeRepository;
         $this->viewIndex = 'management.raw-patents.index';
         $this->viewRecords = 'management.raw-patents.records';
@@ -36,7 +36,7 @@ class RawPatentController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids);
+        return $this->transferRecord($ids, ['image']);
     }
 
     public function transferToRecordModel($record)

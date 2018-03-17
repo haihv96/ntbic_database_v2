@@ -116,8 +116,8 @@ abstract class BaseRepository implements BaseInterface
         return call_user_func_array([$this->model, $method], $args);
     }
 
-    public function newModel()
+    public function join(...$params)
     {
-        return $this->model;
+        return $this->model->join(...$params);
     }
 }

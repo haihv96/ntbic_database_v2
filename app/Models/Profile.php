@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\Media;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Profile extends Model
+class Profile extends Model implements HasMediaConversions
 {
     use HasMediaTrait;
 
@@ -22,8 +24,17 @@ class Profile extends Model
         'agency_address',
         'research_for',
         'research_joined',
-        'research_results'
+        'research_results',
     ];
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+            ->width(368)
+            ->height(232)
+            ->sharpen(10)
+            ->performOnCollections('avatar');
+    }
 
     public function attrNames()
     {
@@ -31,7 +42,8 @@ class Profile extends Model
             'url' => 'Source url',
             'studies_or_papers' => 'Studies or papers',
             'name' => 'Name',
-            'academic_title' => 'Academic_title',
+            'province' => 'Province',
+            'academic_title' => 'Academic title',
             'birthday' => 'Birthday',
             'specialization' => 'Specialization',
             'agency' => 'Agency',
@@ -50,5 +62,19 @@ class Profile extends Model
     public function academicTitle()
     {
         return $this->belongsTo(AcademicTitle::class, 'academic_title_id');
+    }
+
+    public function getProvincesAttribute()
+    {
+        return Province::select('id', 'name')->get()->mapWithKeys(function ($entry) {
+            return [$entry->id => $entry->name];
+        })->toArray();
+    }
+
+    public function getAcademicTitlesAttribute()
+    {
+        return AcademicTitle::select('id', 'name')->get()->mapWithKeys(function ($entry) {
+            return [$entry->id => $entry->name];
+        })->toArray();
     }
 }

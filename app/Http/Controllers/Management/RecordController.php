@@ -11,7 +11,6 @@ class RecordController extends Controller
 {
     protected $recordRepository = null;
     protected $transferToRecordModel = null;
-
     protected $perPage = 10;
 
     protected $viewIndex = null;
@@ -29,35 +28,41 @@ class RecordController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $customIndexQuery = method_exists($this, 'customIndexQuery') ?
+            $this->customIndexQuery($search) : $this->recordRepository;
         if ($request->ajax()) {
             return response()->json([
                 'data' => view($this->viewRecords, [
-                    'records' => $this->recordRepository
-                        ->where('name', 'like', "%$search%")
+                    'records' => $customIndexQuery
                         ->paginate($this->perPage)
                 ])->render(),
             ], 200);
         } else {
             return view($this->viewIndex, [
-                'records' => $this->recordRepository->paginate($this->perPage)
+                'records' => $customIndexQuery
+                    ->paginate($this->perPage)
             ]);
         }
     }
 
     public function show($id)
     {
+        $customShowQuery = method_exists($this, 'customShowQuery') ?
+            $this->customShowQuery($id) : $this->recordRepository;
         return response()->json([
             'data' => view($this->viewShow, [
-                'record' => $this->recordRepository->find($id)
+                'record' => $customShowQuery
             ])->render(),
         ], 200);
     }
 
     public function edit($id)
     {
+        $customEditQuery = method_exists($this, 'customEditQuery') ?
+            $this->customEditQuery($id) : $this->recordRepository->find($id);
         return response()->json([
             'data' => view($this->viewEdit, [
-                'record' => $this->recordRepository->find($id)
+                'record' => $customEditQuery
             ])->render(),
         ], 200);
     }
@@ -65,10 +70,12 @@ class RecordController extends Controller
     public function updateRecord($validUpdateRequest, $id)
     {
         try {
-            $record = $this->recordRepository->update($id, $validUpdateRequest->all());
+            $this->recordRepository->update($id, $validUpdateRequest->all());
+            $customUpdatedQuery = method_exists($this, 'customUpdatedQuery') ?
+                $this->customUpdatedQuery($id) : $this->recordRepository->find($id);
             return response()->json([
                 'data' => view($this->viewRecord, [
-                    'record' => $record
+                    'record' => $customUpdatedQuery
                 ])->render(),
                 'message' => $this->updateSuccessMessage
             ], 200);
@@ -82,22 +89,27 @@ class RecordController extends Controller
 
     public function destroy($ids)
     {
-        try {
-            $ids === 'all' ? $this->recordRepository->truncate() :
-                $this->recordRepository->delete(json_decode($ids));
-            return response()->json([
-                'data' => $ids,
-                'message' => $this->destroySuccessMessage
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'data' => null,
-                'message' => $this->destroyErrorMessage
-            ], 500);
+        $records = ($ids === 'all' ? $this->recordRepository->all() :
+            $this->recordRepository->whereIn('id', json_decode($ids))->get());
+        foreach ($records as $record) {
+            try {
+                DB::beginTransaction();
+                $record->delete();
+                DB::commit();
+            } catch (Exception $e) {
+                return response()->json([
+                    'data' => null,
+                    'message' => $this->destroyErrorMessage
+                ], 500);
+            }
         }
+        return response()->json([
+            'data' => $ids,
+            'message' => $this->destroySuccessMessage
+        ], 200);
     }
 
-    public function transferRecord($ids)
+    public function transferRecord($ids, $medias = false)
     {
         $records = ($ids === 'all' ?
             $this->recordRepository->all() :
@@ -107,6 +119,7 @@ class RecordController extends Controller
                 DB::beginTransaction();
                 $transferTo = $this->transferToRecordModel($record);
                 $transferTo->save();
+                $medias && $this->transferMedia($record, $transferTo, $medias);
                 $record->delete();
                 DB::commit();
             } catch (Exception $e) {
@@ -121,5 +134,14 @@ class RecordController extends Controller
             'data' => null,
             'message' => $this->transferSuccessMessage
         ], 200);
+    }
+
+    private function transferMedia($record, $transferTo, $medias)
+    {
+        foreach ($medias as $mediaName) {
+            foreach ($record->getMedia($mediaName) as $recordMedia) {
+                $transferTo->addMedia($recordMedia->getPath())->toMediaCollection($mediaName);
+            }
+        }
     }
 }

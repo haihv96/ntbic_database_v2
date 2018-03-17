@@ -90,7 +90,7 @@ $(document).ready(function () {
     modalContainer.html($(this).find('.modal-content').html());
   });
 
-  // Submit form ajax with model
+  // Submit form ajax with model form-ajax
   BODY.on('submit', 'form.form-ajax', function (e) {
     e.preventDefault();
     const formObject = new Form($(this));

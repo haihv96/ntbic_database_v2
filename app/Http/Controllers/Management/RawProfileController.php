@@ -28,6 +28,7 @@ class RawProfileController extends RecordController
         $this->viewEdit = 'management.raw-profiles.edit';
     }
 
+
     public function update(UpdateRawProfile $validUpdateRequest, $id)
     {
         return $this->updateRecord($validUpdateRequest, $id);
@@ -35,7 +36,7 @@ class RawProfileController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids);
+        return $this->transferRecord($ids, ['avatar']);
     }
 
     public function transferToRecordModel($record)

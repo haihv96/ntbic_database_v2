@@ -63,30 +63,34 @@
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-diamond"></i>
-                    <span class="title">Ntbic Home</span>
+                    <span class="title">Transfer Data</span>
                     <span class="selected"></span>
                     <span class="arrow open"></span>
                 </a>
                 <ul class="sub-menu">
-
-                    <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
-                            <span class="title">Roles</span>
+                    <li class="nav-item">
+                        <a href="{{route('profiles.index')}}" class="nav-link">
+                            <span class="title">Profiles</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link ">
-                            <span class="title">Permissions</span>
+                        <a href="{{route('projects.index')}}" class="nav-link ">
+                            <span class="title">Projects</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link ">
-                            <span class="title">User Has Roles</span>
+                        <a href="{{route('patents.index')}}" class="nav-link ">
+                            <span class="title">Patents</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link ">
-                            <span class="title">User Has Permissions</span>
+                        <a href="{{route('products.index')}}" class="nav-link ">
+                            <span class="title">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('companies.index')}}" class="nav-link ">
+                            <span class="title">Companies</span>
                         </a>
                     </li>
                 </ul>
