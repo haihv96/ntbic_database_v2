@@ -77,6 +77,18 @@ return [
                 'edit',
                 'delete',
             ]
-        ]
+        ],
+        'companies' => [
+            'ths' => [
+                'Logo',
+                'Name',
+                'Technology category',
+                'Headquarters',
+                'Province',
+                'view',
+                'edit',
+                'delete',
+            ]
+        ],
     ]
 ];

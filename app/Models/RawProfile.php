@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\Media;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class RawProfile extends Model implements HasMediaConversions
+class RawProfile extends BaseModel implements HasMediaConversions
 {
     use HasMediaTrait;
 

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class BaseTechnologyCategory extends Model
+class BaseTechnologyCategory extends BaseModel
 {
     protected $table = 'base_technology_categories';
     protected $fillable = [

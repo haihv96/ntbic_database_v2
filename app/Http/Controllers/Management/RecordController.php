@@ -48,7 +48,7 @@ class RecordController extends Controller
     public function show($id)
     {
         $customShowQuery = method_exists($this, 'customShowQuery') ?
-            $this->customShowQuery($id) : $this->recordRepository;
+            $this->customShowQuery($id) : $this->recordRepository->find($id);
         return response()->json([
             'data' => view($this->viewShow, [
                 'record' => $customShowQuery

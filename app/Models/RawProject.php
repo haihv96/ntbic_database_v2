@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class RawProject extends Model
+class RawProject extends BaseModel
 {
     protected $table = 'raw_projects';
 

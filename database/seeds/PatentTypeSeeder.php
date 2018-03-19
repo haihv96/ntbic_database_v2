@@ -13,7 +13,7 @@ class PatentTypeSeeder extends Seeder
     public function run()
     {
         $names = [
-            'Lựa chọn', 'Sáng chế', 'Phát minh', 'Giải pháp hữu ích'
+            'Lựa chọn', 'Sáng chế', 'Phát minh', 'Giải pháp hữu ích', 'Khác'
         ];
         foreach ($names as $name) {
             PatentType::create(['name' => $name, 'normalize' => strNormalize($name)]);

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class PatentType extends Model
+class PatentType extends BaseModel
 {
     protected $table = 'patent_types';
     protected $fillable = [

@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\Media;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Profile extends Model implements HasMediaConversions
+class Profile extends BaseModel implements HasMediaConversions
 {
     use HasMediaTrait;
 
@@ -62,15 +61,6 @@ class Profile extends Model implements HasMediaConversions
     public function academicTitle()
     {
         return $this->belongsTo(AcademicTitle::class, 'academic_title_id');
-    }
-
-    public function getProvincesAttribute()
-    {
-        return Province::select('id', 'name')->get()->mapWithKeys(function ($entry) {
-            return [$entry->id => $entry->name];
-        })->sortBy(function ($value, $key) {
-            return $key;
-        })->all();
     }
 
     public function getAcademicTitlesAttribute()

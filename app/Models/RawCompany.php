@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class RawCompany extends Model implements HasMedia
+class RawCompany extends BaseModel implements HasMedia
 {
     use HasMediaTrait;
 

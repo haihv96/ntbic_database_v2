@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class AcademicTitle extends Model
+class AcademicTitle extends BaseModel
 {
     protected $table = 'academic_titles';
     protected $fillable = [

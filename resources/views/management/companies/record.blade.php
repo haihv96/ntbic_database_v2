@@ -11,7 +11,7 @@
     </td>
     <td width="30%">
         <a href="#show-record" data-toggle="modal" class="send-request bold"
-           data-url="{{route('raw-companies.show', ['id' => $record->id])}}"
+           data-url="{{route('companies.show', ['id' => $record->id])}}"
            data-method="GET">
             {{$record->name}}
         </a>
@@ -27,14 +27,14 @@
     </td>
     <td>
         <a href="#show-record" data-toggle="modal" class="send-request font-dark btn-sm"
-           data-url="{{route('raw-companies.show', ['id' => $record->id])}}"
+           data-url="{{route('companies.show', ['id' => $record->id])}}"
            data-method="GET">
             <i class="fa fa-eye"></i>
         </a>
     </td>
     <td>
         <a href="#edit-record" data-toggle="modal" class="send-request font-green-junger btn-sm"
-           data-url="{{route('raw-companies.edit', ['id' => $record->id])}}"
+           data-url="{{route('companies.edit', ['id' => $record->id])}}"
            data-method="GET">
             <i class="fa fa-pencil"></i>
         </a>
@@ -43,7 +43,7 @@
         <a href="#delete-record" data-toggle="modal" class="request-client-modal font-red btn-sm">
             <i class="fa fa-trash"></i>
             <div class="modal-content" hidden>
-                @component('management.raw-companies.helpers.form_delete', [
+                @component('management.companies.helpers.form_delete', [
                     'ids' => $record->id
                 ])
                     @slot('body')
@@ -52,8 +52,5 @@
                 @endcomponent
             </div>
         </a>
-    </td>
-    <td>
-        @include('management.raw-companies.transfer', ['ids' => $record->id])
     </td>
 </tr>

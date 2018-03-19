@@ -26,6 +26,15 @@ use App\Repositories\RawCompany\RawCompanyRepository;
 
 use App\Repositories\Profile\ProfileInterface;
 use App\Repositories\Profile\ProfileRepository;
+use App\Repositories\Project\ProjectInterface;
+use App\Repositories\Project\ProjectRepository;
+use App\Repositories\Patent\PatentInterface;
+use App\Repositories\Patent\PatentRepository;
+use App\Repositories\Company\CompanyInterface;
+use App\Repositories\Company\CompanyRepository;
+use App\Repositories\Product\ProductInterface;
+use App\Repositories\Product\ProductRepository;
+
 use App\Repositories\AcademicTitle\AcademicTitleInterface;
 use App\Repositories\AcademicTitle\AcademicTitleRepository;
 use App\Repositories\Province\ProvinceInterface;
@@ -59,6 +68,10 @@ class AppServiceProvider extends ServiceProvider
         App::bind(RawCompanyInterface::class, RawCompanyRepository::class);
 
         App::bind(ProfileInterface::class, ProfileRepository::class);
+        App::bind(PatentInterface::class, PatentRepository::class);
+        App::bind(ProjectInterface::class, ProjectRepository::class);
+        App::bind(ProductInterface::class, ProductRepository::class);
+        App::bind(CompanyInterface::class, CompanyRepository::class);
 
         App::bind(AcademicTitleInterface::class, AcademicTitleRepository::class);
         App::bind(ProvinceInterface::class, ProvinceRepository::class);

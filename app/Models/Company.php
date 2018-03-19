@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
-class Company extends Model implements HasMedia
+class Company extends BaseModel implements HasMedia
 {
     use HasMediaTrait;
 
@@ -53,7 +52,7 @@ class Company extends Model implements HasMedia
             'url' => 'Source url',
             'name' => 'Name',
             'last_update' => 'Last update',
-            'base_technology_category_id' => 'Base Technology category',
+            'base_technology_category' => 'Base Technology category',
             'province' => 'Province',
             'headquarters' => 'Headquarters',
             'email' => 'Email',
