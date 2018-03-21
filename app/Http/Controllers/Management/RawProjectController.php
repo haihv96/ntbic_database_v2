@@ -44,13 +44,18 @@ class RawProjectController extends RecordController
         $transferTo = assignObject([
             'url',
             'name',
+            'project_code',
+            'start_date_invest',
+            'close_date',
+            'operator',
+            'author',
             'highlights',
             'description',
             'transfer_description',
             'results'
         ], $record, new Project);
 
-        $tcNormalize = strNormalize($record->technology_category);
+        $tcNormalize = strNormalize($record->specialization);
         $transferTo->specialization()->associate(
             $this->specializationRepository->whereRaw("INSTR('$tcNormalize',normalize)<>0")->first()
         );

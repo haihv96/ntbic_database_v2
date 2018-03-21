@@ -18,7 +18,7 @@ class CreateRawProjectsTable extends Migration
             $table->string('url', 500)->unique();
             $table->text('name');
             $table->string('project_code')->nullable();
-            $table->text('technology_category')->nullable();
+            $table->text('specialization')->nullable();
             $table->string('start_date_invest')->nullable();
             $table->string('close_date')->nullable();
             $table->text('operator')->nullable();

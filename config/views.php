@@ -90,5 +90,17 @@ return [
                 'delete',
             ]
         ],
+        'projects' => [
+            'ths' => [
+                'Name',
+                'Technology category',
+                'Project code',
+                'Author',
+                'Close date',
+                'view',
+                'edit',
+                'delete',
+            ]
+        ],
     ]
 ];

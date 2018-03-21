@@ -23,4 +23,13 @@ class BaseModel extends Model
             return $key;
         })->all();
     }
+
+    public function getSpecializationsAttribute()
+    {
+        return Specialization::select('id', 'name')->get()->mapWithKeys(function ($entry) {
+            return [$entry->id => $entry->name];
+        })->sortBy(function ($value, $key) {
+            return $key;
+        })->all();
+    }
 }

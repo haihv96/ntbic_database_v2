@@ -38,7 +38,7 @@ class CrawlProjects extends Command
             $name = trim($projectXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/div[2]')->item(0)->nodeValue);
             $body = $projectXpath->query('//*[@class="archives_list"]/tbody')->item(0);
             $project_code = trim($projectXpath->query('./tr[1]/td[2]', $body)->item(0)->nodeValue);
-            $technology_category = trim($projectXpath->query('./tr[2]/td[2]', $body)->item(0)->nodeValue);
+            $specialization = trim($projectXpath->query('./tr[2]/td[2]', $body)->item(0)->nodeValue);
             $start_date_invest = trim($projectXpath->query('./tr[3]/td[2]', $body)->item(0)->nodeValue);
             $close_date = trim($projectXpath->query('./tr[4]/td[2]', $body)->item(0)->nodeValue);
             $operator = trim($projectXpath->query('./tr[5]/td[2]', $body)->item(0)->nodeValue);
@@ -59,7 +59,7 @@ class CrawlProjects extends Command
             $results = trim($projectXpath->query('./tr[4]/td/div[2]', $body3)->item(0)->nodeValue);
 
             RawProject::create(
-                compact('url', 'name', 'project_code', 'technology_category',
+                compact('url', 'name', 'project_code', 'specialization',
                     'start_date_invest', 'close_date', 'operator', 'author', 'highlights',
                     'description', 'transfer_description', 'results')
             );

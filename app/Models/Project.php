@@ -27,7 +27,7 @@ class Project extends BaseModel
             'url' => 'Source url',
             'name' => 'Name',
             'project_code' => 'Project code',
-            'technology_category' => 'Technology category',
+            'specialization' => 'Specialization',
             'start_date_invest' => 'Start date invest',
             'close_date' => 'Close date',
             'operator' => 'Operator',
