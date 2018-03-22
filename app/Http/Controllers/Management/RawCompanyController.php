@@ -82,7 +82,8 @@ class RawCompanyController extends RecordController
         );
 
         $transferTo->baseTechnologyCategory()->associate(
-            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize($record->base_technology_category))
+            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize($record->base_technology_category)) ??
+            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize('Công nghệ khác'))
         );
 
         $transferTo->path = strToPath($record->name);

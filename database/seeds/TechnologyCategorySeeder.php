@@ -16,7 +16,7 @@ class TechnologyCategorySeeder extends Seeder
         $names = [
             'Khoa học tự nhiên', 'khoa học kĩ thuật và công nghệ',
             'khoa học y - dược', 'Khoa học nông nghiệp',
-            'Khoa học xã hội', 'Khoa học nhân văn'
+            'Khoa học xã hội', 'Khoa học nhân văn', 'Khác'
         ];
         $specializations = [
             [
@@ -47,6 +47,9 @@ class TechnologyCategorySeeder extends Seeder
                 'Lịch sử và khảo cổ học', 'Ngôn ngữ học và văn học', 'Triết học, đạo đức học và tôn giáo',
                 'Nghệ thuật', 'Khoa học nhân văn khác'
             ],
+            [
+                'Khác'
+            ]
         ];
         foreach ($names as $key => $name) {
             $tech = TechnologyCategory::create(['name' => $name, 'normalize' => strNormalize($name)]);

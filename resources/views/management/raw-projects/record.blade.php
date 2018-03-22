@@ -13,7 +13,7 @@
         </a>
     </td>
     <td>
-        {{$record->technology_category}}
+        {{$record->specialization}}
     </td>
     <td>
         {{$record->project_code}}

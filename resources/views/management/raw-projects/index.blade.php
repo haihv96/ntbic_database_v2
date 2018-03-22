@@ -1,6 +1,6 @@
 @extends('layouts.dashboards.app')
 
-@section('title', 'Mangagement raw project data')
+@section('title', 'Mangagement raw projects data')
 @section('linkage.heading.first', 'Dashboard')
 @section('linkage.heading.second', 'Raw Projects')
 @section('linkage.heading.second.link', route('raw-projects.index'))

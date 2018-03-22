@@ -57,11 +57,13 @@ class RawPatentController extends RecordController
 
         $btcNormalize = strNormalize($record->base_technology_category);
         $transferTo->baseTechnologyCategory()->associate(
-            $this->baseTechnologyCategoryRepository->whereRaw("INSTR('$btcNormalize',normalize)<>0")->first()
+            $this->baseTechnologyCategoryRepository->whereRaw("INSTR('$btcNormalize',normalize)<>0")->first() ??
+            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize('Công nghệ khác'))
         );
 
         $transferTo->patentType()->associate(
-            $this->patentTypeRepository->whereRaw("INSTR('$btcNormalize',normalize)<>0")->first()
+            $this->patentTypeRepository->whereRaw("INSTR('$btcNormalize',normalize)<>0")->first() ??
+            $this->patentTypeRepository->findBy('normalize', strNormalize('Khác'))
         );
         $transferTo->path = strToPath($record->name);
         return $transferTo;

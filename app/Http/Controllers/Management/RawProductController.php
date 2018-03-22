@@ -47,7 +47,8 @@ class RawProductController extends RecordController
         ], $record, new Product);
 
         $transferTo->baseTechnologyCategory()->associate(
-            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize($record->base_technology_category))
+            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize($record->base_technology_category)) ??
+            $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize('Công nghệ khác'))
         );
         $transferTo->path = strToPath($record->name);
         return $transferTo;

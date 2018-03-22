@@ -55,9 +55,10 @@ class RawProjectController extends RecordController
             'results'
         ], $record, new Project);
 
-        $tcNormalize = strNormalize($record->specialization);
+        $tcNormalize = $record->specialization;
         $transferTo->specialization()->associate(
-            $this->specializationRepository->whereRaw("INSTR('$tcNormalize',normalize)<>0")->first()
+            $this->specializationRepository->whereRaw("INSTR('$tcNormalize', name)<>0")->first() ??
+            $this->specializationRepository->findBy('normalize', strNormalize('Khác'))
         );
 
         $transferTo->path = strToPath($record->name);
