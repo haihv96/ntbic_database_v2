@@ -1,19 +1,19 @@
 @extends('layouts.dashboards.app')
 
-@section('title', 'Mangagement raw products data')
+@section('title', 'Mangagement products data')
 @section('linkage.heading.first', 'Dashboard')
-@section('linkage.heading.second', 'Raw Products')
-@section('linkage.heading.second.link', route('raw-products.index'))
+@section('linkage.heading.second', 'Products')
+@section('linkage.heading.second.link', route('products.index'))
 @section('page_title')
     <i class="fa fa-database"></i>
-    Raw Products Management
+    Products Management
 @endsection
 @section('container')
-    <div class="portlet light bordered raw-products">
+    <div class="portlet light bordered products">
         <div class="portlet-title">
             <div class="caption font-dark">
                 <i class="fa fa-table"></i>
-                <span class="caption-subject bold uppercase"> Raw Product List</span>
+                <span class="caption-subject bold uppercase"> Product List</span>
             </div>
         </div>
         <div class="portlet-body table-list">
@@ -22,17 +22,15 @@
                 <div class="row toolkit">
                     <div class="col-xs-6">
                         <div class="row">
-                            @include('management.raw-products.helpers.delete_selected')
-                            @include('management.raw-products.helpers.transfer_selected')
+                            @include('management.products.helpers.delete_selected')
                         </div>
                     </div>
                     <div class="col-xs-6">
                         @if($records->count())
-                            @include('management.raw-products.helpers.delete_all')
-                            @include('management.raw-products.helpers.transfer_all')
+                            @include('management.products.helpers.delete_all')
                         @endif
                         <div class="form-search-in-table">
-                            {!! Form::open(['route' => 'raw-products.index', 'method' => 'get', 'class'=> 'search-in-table']) !!}
+                            {!! Form::open(['route' => 'products.index', 'method' => 'get', 'class'=> 'search-in-table']) !!}
                             {!! Form::token() !!}
                             Search:
                             {!! Form::text('search',null, ['class'=>'form-control input-sm input-small input-inline']) !!}
@@ -43,33 +41,27 @@
                     </div>
                 </div>
                 <div id="records" class="ajax-table">
-                    @include('management.raw-products.records', ['records' => $records])
+                    @include('management.products.records', ['records' => $records])
                 </div>
             </div>
         </div>
     </div>
     @include('shared.modal', [
         'id' => 'show-record',
-        'title' => 'View Raw Product',
+        'title' => 'View Product',
         'titleBg' => 'blue-dark',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'edit-record',
-        'title' => 'Edit Raw Product',
+        'title' => 'Edit Product',
         'titleBg' => 'blue-steel',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'delete-record',
-        'title' => 'Delete Raw Product',
+        'title' => 'Delete Product',
         'titleBg' => 'red-haze',
-        'class' => 'modal-dialog'
-    ])
-    @include('shared.modal', [
-        'id' => 'transfer-record',
-        'title' => 'Transfer Raw Product',
-        'titleBg' => 'blue-steel',
         'class' => 'modal-dialog'
     ])
 @endsection

@@ -13,7 +13,7 @@
         </a>
     </td>
     <td>
-        {{$record->technology_category}}
+        {{$record->base_technology_category}}
     </td>
     <td>
         {{$record->patent_code}}

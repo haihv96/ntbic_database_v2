@@ -25,7 +25,7 @@ class Product extends BaseModel implements HasMedia
         return [
             'url' => 'Source url',
             'name' => 'Name',
-            'base_technology_category_id' => 'Base Technology category',
+            'base_technology_category' => 'Base Technology category',
             'highlights' => 'Highlights',
             'description' => 'Description',
             'transfer_description' => 'Transfer description',

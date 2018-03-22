@@ -102,5 +102,28 @@ return [
                 'delete',
             ]
         ],
+        'patents' => [
+            'ths' => [
+                'Name',
+                'Technology category',
+                'Patent code',
+                'Author',
+                'Public date',
+                'view',
+                'edit',
+                'delete',
+            ]
+        ],
+        'products' => [
+            'ths' => [
+                'Thumb',
+                'Name',
+                'Technology category',
+                'Highlights',
+                'view',
+                'edit',
+                'delete',
+            ]
+        ],
     ]
 ];
