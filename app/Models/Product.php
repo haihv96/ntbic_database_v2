@@ -33,6 +33,14 @@ class Product extends BaseModel implements HasMedia
         ];
     }
 
+    public function esIndexing()
+    {
+        $this->baseEsIndexing('products', 'products', [
+            'name', 'base_technology_category_id', 'highlights',
+            'description', 'transfer_description', 'results'
+        ]);
+    }
+
     public function baseTechnologyCategory()
     {
         return $this->belongsTo(BaseTechnologyCategory::class);

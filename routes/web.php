@@ -1,5 +1,7 @@
 <?php
 
+use Elasticsearch\ClientBuilder;
+
 Route::group(['prefix' => 'management', 'namespace' => 'Management'], function () {
     Route::resource('dashboards', 'DashboardController', ['only' => 'index']);
     Route::resource('raw-profiles', 'RawProfileController');
@@ -17,4 +19,21 @@ Route::group(['prefix' => 'management', 'namespace' => 'Management'], function (
     Route::resource('projects', 'ProjectController');
     Route::resource('products', 'ProductController');
     Route::resource('companies', 'CompanyController');
+});
+
+Route::get('test', function(){
+    $params = [
+        'index' => 'profiles',
+        'type' => 'profiles',
+        'body' => [
+            'query' => [
+                'match' => [
+                    'name' => 'kim ánh'
+                ]
+            ]
+        ]
+    ];
+
+    $results = ClientBuilder::create()->build()->search($params);
+    dd($results);
 });

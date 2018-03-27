@@ -39,6 +39,14 @@ class Project extends BaseModel
         ];
     }
 
+    public function esIndexing()
+    {
+        $this->baseEsIndexing('projects', 'projects', [
+            'name', 'project_code', 'specialization_id', 'operator',
+            'author', 'highlights', 'description', 'transfer_description', 'results'
+        ]);
+    }
+
     public function specialization()
     {
         return $this->belongsTo(Specialization::class);

@@ -119,6 +119,7 @@ class RecordController extends Controller
                 DB::beginTransaction();
                 $transferTo = $this->transferToRecordModel($record);
                 $transferTo->save();
+                $transferTo->esIndexing();
                 $medias && $this->transferMedia($record, $transferTo, $medias);
                 $record->delete();
                 DB::commit();

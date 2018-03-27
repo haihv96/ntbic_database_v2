@@ -85,6 +85,16 @@ class Company extends BaseModel implements HasMedia
         ];
     }
 
+    public function esIndexing()
+    {
+        $this->baseEsIndexing('companies', 'companies', [
+            'name', 'base_technology_category_id', 'province_id', 'headquarters',
+            'company_code', 'founder', 'industry', 'research_for',
+            'technology_highlight', 'technology_using',
+            'technology_transfer', 'results', 'products'
+        ]);
+    }
+
     public function baseTechnologyCategory()
     {
         return $this->belongsTo(BaseTechnologyCategory::class);

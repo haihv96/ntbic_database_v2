@@ -44,6 +44,16 @@ class Patent extends BaseModel implements HasMedia
         ];
     }
 
+    public function esIndexing()
+    {
+        $this->baseEsIndexing('patents', 'patents', [
+            'name', 'patent_code', 'base_technology_category_id',
+            'patent_type_id', 'owner', 'author', 'highlights',
+            'description', 'market_application'
+        ]);
+    }
+
+
     public function baseTechnologyCategory()
     {
         return $this->belongsTo(BaseTechnologyCategory::class);

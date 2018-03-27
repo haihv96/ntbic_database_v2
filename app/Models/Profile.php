@@ -53,6 +53,14 @@ class Profile extends BaseModel implements HasMediaConversions
         ];
     }
 
+    public function esIndexing()
+    {
+        $this->baseEsIndexing('profiles', 'profiles', [
+            'name', 'province_id', 'academic_title_id', 'specialization',
+            'agency', 'research_for', 'research_joined', 'research_results'
+        ]);
+    }
+
     public function province()
     {
         return $this->belongsTo(Province::class, 'province_id');
