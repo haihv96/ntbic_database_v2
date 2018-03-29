@@ -15,7 +15,7 @@ class CreateEsCompaniesIndex extends Migration
     public function up()
     {
         $this->esClient->indices()->create([
-            'index' => 'profiles',
+            'index' => 'companies',
             'body' => [
                 'settings' => [
                     'number_of_shards' => 1,
@@ -39,7 +39,7 @@ class CreateEsCompaniesIndex extends Migration
 
                 ],
                 'mappings' => [
-                    'profiles' => [
+                    'companies' => [
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],

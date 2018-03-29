@@ -36,7 +36,7 @@ class RawPatentController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids, ['image']);
+        return $this->transferData($ids, ['image']);
     }
 
     public function transferToRecordModel($record)

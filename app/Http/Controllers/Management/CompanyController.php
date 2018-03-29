@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Management;
 
 use App\Repositories\Company\CompanyInterface;
-use App\Http\Requests\UpdateProfile;
+use App\Http\Requests\UpdateCompany;
+use Closure;
 
 class CompanyController extends RecordController
 {
@@ -76,8 +77,17 @@ class CompanyController extends RecordController
             ->first();
     }
 
-    public function update(UpdateProfile $validUpdateRequest, $id)
+    public function update(UpdateCompany $validUpdateRequest, $id)
     {
-        return $this->updateRecord($validUpdateRequest, $id);
+        return $this->updateRecord($validUpdateRequest, $id, function($record){
+            $record->esUpdate();
+        });
+    }
+
+    public function destroy($ids, Closure $callback = null)
+    {
+        return parent::destroy($ids, function($record){
+            $record->esDelete();
+        });
     }
 }

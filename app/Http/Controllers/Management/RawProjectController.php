@@ -36,7 +36,7 @@ class RawProjectController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids);
+        return $this->transferData($ids);
     }
 
     public function transferToRecordModel($record)

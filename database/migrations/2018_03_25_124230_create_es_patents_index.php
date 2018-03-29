@@ -15,7 +15,7 @@ class CreateEsPatentsIndex extends Migration
     public function up()
     {
         $this->esClient->indices()->create([
-            'index' => 'profiles',
+            'index' => 'patents',
             'body' => [
                 'settings' => [
                     'number_of_shards' => 1,
@@ -39,7 +39,7 @@ class CreateEsPatentsIndex extends Migration
 
                 ],
                 'mappings' => [
-                    'profiles' => [
+                    'patents' => [
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],

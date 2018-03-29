@@ -34,7 +34,7 @@ class CreateEsProductsIndex extends Migration
 
                 ],
                 'mappings' => [
-                    'profiles' => [
+                    'products' => [
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],

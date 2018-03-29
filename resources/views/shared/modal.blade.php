@@ -1,4 +1,4 @@
-<div class="modal fade shared-modal" id="{{$id}}" aria-hidden="true">
+<div class="modal fade shared-modal" id="{{$id}}" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog {{isset($class) ? $class : null}}">
         <div class="modal-content">
             <div class="modal-header bg-{{isset($titleBg) ? $titleBg : null}}">

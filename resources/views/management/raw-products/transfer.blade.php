@@ -8,7 +8,7 @@
     'data-reloadable' => true
     ])
 !!}
-<button type="submit" class="send-request btn btn-primary btn-sm">
+<button type="submit" class="submit-form-ajax btn btn-primary btn-sm">
     <i class="fa fa-sign-out"></i>
 </button>
 {!! Form::close() !!}

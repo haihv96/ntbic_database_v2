@@ -36,7 +36,7 @@ class RawProfileController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids, ['avatar']);
+        return $this->transferData($ids, ['avatar']);
     }
 
     public function transferToRecordModel($record)

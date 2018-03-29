@@ -26,6 +26,15 @@ class Profile extends BaseModel implements HasMediaConversions
         'research_results',
     ];
 
+    protected $esIndexName = 'profiles';
+
+    protected $esTypeName = 'profiles';
+
+    protected $esAttributes = [
+        'name', 'province_id', 'academic_title_id', 'specialization',
+        'agency', 'research_for', 'research_joined', 'research_results'
+    ];
+
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')
@@ -51,14 +60,6 @@ class Profile extends BaseModel implements HasMediaConversions
             'research_joined' => 'Research joined',
             'research_results' => 'Research results'
         ];
-    }
-
-    public function esIndexing()
-    {
-        $this->baseEsIndexing('profiles', 'profiles', [
-            'name', 'province_id', 'academic_title_id', 'specialization',
-            'agency', 'research_for', 'research_joined', 'research_results'
-        ]);
     }
 
     public function province()

@@ -37,7 +37,7 @@ class RawCompanyController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids, ['logo']);
+        return $this->transferData($ids, ['logo']);
     }
 
     public function transferToRecordModel($record)

@@ -15,7 +15,7 @@ class CreateEsProjectsIndex extends Migration
     public function up()
     {
         $this->esClient->indices()->create([
-            'index' => 'profiles',
+            'index' => 'projects',
             'body' => [
                 'settings' => [
                     'number_of_shards' => 1,
@@ -39,7 +39,7 @@ class CreateEsProjectsIndex extends Migration
 
                 ],
                 'mappings' => [
-                    'profiles' => [
+                    'projects' => [
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],

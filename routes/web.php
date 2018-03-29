@@ -21,16 +21,19 @@ Route::group(['prefix' => 'management', 'namespace' => 'Management'], function (
     Route::resource('companies', 'CompanyController');
 });
 
-Route::get('test', function(){
+Route::get('test', function () {
     $params = [
-        'index' => 'profiles',
-        'type' => 'profiles',
+        'index' => 'patents',
+        'type' => 'patents',
         'body' => [
             'query' => [
                 'match' => [
-                    'name' => 'kim ánh'
+                    'highlights' => [
+                        'query' => 'tiet kiem',
+                        'operator' => 'and',
+                    ]
                 ]
-            ]
+            ],
         ]
     ];
 

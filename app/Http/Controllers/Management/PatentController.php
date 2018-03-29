@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Repositories\Patent\PatentInterface;
 use App\Http\Requests\UpdatePatent;
+use Closure;
 
 class PatentController extends RecordController
 {
@@ -68,6 +69,15 @@ class PatentController extends RecordController
 
     public function update(UpdatePatent $validUpdateRequest, $id)
     {
-        return $this->updateRecord($validUpdateRequest, $id);
+        return $this->updateRecord($validUpdateRequest, $id, function($record){
+            $record->esUpdate();
+        });
+    }
+
+    public function destroy($ids, Closure $callback = null)
+    {
+        return parent::destroy($ids, function($record){
+            $record->esDelete();
+        });
     }
 }

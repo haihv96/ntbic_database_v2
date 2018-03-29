@@ -21,6 +21,15 @@ class Project extends BaseModel
         'results'
     ];
 
+    protected $esIndexName = 'projects';
+
+    protected $esTypeName = 'projects';
+
+    protected $esAttributes =[
+        'name', 'project_code', 'specialization_id', 'operator',
+        'author', 'highlights', 'description', 'transfer_description', 'results'
+    ];
+
     public function attrNames()
     {
         return [
@@ -37,14 +46,6 @@ class Project extends BaseModel
             'transfer_description' => 'Transfer description',
             'results' => 'Results'
         ];
-    }
-
-    public function esIndexing()
-    {
-        $this->baseEsIndexing('projects', 'projects', [
-            'name', 'project_code', 'specialization_id', 'operator',
-            'author', 'highlights', 'description', 'transfer_description', 'results'
-        ]);
     }
 
     public function specialization()

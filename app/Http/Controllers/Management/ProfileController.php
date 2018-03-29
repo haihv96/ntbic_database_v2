@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Repositories\Profile\ProfileInterface;
 use App\Http\Requests\UpdateProfile;
+use Closure;
 
 class ProfileController extends RecordController
 {
@@ -57,6 +58,15 @@ class ProfileController extends RecordController
 
     public function update(UpdateProfile $validUpdateRequest, $id)
     {
-        return $this->updateRecord($validUpdateRequest, $id);
+        return $this->updateRecord($validUpdateRequest, $id, function($record){
+            $record->esUpdate();
+        });
+    }
+
+    public function destroy($ids, Closure $callback = null)
+    {
+        return parent::destroy($ids, function($record){
+            $record->esDelete();
+        });
     }
 }

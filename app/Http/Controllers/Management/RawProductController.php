@@ -32,7 +32,7 @@ class RawProductController extends RecordController
 
     public function transfer($ids)
     {
-        return $this->transferRecord($ids, ['thumb']);
+        return $this->transferData($ids, ['thumb']);
     }
 
     public function transferToRecordModel($record)

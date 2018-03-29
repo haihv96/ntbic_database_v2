@@ -20,6 +20,13 @@ class Product extends BaseModel implements HasMedia
         'results'
     ];
 
+    protected $esIndexName = 'products';
+    protected $esTypeName = 'products';
+    protected $esAttributes = [
+        'name', 'base_technology_category_id', 'highlights',
+        'description', 'transfer_description', 'results'
+    ];
+
     public function attrNames()
     {
         return [
@@ -31,14 +38,6 @@ class Product extends BaseModel implements HasMedia
             'transfer_description' => 'Transfer description',
             'results' => 'Results'
         ];
-    }
-
-    public function esIndexing()
-    {
-        $this->baseEsIndexing('products', 'products', [
-            'name', 'base_technology_category_id', 'highlights',
-            'description', 'transfer_description', 'results'
-        ]);
     }
 
     public function baseTechnologyCategory()

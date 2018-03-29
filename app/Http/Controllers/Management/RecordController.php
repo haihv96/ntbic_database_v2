@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Management;
 
+use Closure;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Mockery\Exception;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class RecordController extends Controller
 {
+    use TransferRecord;
     protected $recordRepository = null;
     protected $transferToRecordModel = null;
     protected $perPage = 10;
@@ -67,12 +69,14 @@ class RecordController extends Controller
         ], 200);
     }
 
-    public function updateRecord($validUpdateRequest, $id)
+    public function updateRecord($validUpdateRequest, $id, Closure $callback = null)
     {
         try {
-            $this->recordRepository->update($id, $validUpdateRequest->all());
+            $record = $this->recordRepository->find($id);
+            $record->update($validUpdateRequest->all());
+            $callback && $callback($record);
             $customUpdatedQuery = method_exists($this, 'customUpdatedQuery') ?
-                $this->customUpdatedQuery($id) : $this->recordRepository->find($id);
+                $this->customUpdatedQuery($id) : $record;
             return response()->json([
                 'data' => view($this->viewRecord, [
                     'record' => $customUpdatedQuery
@@ -87,11 +91,12 @@ class RecordController extends Controller
         }
     }
 
-    public function destroy($ids)
+    public function destroy($ids, Closure $callback = null)
     {
         $records = ($ids === 'all' ? $this->recordRepository->all() :
             $this->recordRepository->whereIn('id', json_decode($ids))->get());
         foreach ($records as $record) {
+            $callback && $callback($record);
             try {
                 DB::beginTransaction();
                 $record->delete();
@@ -107,42 +112,5 @@ class RecordController extends Controller
             'data' => $ids,
             'message' => $this->destroySuccessMessage
         ], 200);
-    }
-
-    public function transferRecord($ids, $medias = false)
-    {
-        $records = ($ids === 'all' ?
-            $this->recordRepository->all() :
-            $this->recordRepository->whereIn('id', json_decode($ids))->get());
-        foreach ($records as $record) {
-            try {
-                DB::beginTransaction();
-                $transferTo = $this->transferToRecordModel($record);
-                $transferTo->save();
-                $transferTo->esIndexing();
-                $medias && $this->transferMedia($record, $transferTo, $medias);
-                $record->delete();
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollback();
-                return response()->json([
-                    'data' => null,
-                    'message' => $this->transferErrorMessage
-                ], 500);
-            }
-        }
-        return response()->json([
-            'data' => null,
-            'message' => $this->transferSuccessMessage
-        ], 200);
-    }
-
-    private function transferMedia($record, $transferTo, $medias)
-    {
-        foreach ($medias as $mediaName) {
-            foreach ($record->getMedia($mediaName) as $recordMedia) {
-                $transferTo->addMedia($recordMedia->getPath())->toMediaCollection($mediaName);
-            }
-        }
     }
 }

@@ -13,7 +13,7 @@
         <div class="portlet-title">
             <div class="caption font-dark">
                 <i class="fa fa-table"></i>
-                <span class="caption-subject bold uppercase"> Raw Patent List</span>
+                <span class="caption-subject bold uppercase"> Patent List</span>
             </div>
         </div>
         <div class="portlet-body table-list">
@@ -48,19 +48,19 @@
     </div>
     @include('shared.modal', [
         'id' => 'show-record',
-        'title' => 'View Raw Patent',
+        'title' => 'View Patent',
         'titleBg' => 'blue-dark',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'edit-record',
-        'title' => 'Edit Raw Patent',
+        'title' => 'Edit Patent',
         'titleBg' => 'blue-steel',
         'class' => 'modal-lg modal-loadable modal-long'
     ])
     @include('shared.modal', [
         'id' => 'delete-record',
-        'title' => 'Delete Raw Patent',
+        'title' => 'Delete Patent',
         'titleBg' => 'red-haze',
         'class' => 'modal-dialog'
     ])

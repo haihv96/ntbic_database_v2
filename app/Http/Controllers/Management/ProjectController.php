@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Management;
 use App\Repositories\Project\ProjectInterface;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdateProject;
+use Closure;
 
 class ProjectController extends RecordController
 {
@@ -56,8 +57,18 @@ class ProjectController extends RecordController
             ->first();
     }
 
+
     public function update(UpdateProject $validUpdateRequest, $id)
     {
-        return $this->updateRecord($validUpdateRequest, $id);
+        return $this->updateRecord($validUpdateRequest, $id, function($record){
+            $record->esUpdate();
+        });
+    }
+
+    public function destroy($ids, Closure $callback = null)
+    {
+        return parent::destroy($ids, function($record){
+            $record->esDelete();
+        });
     }
 }

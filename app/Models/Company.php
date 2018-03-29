@@ -11,39 +11,24 @@ class Company extends BaseModel implements HasMedia
 
     protected $table = 'companies';
     protected $fillable = [
-        'url',
-        'name',
-        'last_update',
-        'base_technology_category_id',
-        'province_id',
-        'headquarters',
-        'email',
-        'phone',
-        'fax',
-        'website',
-        'company_code',
-        'tax_code',
-        'type',
-        'founded',
-        'founder',
-        'founder_phone',
-        'founder_email',
-        'founder_address',
-        'industry',
-        'tax_information',
-        'company_branch',
-        'representative_office',
-        'TRC_number',
-        'TRC_date',
-        'TRC_place',
-        'technology_rank',
-        'research_for',
-        'number_of_employees_research',
-        'technology_highlight',
-        'technology_using',
-        'technology_transfer',
-        'results',
-        'products'
+        'url', 'name', 'last_update', 'base_technology_category_id', 'province_id',
+        'headquarters', 'email', 'phone', 'fax', 'website', 'company_code',
+        'tax_code', 'type', 'founded', 'founder', 'founder_phone', 'founder_email',
+        'founder_address', 'industry', 'tax_information', 'company_branch',
+        'representative_office', 'TRC_number', 'TRC_date', 'TRC_place',
+        'technology_rank', 'research_for', 'number_of_employees_research',
+        'technology_highlight', 'technology_using', 'technology_transfer',
+        'results', 'products'
+    ];
+
+
+    protected $esIndexName = 'companies';
+    protected $esTypeName = 'companies';
+    protected $esAttributes = [
+        'name', 'base_technology_category_id', 'province_id', 'headquarters',
+        'company_code', 'founder', 'industry', 'research_for',
+        'technology_highlight', 'technology_using',
+        'technology_transfer', 'results', 'products'
     ];
 
     public function attrNames()
@@ -83,16 +68,6 @@ class Company extends BaseModel implements HasMedia
             'results' => 'Results',
             'products' => 'Products'
         ];
-    }
-
-    public function esIndexing()
-    {
-        $this->baseEsIndexing('companies', 'companies', [
-            'name', 'base_technology_category_id', 'province_id', 'headquarters',
-            'company_code', 'founder', 'industry', 'research_for',
-            'technology_highlight', 'technology_using',
-            'technology_transfer', 'results', 'products'
-        ]);
     }
 
     public function baseTechnologyCategory()

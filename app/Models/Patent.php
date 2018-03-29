@@ -25,6 +25,14 @@ class Patent extends BaseModel implements HasMedia
         'market_application'
     ];
 
+    protected $esIndexName = 'patents';
+    protected $esTypeName = 'patents';
+    protected $esAttributes = [
+        'name', 'patent_code', 'base_technology_category_id',
+        'patent_type_id', 'owner', 'author', 'highlights',
+        'description', 'market_application'
+    ];
+
     public function attrNames()
     {
         return [
@@ -43,16 +51,6 @@ class Patent extends BaseModel implements HasMedia
             'market_application' => 'Market application',
         ];
     }
-
-    public function esIndexing()
-    {
-        $this->baseEsIndexing('patents', 'patents', [
-            'name', 'patent_code', 'base_technology_category_id',
-            'patent_type_id', 'owner', 'author', 'highlights',
-            'description', 'market_application'
-        ]);
-    }
-
 
     public function baseTechnologyCategory()
     {
