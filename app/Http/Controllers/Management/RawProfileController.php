@@ -41,31 +41,16 @@ class RawProfileController extends RecordController
 
     public function transferToRecordModel($record)
     {
-        $transferTo = assignObject([
-            'url',
-            'studies_or_papers',
-            'name',
-            'birthday',
-            'specialization',
-            'agency',
-            'agency_address',
-            'research_for',
-            'research_joined',
-            'research_results'
-        ], $record, new Profile);
-
+        $transferTo = assignObject($record, new Profile);
         $transferTo->province()->associate(
             $this->provinceRepository->findBy('normalize', strNormalize($record->province)) ??
             $this->provinceRepository->findBy('normalize', strNormalize('Khác'))
         );
-
         $transferTo->academicTitle()->associate(
             $this->academicTitleRepository->findBy('normalize', strNormalize($record->academic_title)) ??
             $this->academicTitleRepository->findBy('normalize', strNormalize('Khác'))
         );
-
         $transferTo->path = strToPath($record->name);
-
         return $transferTo;
     }
 }

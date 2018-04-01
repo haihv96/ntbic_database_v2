@@ -98,11 +98,14 @@ $(document).ready(function () {
     const submitButton = new AppElement($(this).find('.submit-form-ajax'));
     const closeButton = new AppElement($(this).find('.close-modal'));
     formAjax.request(
-      function () {
+      () => {
         submitButton.defaultLoading();
+        this.disableSubmitButton = setInterval(() => {
+          $('.submit-form-ajax').prop('disabled', true);
+        });
         closeButton.disable();
       },
-      function (response) {
+      (response) => {
         $('.modal').modal('hide');
         if (formObject.element.data().hasOwnProperty('reloadable')) {
           new AppElement($('#records')).empty();
@@ -116,10 +119,13 @@ $(document).ready(function () {
         }
       },
       null,
-      function () {
+      () => {
         submitButton.reset();
         closeButton.reset();
-      }, true);
+        $('.submit-form-ajax').prop('disabled', false);
+        clearInterval(this.disableSubmitButton);
+      },
+      true);
   });
 });
 

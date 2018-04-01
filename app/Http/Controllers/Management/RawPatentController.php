@@ -41,20 +41,7 @@ class RawPatentController extends RecordController
 
     public function transferToRecordModel($record)
     {
-        $transferTo = assignObject([
-            'url',
-            'name',
-            'patent_code',
-            'public_date',
-            'provide_date',
-            'owner',
-            'author',
-            'highlights',
-            'description',
-            'content_can_be_transferred',
-            'market_application'
-        ], $record, new Patent);
-
+        $transferTo = assignObject($record, new Patent);
         $btcNormalize = strNormalize($record->base_technology_category);
         $transferTo->baseTechnologyCategory()->associate(
             $this->baseTechnologyCategoryRepository->whereRaw("INSTR('$btcNormalize',normalize)<>0")->first() ??

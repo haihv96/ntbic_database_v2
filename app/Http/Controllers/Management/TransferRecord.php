@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Management;
+
 use Illuminate\Support\Facades\DB;
 
 trait TransferRecord
 {
     public function transferData($ids, $medias = false)
     {
-        $records = ($ids === 'all' ?
-            $this->recordRepository->all() :
-            $this->recordRepository->whereIn('id', json_decode($ids))->get());
-        foreach ($records as $index => $record) {
+        $records = $this->recordRepository->getTransferData(json_decode($ids));
+        foreach ($records as $record) {
             try {
                 DB::beginTransaction();
                 $transferTo = $this->transferToRecordModel($record);

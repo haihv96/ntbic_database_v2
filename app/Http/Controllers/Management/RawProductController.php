@@ -37,14 +37,7 @@ class RawProductController extends RecordController
 
     public function transferToRecordModel($record)
     {
-        $transferTo = assignObject([
-            'url',
-            'name',
-            'highlights',
-            'description',
-            'transfer_description',
-            'results'
-        ], $record, new Product);
+        $transferTo = assignObject($record, new Product);
 
         $transferTo->baseTechnologyCategory()->associate(
             $this->baseTechnologyCategoryRepository->findBy('normalize', strNormalize($record->base_technology_category)) ??

@@ -41,20 +41,7 @@ class RawProjectController extends RecordController
 
     public function transferToRecordModel($record)
     {
-        $transferTo = assignObject([
-            'url',
-            'name',
-            'project_code',
-            'start_date_invest',
-            'close_date',
-            'operator',
-            'author',
-            'highlights',
-            'description',
-            'transfer_description',
-            'results'
-        ], $record, new Project);
-
+        $transferTo = assignObject($record, new Project);
         $tcNormalize = $record->specialization;
         $transferTo->specialization()->associate(
             $this->specializationRepository->whereRaw("INSTR('$tcNormalize', name)<>0")->first() ??

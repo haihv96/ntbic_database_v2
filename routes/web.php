@@ -29,7 +29,7 @@ Route::get('test', function () {
             'query' => [
                 'match' => [
                     'highlights' => [
-                        'query' => 'tiet kiem',
+                        'query' => 'may phat dien su dung nhien lieu khi',
                         'operator' => 'and',
                     ]
                 ]

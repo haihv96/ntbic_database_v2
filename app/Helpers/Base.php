@@ -18,10 +18,12 @@ function mbStrSplit($str)
     return preg_split('/(?<!^)(?!$)/u', $str);
 }
 
-function assignObject(array $attrs, $target, $source)
+function assignObject($target, $source)
 {
-    foreach ($attrs as $attr) {
-        $source[$attr] = $target[$attr];
+    $targetArray = $target->toArray();
+    unset($targetArray['id']);
+    foreach ($targetArray as $key => $value) {
+        $source[$key] = $value;
     }
 
     return $source;

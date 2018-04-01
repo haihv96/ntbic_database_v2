@@ -11,4 +11,13 @@ class RawProductRepository extends BaseRepository implements RawProductInterface
     {
         parent::__construct($rawProduct);
     }
+
+    public function getTransferData($ids)
+    {
+        $results = $ids ? $this->whereIn('id', $ids) : $this->model;
+        return $results->select(
+            'id', 'url', 'name', 'highlights', 'description',
+            'transfer_description', 'results'
+        )->get();
+    }
 }
