@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-
 Route::group(['namespace' => 'Api'], function () {
-    Route::resource('raw-profiles', 'RawProfileController');
+    Route::group(['namespace' => 'V1', 'prefix' => 'v1'], function () {
+        Route::resource('profiles', 'ProfileController');
+    });
 });

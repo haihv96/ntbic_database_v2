@@ -20,10 +20,9 @@ function mbStrSplit($str)
 
 function assignObject($target, $source)
 {
-    $targetArray = $target->toArray();
-    unset($targetArray['id']);
-    foreach ($targetArray as $key => $value) {
-        $source[$key] = $value;
+    $targetArray = $source->getFillable();
+    foreach ($targetArray as $value) {
+        $source[$value] = $target[$value];
     }
 
     return $source;

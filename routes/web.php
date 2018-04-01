@@ -1,7 +1,5 @@
 <?php
 
-use Elasticsearch\ClientBuilder;
-
 Route::group(['prefix' => 'management', 'namespace' => 'Management'], function () {
     Route::resource('dashboards', 'DashboardController', ['only' => 'index']);
     Route::resource('raw-profiles', 'RawProfileController');
@@ -19,24 +17,4 @@ Route::group(['prefix' => 'management', 'namespace' => 'Management'], function (
     Route::resource('projects', 'ProjectController');
     Route::resource('products', 'ProductController');
     Route::resource('companies', 'CompanyController');
-});
-
-Route::get('test', function () {
-    $params = [
-        'index' => 'patents',
-        'type' => 'patents',
-        'body' => [
-            'query' => [
-                'match' => [
-                    'highlights' => [
-                        'query' => 'may phat dien su dung nhien lieu khi',
-                        'operator' => 'and',
-                    ]
-                ]
-            ],
-        ]
-    ];
-
-    $results = ClientBuilder::create()->build()->search($params);
-    dd($results);
 });

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    public function getFillable()
+    {
+        return $this->fillable;
+    }
 
     public function collectEsAttrs()
     {

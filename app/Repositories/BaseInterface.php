@@ -37,4 +37,6 @@ interface BaseInterface
     public function truncate();
 
     public function join(...$params);
+
+    public function getTransferData($ids);
 }

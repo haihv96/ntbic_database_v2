@@ -26,11 +26,11 @@ abstract class BaseRepository implements BaseInterface
         return $this->model->pluck($column, $key);
     }
 
-    public function paginate($limit = null, $columns = ['*'])
+    public function paginate($limit = null, $columns = ['*'], $pageName = 'page', $page = null)
     {
         $limit = is_null($limit) ? config('setting.paginate') : $limit;
 
-        return $this->model->paginate($limit, $columns);
+        return $this->model->paginate($limit, $columns, $pageName, $page);
     }
 
     public function find($id, $columns = ['*'])
@@ -119,5 +119,10 @@ abstract class BaseRepository implements BaseInterface
     public function join(...$params)
     {
         return $this->model->join(...$params);
+    }
+
+    public function getTransferData($ids)
+    {
+        return $ids ? $this->whereIn('id', $ids)->get() : $this->model->get();
     }
 }
