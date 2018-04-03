@@ -121,7 +121,7 @@ abstract class BaseRepository implements BaseInterface
         return $this->model->join(...$params);
     }
 
-    public function getTransferData($ids)
+    public function getListRecord($ids)
     {
         return $ids ? $this->whereIn('id', $ids)->get() : $this->model->get();
     }

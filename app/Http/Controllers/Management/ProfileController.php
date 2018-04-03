@@ -18,44 +18,6 @@ class ProfileController extends RecordController
         $this->viewEdit = 'management.profiles.edit';
     }
 
-    public function customIndexQuery($search)
-    {
-        return $this->recordRepository
-            ->join('academic_titles', 'academic_titles.id', '=', 'profiles.academic_title_id')
-            ->select(
-                'profiles.*',
-                'academic_titles.name as academic_title'
-            )
-            ->where('profiles.name', 'like', "%$search%");
-    }
-
-    public function customShowQuery($id)
-    {
-        return $this->recordRepository
-            ->join('academic_titles', 'academic_titles.id', '=', 'profiles.academic_title_id')
-            ->join('provinces', 'provinces.id', '=', 'profiles.province_id')
-            ->where('profiles.id', $id)
-            ->select(
-                'profiles.*',
-                'academic_titles.name as academic_title',
-                'provinces.name as province'
-            )
-            ->first();
-    }
-
-    public function customUpdatedQuery($id)
-    {
-        return $this->recordRepository
-            ->join('academic_titles', 'academic_titles.id', '=', 'profiles.academic_title_id')
-            ->join('provinces', 'provinces.id', '=', 'profiles.province_id')
-            ->where('profiles.id', $id)
-            ->select(
-                'profiles.*',
-                'academic_titles.name as academic_title'
-            )
-            ->first();
-    }
-
     public function update(UpdateProfile $validUpdateRequest, $id)
     {
         return $this->updateRecord($validUpdateRequest, $id, function($record){

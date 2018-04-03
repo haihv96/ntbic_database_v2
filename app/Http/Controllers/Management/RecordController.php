@@ -30,18 +30,18 @@ class RecordController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $customIndexQuery = method_exists($this, 'customIndexQuery') ?
-            $this->customIndexQuery($search) : $this->recordRepository;
+        $data = method_exists($this->recordRepository, 'indexQuery') ?
+            $this->recordRepository->indexQuery($search) : $this->recordRepository;
         if ($request->ajax()) {
             return response()->json([
                 'data' => view($this->viewRecords, [
-                    'records' => $customIndexQuery
+                    'records' => $data
                         ->paginate($this->perPage)
                 ])->render(),
             ], 200);
         } else {
             return view($this->viewIndex, [
-                'records' => $customIndexQuery
+                'records' => $data
                     ->paginate($this->perPage)
             ]);
         }
@@ -49,22 +49,22 @@ class RecordController extends Controller
 
     public function show($id)
     {
-        $customShowQuery = method_exists($this, 'customShowQuery') ?
-            $this->customShowQuery($id) : $this->recordRepository->find($id);
+        $data = method_exists($this->recordRepository, 'showQuery') ?
+            $this->recordRepository->showQuery($id) : $this->recordRepository->find($id);
         return response()->json([
             'data' => view($this->viewShow, [
-                'record' => $customShowQuery
+                'record' => $data
             ])->render(),
         ], 200);
     }
 
     public function edit($id)
     {
-        $customEditQuery = method_exists($this, 'customEditQuery') ?
-            $this->customEditQuery($id) : $this->recordRepository->find($id);
+        $data = method_exists($this->recordRepository, 'editQuery') ?
+            $this->recordRepository->editQuery($id) : $this->recordRepository->find($id);
         return response()->json([
             'data' => view($this->viewEdit, [
-                'record' => $customEditQuery
+                'record' => $data
             ])->render(),
         ], 200);
     }
@@ -75,11 +75,11 @@ class RecordController extends Controller
             $record = $this->recordRepository->find($id);
             $record->update($validUpdateRequest->all());
             $callback && $callback($record);
-            $customUpdatedQuery = method_exists($this, 'customUpdatedQuery') ?
-                $this->customUpdatedQuery($id) : $record;
+            $data = method_exists($this->recordRepository, 'updatedQuery') ?
+                $this->recordRepository->updatedQuery($id) : $record;
             return response()->json([
                 'data' => view($this->viewRecord, [
-                    'record' => $customUpdatedQuery
+                    'record' => $data
                 ])->render(),
                 'message' => $this->updateSuccessMessage
             ], 200);
@@ -93,8 +93,7 @@ class RecordController extends Controller
 
     public function destroy($ids, Closure $callback = null)
     {
-        $records = ($ids === 'all' ? $this->recordRepository->all() :
-            $this->recordRepository->whereIn('id', json_decode($ids))->get());
+        $records = $this->recordRepository->getListRecord(json_decode($ids));
         foreach ($records as $record) {
             $callback && $callback($record);
             try {

@@ -8,7 +8,7 @@ trait TransferRecord
 {
     public function transferData($ids, $medias = false)
     {
-        $records = $this->recordRepository->getTransferData(json_decode($ids));
+        $records = $this->recordRepository->getListRecord(json_decode($ids));
         foreach ($records as $record) {
             try {
                 DB::beginTransaction();

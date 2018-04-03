@@ -18,56 +18,6 @@ class ProductController extends RecordController
         $this->viewEdit = 'management.products.edit';
     }
 
-    public function customIndexQuery($search)
-    {
-        return $this->recordRepository
-            ->join(
-                'base_technology_categories',
-                'base_technology_categories.id',
-                '=',
-                'products.base_technology_category_id'
-            )
-            ->select(
-                'products.*',
-                'base_technology_categories.name as base_technology_category'
-            )
-            ->where('products.name', 'like', "%$search%");
-    }
-
-    public function customShowQuery($id)
-    {
-        return $this->recordRepository
-            ->where('products.id', $id)
-            ->join(
-                'base_technology_categories',
-                'base_technology_categories.id',
-                '=',
-                'products.base_technology_category_id'
-            )
-            ->select(
-                'products.*',
-                'base_technology_categories.name as base_technology_category'
-            )
-            ->first();
-    }
-
-    public function customUpdatedQuery($id)
-    {
-        return $this->recordRepository
-            ->where('products.id', $id)
-            ->join(
-                'base_technology_categories',
-                'base_technology_categories.id',
-                '=',
-                'products.base_technology_category_id'
-            )
-            ->select(
-                'products.*',
-                'base_technology_categories.name as base_technology_category'
-            )
-            ->first();
-    }
-
     public function update(UpdateProduct $validUpdateRequest, $id)
     {
         return $this->updateRecord($validUpdateRequest, $id, function($record){

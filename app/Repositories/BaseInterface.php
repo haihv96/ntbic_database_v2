@@ -38,5 +38,7 @@ interface BaseInterface
 
     public function join(...$params);
 
-    public function getTransferData($ids);
+    public function getListRecord($ids);
+
+    public function filters($data);
 }

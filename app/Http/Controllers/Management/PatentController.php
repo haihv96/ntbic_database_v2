@@ -18,55 +18,6 @@ class PatentController extends RecordController
         $this->viewEdit = 'management.patents.edit';
     }
 
-    public function customIndexQuery($search)
-    {
-        return $this->recordRepository
-            ->join(
-                'base_technology_categories',
-                'base_technology_categories.id',
-                '=',
-                'patents.base_technology_category_id'
-            )
-            ->select(
-                'patents.*',
-                'base_technology_categories.name as base_technology_category'
-            )
-            ->where('patents.name', 'like', "%$search%");
-    }
-
-    public function customShowQuery($id)
-    {
-        return $this->recordRepository
-            ->join(
-                'base_technology_categories',
-                'base_technology_categories.id',
-                '=',
-                'patents.base_technology_category_id'
-            )
-            ->join('patent_types', 'patent_types.id', '=', 'patents.patent_type_id')
-            ->select(
-                'patents.*',
-                'base_technology_categories.name as base_technology_category',
-                'patent_types.name as patent_type'
-            )
-            ->where('patents.id', $id)
-            ->first();
-    }
-
-    public function customUpdatedQuery($id)
-    {
-        return $this->recordRepository
-            ->join(
-                'base_technology_categories',
-                'base_technology_categories.id',
-                '=',
-                'patents.base_technology_category_id'
-            )
-            ->select('patents.*', 'base_technology_categories.name as base_technology_category')
-            ->where('patents.id', $id)
-            ->first();
-    }
-
     public function update(UpdatePatent $validUpdateRequest, $id)
     {
         return $this->updateRecord($validUpdateRequest, $id, function($record){
