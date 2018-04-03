@@ -8,6 +8,8 @@ use Illuminate\Support\ServiceProvider;
 
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
 use App\Services\CrawlRequest\CrawlRequestService;
+use App\Services\ElasticSearch\ElasticSearchServiceInterface;
+use App\Services\ElasticSearch\ElasticSearchService;
 use App\Services\GuzzleHttp\AuthorizeRequestServiceInterface;
 use App\Services\GuzzleHttp\AuthorizeRequestService;
 
@@ -59,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         App::bind(CrawlRequestServiceInterface::class, CrawlRequestService::class);
+        App::bind(ElasticSearchServiceInterface::class, ElasticSearchService::class);
         App::bind(AuthorizeRequestServiceInterface::class, AuthorizeRequestService::class);
         App::bind(UserInterface::class, UserRepository::class);
         App::bind(RawProductInterface::class, RawProductRepository::class);

@@ -125,4 +125,13 @@ abstract class BaseRepository implements BaseInterface
     {
         return $ids ? $this->whereIn('id', $ids)->get() : $this->model->get();
     }
+
+    public function filters($data)
+    {
+        $results = $this->model;
+        foreach ($data as $index => $value) {
+            $results = (empty($value) ? $results : $results->where($index, $value));
+        }
+        return $results;
+    }
 }

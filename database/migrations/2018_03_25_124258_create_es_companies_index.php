@@ -43,19 +43,19 @@ class CreateEsCompaniesIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
+                            'name' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                             'base_technology_category_id' => ['type' => 'integer'],
                             'province_id' => ['type' => 'integer'],
-                            'headquarters' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
+                            'headquarters' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                             'company_code' => ['type' => 'text'],
                             'founder' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'industry' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'research_for' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'technology_highlight' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'technology_using' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'technology_transfer' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'results' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'products' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
+                            'industry' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'research_for' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'technology_highlight' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'technology_using' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'technology_transfer' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'results' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'products' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                         ]
                     ]
                 ]

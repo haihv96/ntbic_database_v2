@@ -43,15 +43,15 @@ class CreateEsPatentsIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
+                            'name' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                             'patent_code' => ['type' => 'text'],
                             'base_technology_category_id' => ['type' => 'integer'],
                             'patent_type_id' => ['type' => 'integer'],
                             'owner' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                             'author' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'highlights' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'description' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'market_application' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
+                            'highlights' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'description' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'market_application' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                         ]
                     ]
                 ]

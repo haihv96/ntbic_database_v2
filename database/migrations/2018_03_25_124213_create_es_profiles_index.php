@@ -46,11 +46,11 @@ class CreateEsProfilesIndex extends Migration
                             'name' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                             'province_id' => ['type' => 'integer'],
                             'academic_title_id' => ['type' => 'integer'],
-                            'specialization' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'agency' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'research_for' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'research_joined' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
-                            'research_results' => ['type' => 'text', 'analyzer' => 'text_analyzer'],
+                            'specialization' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'agency' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'research_for' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'research_joined' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'research_results' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
                         ]
                     ]
                 ]

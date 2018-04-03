@@ -3,50 +3,48 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
+use App\Services\ElasticSearch\ElasticSearchServiceInterface;
 use App\Http\Resources\ProfileResource;
 use App\Http\Controllers\Controller;
 use App\Repositories\Profile\ProfileInterface;
-use Elasticsearch\ClientBuilder;
 
 class ProfileController extends Controller
 {
-    protected $recordRepository;
+    protected $recordRepository, $elasticSearchService;
 
-    public function __construct(ProfileInterface $profileRepository)
+    public function __construct(
+        ProfileInterface $profileRepository,
+        ElasticSearchServiceInterface $elasticSearchService
+    )
     {
         $this->recordRepository = $profileRepository;
+        $this->elasticSearchService = $elasticSearchService;
     }
 
     public function index(Request $request)
     {
         $perPage = $request->get('per_page');
         $queryString = $request->get('query');
-        $academicTitle = $request->get('academic_title');
-        $province = $request->get('province');
-        $params = [
-            'index' => 'profiles',
-            'type' => 'profiles',
-            'body' => [
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            'match' => [
-                                'highlights' => [
-                                    'query' => $queryString || '',
-                                    'operator' => 'and',
-                                ]
-                            ]
-                        ]
-                    ],
-                ],
-            ]
-        ];
-
-        $results = ClientBuilder::create()->build()->search($params);
-        dd($results);
-        $records = $this->recordRepository->paginate($perPage);
-        return ProfileResource::collection($records)
+        $academic_title_id = $request->get('academic_title_id');
+        $province_id = $request->get('province_id');
+        if (empty($queryString)) {
+            $results = $this->recordRepository
+                ->filters(compact('academic_title_id', 'province_id'))
+                ->paginate($perPage);
+        } else {
+            $ids = $this->elasticSearchService->search(
+                'profiles', 'profiles', $queryString, ['name'],
+                compact('academic_title_id', 'province_id')
+            );
+            $results = $this->recordRepository->whereIn('id', $ids)->paginate($perPage);
+        }
+        return ProfileResource::collection($results)
             ->response()
             ->setStatusCode(200);
+    }
+
+    public function show($id)
+    {
+
     }
 }
