@@ -93,7 +93,7 @@ return [
         'projects' => [
             'ths' => [
                 'Name',
-                'Technology category',
+                'Specialization',
                 'Project code',
                 'Author',
                 'Close date',

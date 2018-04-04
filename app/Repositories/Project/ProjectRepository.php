@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Project;
 
+use DB;
 use App\Repositories\BaseRepository;
 use App\Models\Project;
 

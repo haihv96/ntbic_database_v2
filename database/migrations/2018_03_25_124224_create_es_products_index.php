@@ -28,6 +28,11 @@ class CreateEsProductsIndex extends Migration
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['icu_folding', 'lowercase'],
                                 ],
+                                'name_analyzer' => [
+                                    'tokenizer' => 'standard',
+                                    'char_filter' => ['html_strip'],
+                                    'filter' => ['icu_folding', 'lowercase'],
+                                ],
                             ],
                         ],
                     ],

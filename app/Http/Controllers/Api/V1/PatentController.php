@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Services\ElasticSearch\ElasticSearchServiceInterface;
-use App\Http\Resources\Profiles\ProfileListResource;
-use App\Http\Resources\Profiles\ProfileResource;
+use App\Http\Resources\Patents\PatentListResource;
+use App\Http\Resources\Patents\PatentResource;
 use App\Http\Controllers\Controller;
-use App\Repositories\Profile\ProfileInterface;
+use App\Repositories\Patent\PatentInterface;
 
-class ProfileController extends Controller
+class PatentController extends Controller
 {
     protected $recordRepository, $elasticSearchService;
 
     public function __construct(
-        ProfileInterface $profileRepository,
+        PatentInterface $patentRepository,
         ElasticSearchServiceInterface $elasticSearchService
     )
     {
-        $this->recordRepository = $profileRepository;
+        $this->recordRepository = $patentRepository;
         $this->elasticSearchService = $elasticSearchService;
     }
 
@@ -26,27 +26,27 @@ class ProfileController extends Controller
     {
         $perPage = $request->get('per_page');
         $queryString = $request->get('query');
-        $academic_title_id = $request->get('academic_title_id');
-        $province_id = $request->get('province_id');
+        $base_technology_category_id = $request->get('base_technology_category_id');
+        $patent_type_id = $request->get('patent_type_id');
         if (empty($queryString)) {
             $results = $this->recordRepository
-                ->filters(compact('academic_title_id', 'province_id'));
+                ->filters(compact('base_technology_category_id', 'patent_type_id'));
         } else {
             $ids = $this->elasticSearchService->search(
-                'profiles', 'profiles', $queryString, ['name'],
-                compact('academic_title_id', 'province_id')
+                'patents', 'patents', $queryString, ['name'],
+                compact('base_technology_category_id', 'patent_type_id')
             );
             $results = $this->recordRepository->whereIn('id', $ids);
         }
-        return ProfileListResource::collection($results->paginate($perPage))
+        return PatentListResource::collection($results->paginate($perPage))
             ->response()
             ->setStatusCode(200);
     }
 
     public function show($id)
     {
-        $record = $this->recordRepository->showQuery($id);
-        return (new ProfileResource($record))
+        $record = $this->recordRepository->find($id);
+        return (new PatentResource($record))
             ->response()
             ->setStatusCode(200);
     }
