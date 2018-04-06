@@ -52,4 +52,16 @@ class ProjectRepository extends BaseRepository implements ProjectInterface
             ->first();
     }
 
+    public function baseAnalysis()
+    {
+        return $this->model
+            ->join('specializations', 'specializations.id', '=', 'projects.specialization_id')
+            ->rightJoin('technology_categories', 'technology_categories.id', '=', 'specializations.technology_category_id')
+            ->groupBy('technology_categories.id')
+            ->select(
+                'technology_categories.name',
+                DB::raw('COUNT(*) as projects')
+            )
+            ->get();
+    }
 }

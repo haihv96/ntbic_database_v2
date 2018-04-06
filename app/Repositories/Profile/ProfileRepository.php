@@ -4,6 +4,7 @@ namespace App\Repositories\Profile;
 
 use App\Repositories\BaseRepository;
 use App\Models\Profile;
+use DB;
 
 class ProfileRepository extends BaseRepository implements ProfileInterface
 {
@@ -48,5 +49,14 @@ class ProfileRepository extends BaseRepository implements ProfileInterface
                 'academic_titles.name as academic_title'
             )
             ->first();
+    }
+
+    public function baseAnalysis()
+    {
+        return $this->model
+            ->rightJoin('academic_titles', 'academic_titles.id', '=', 'profiles.academic_title_id')
+            ->groupBy('academic_titles.id')
+            ->select(DB::raw('academic_titles.name as academic_title, COUNT(*) as profiles'))
+            ->get();
     }
 }

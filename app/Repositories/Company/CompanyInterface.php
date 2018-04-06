@@ -9,4 +9,6 @@ interface CompanyInterface
     public function showQuery($id);
 
     public function updatedQuery($id);
+
+    public function baseAnalysis();
 }

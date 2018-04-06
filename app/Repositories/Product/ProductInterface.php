@@ -9,4 +9,6 @@ interface ProductInterface
     public function showQuery($id);
 
     public function updatedQuery($id);
+
+    public function baseAnalysis();
 }

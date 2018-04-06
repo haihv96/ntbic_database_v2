@@ -4,6 +4,7 @@ namespace App\Repositories\Company;
 
 use App\Repositories\BaseRepository;
 use App\Models\Company;
+use DB;
 
 class CompanyRepository extends BaseRepository implements CompanyInterface
 {
@@ -70,5 +71,22 @@ class CompanyRepository extends BaseRepository implements CompanyInterface
                 'base_technology_categories.name as base_technology_category'
             )
             ->first();
+    }
+
+    public function baseAnalysis()
+    {
+        return $this->model
+            ->rightJoin(
+                'base_technology_categories',
+                'base_technology_categories.id',
+                '=',
+                'companies.base_technology_category_id'
+            )
+            ->groupBy('base_technology_categories.id')
+            ->select(
+                'base_technology_categories.name as base_technology_category',
+                DB::raw('COUNT(*) as companies')
+            )
+            ->get();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Repositories\Product;
 
 use App\Repositories\BaseRepository;
 use App\Models\Product;
+use DB;
 
 class ProductRepository extends BaseRepository implements ProductInterface
 {
@@ -60,6 +61,23 @@ class ProductRepository extends BaseRepository implements ProductInterface
                 'base_technology_categories.name as base_technology_category'
             )
             ->first();
+    }
+
+    public function baseAnalysis()
+    {
+        return $this->model
+            ->rightJoin(
+                'base_technology_categories',
+                'base_technology_categories.id',
+                '=',
+                'products.base_technology_category_id'
+            )
+            ->groupBy('base_technology_categories.id')
+            ->select(
+                'base_technology_categories.name as base_technology_category',
+                DB::raw('COUNT(*) as products')
+            )
+            ->get();
     }
 
 }

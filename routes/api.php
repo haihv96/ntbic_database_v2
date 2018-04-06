@@ -12,5 +12,6 @@ Route::group(['namespace' => 'Api'], function () {
         Route::resource('patent-types', 'PatentTypeController', ['only' => ['index']]);
         Route::resource('specializations', 'SpecializationController', ['only' => ['index']]);
         Route::resource('base-technology-categories', 'BaseTechnologyCategoryController', ['only' => ['index']]);
+        Route::get('analysis', 'AnalysisController@index');
     });
 });
