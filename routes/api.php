@@ -3,6 +3,7 @@
 Route::group(['namespace' => 'Api'], function () {
     Route::group(['namespace' => 'V1', 'prefix' => 'v1'], function () {
         Route::resource('profiles', 'ProfileController');
+        Route::get('profiles/query/top', 'ProfileController@getTop');
         Route::resource('projects', 'ProjectController');
         Route::resource('patents', 'PatentController');
         Route::resource('companies', 'CompanyController');

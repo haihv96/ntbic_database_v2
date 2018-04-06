@@ -59,4 +59,12 @@ class ProfileRepository extends BaseRepository implements ProfileInterface
             ->select(DB::raw('academic_titles.name as academic_title, COUNT(*) as profiles'))
             ->get();
     }
+
+    public function getTop($limit)
+    {
+        return $this->model
+            ->orderBy('created_at', 'asc')
+            ->limit(empty($limit) ? 10 : $limit)
+            ->get();
+    }
 }

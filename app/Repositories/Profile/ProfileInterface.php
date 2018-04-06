@@ -11,4 +11,6 @@ interface ProfileInterface
     public function updatedQuery($id);
 
     public function baseAnalysis();
+
+    public function getTop($limit);
 }

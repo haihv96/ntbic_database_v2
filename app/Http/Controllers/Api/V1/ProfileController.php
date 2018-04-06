@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\ElasticSearch\ElasticSearchServiceInterface;
 use App\Http\Resources\Profiles\ProfileListResource;
 use App\Http\Resources\Profiles\ProfileResource;
+use App\Http\Resources\Profiles\BaseInfoProfileResource;
 use App\Http\Controllers\Controller;
 use App\Repositories\Profile\ProfileInterface;
 
@@ -47,6 +48,15 @@ class ProfileController extends Controller
     {
         $record = $this->recordRepository->showQuery($id);
         return (new ProfileResource($record))
+            ->response()
+            ->setStatusCode(200);
+    }
+
+    public function getTop(Request $request)
+    {
+        $limit = $request->get('limit');
+        $record = $this->recordRepository->getTop((int)$limit);
+        return BaseInfoProfileResource::collection($record)
             ->response()
             ->setStatusCode(200);
     }
