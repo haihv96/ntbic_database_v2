@@ -60,7 +60,7 @@ class ProjectRepository extends BaseRepository implements ProjectInterface
             ->groupBy('technology_categories.id')
             ->select(
                 'technology_categories.name',
-                DB::raw('COUNT(*) as projects')
+                DB::raw('COUNT(*) as count')
             )
             ->get();
     }

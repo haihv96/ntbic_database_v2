@@ -75,7 +75,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
             ->groupBy('base_technology_categories.id')
             ->select(
                 'base_technology_categories.name as base_technology_category',
-                DB::raw('COUNT(*) as products')
+                DB::raw('COUNT(*) as count')
             )
             ->get();
     }

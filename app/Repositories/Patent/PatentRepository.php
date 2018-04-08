@@ -74,7 +74,7 @@ class PatentRepository extends BaseRepository implements PatentInterface
             ->groupBy('base_technology_categories.id')
             ->select(
                 'base_technology_categories.name as base_technology_category',
-                DB::raw('COUNT(*) as patents')
+                DB::raw('COUNT(*) as count')
             )
             ->get();
     }

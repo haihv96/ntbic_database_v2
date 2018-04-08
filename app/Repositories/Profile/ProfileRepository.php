@@ -56,7 +56,10 @@ class ProfileRepository extends BaseRepository implements ProfileInterface
         return $this->model
             ->rightJoin('academic_titles', 'academic_titles.id', '=', 'profiles.academic_title_id')
             ->groupBy('academic_titles.id')
-            ->select(DB::raw('academic_titles.name as academic_title, COUNT(*) as profiles'))
+            ->select(
+                'academic_titles.name as academic_title',
+                DB::raw('COUNT(*) as count')
+            )
             ->get();
     }
 

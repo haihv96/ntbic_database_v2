@@ -85,7 +85,7 @@ class CompanyRepository extends BaseRepository implements CompanyInterface
             ->groupBy('base_technology_categories.id')
             ->select(
                 'base_technology_categories.name as base_technology_category',
-                DB::raw('COUNT(*) as companies')
+                DB::raw('COUNT(*) as count')
             )
             ->get();
     }
