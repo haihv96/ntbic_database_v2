@@ -18,7 +18,7 @@ class CompanyListResource extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'logo' => $media ? $media : 'images/no_logo.png',
+            'logo' => url($media ? $media : 'images/no_logo.png'),
             'base_technology_category' => $this->baseTechnologyCategory->name,
             'province' => $this->province->name,
             'headquarters' => $this->headquarters

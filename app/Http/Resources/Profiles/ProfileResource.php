@@ -19,7 +19,7 @@ class ProfileResource extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'academic_title' => $this->academicTitle->name,
-            'image' => $media ? $media : 'images/anon_user.png',
+            'image' => url($media ? $media : 'images/anon_user.png'),
             'agency' => $this->agency,
             'birthday' => $this->birthday,
             'research_for' => $this->research_for,

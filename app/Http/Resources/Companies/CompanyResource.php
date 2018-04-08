@@ -18,7 +18,7 @@ class CompanyResource extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'logo' => $media ? $media : 'images/no_logo.png',
+            'logo' => url($media ? $media : 'images/no_logo.png'),
             'last_update' => $this->last_update,
             'base_technology_category' => $this->baseTechnologyCategory,
             'province' => $this->province,

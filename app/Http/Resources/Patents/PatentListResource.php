@@ -18,7 +18,7 @@ class PatentListResource extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $media ? $media : 'you may update this at moment',
+            'image' => url($media ? $media : 'you may update this at moment'),
             'base_technology_category' => $this->baseTechnologyCategory->name,
             'patent_code' => $this->patent_code,
             'author' => $this->author,
