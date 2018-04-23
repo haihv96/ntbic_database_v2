@@ -21,7 +21,7 @@ class ProfileListResource extends Resource
             'academic_title' => $this->academicTitle->name,
             'image' => url($media ? $media : 'images/anon_user.png'),
             'agency' => $this->agency,
-            'birthday' => $this->birthday,
+            'province' => $this->province->name,
             'research_for' => $this->research_for
         ];
     }

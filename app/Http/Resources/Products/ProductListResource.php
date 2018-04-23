@@ -20,7 +20,7 @@ class ProductListResource extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'thumb' => url($media ? $media : 'images/nophoto.jpg'),
-            'technology_category' => $this->baseTechnologyCategory->name,
+            'base_technology_category' => $this->baseTechnologyCategory->name,
             'highlights' => $this->hightlights
         ];
     }

@@ -14,11 +14,9 @@ class PatentListResource extends Resource
      */
     public function toArray($request)
     {
-        $media = $this->getFirstMediaUrl('image');
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => url($media ? $media : 'you may update this at moment'),
             'base_technology_category' => $this->baseTechnologyCategory->name,
             'patent_code' => $this->patent_code,
             'author' => $this->author,
