@@ -37,7 +37,7 @@ class ProductController extends Controller
             );
             $results = $this->recordRepository->whereIn('id', $ids);
         }
-        return ProductListResource::collection($results->paginate($perPage))
+        return ProductListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()
             ->setStatusCode(200);
     }

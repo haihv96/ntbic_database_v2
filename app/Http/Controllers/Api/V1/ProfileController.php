@@ -39,7 +39,7 @@ class ProfileController extends Controller
             );
             $results = $this->recordRepository->whereIn('id', $ids);
         }
-        return ProfileListResource::collection($results->paginate($perPage))
+        return ProfileListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()
             ->setStatusCode(200);
     }

@@ -38,7 +38,7 @@ class PatentController extends Controller
             );
             $results = $this->recordRepository->whereIn('id', $ids);
         }
-        return PatentListResource::collection($results->paginate($perPage))
+        return PatentListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()
             ->setStatusCode(200);
     }

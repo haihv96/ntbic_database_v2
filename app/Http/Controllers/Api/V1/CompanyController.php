@@ -38,7 +38,7 @@ class CompanyController extends Controller
             );
             $results = $this->recordRepository->whereIn('id', $ids);
         }
-        return CompanyListResource::collection($results->paginate($perPage))
+        return CompanyListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()
             ->setStatusCode(200);
     }

@@ -37,7 +37,7 @@ class ProjectController extends Controller
             );
             $results = $this->recordRepository->whereIn('id', $ids);
         }
-        return ProjectListResource::collection($results->paginate($perPage))
+        return ProjectListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()
             ->setStatusCode(200);
     }
