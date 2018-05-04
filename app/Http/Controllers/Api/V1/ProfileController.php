@@ -34,7 +34,7 @@ class ProfileController extends Controller
                 ->filters(compact('academic_title_id', 'province_id'));
         } else {
             $ids = $this->elasticSearchService->search(
-                'profiles', 'profiles', $queryString, ['name'],
+                'profiles', 'profiles', $queryString, ['name', 'research_for', 'agency'],
                 compact('academic_title_id', 'province_id')
             );
             $results = $this->recordRepository->whereIn('id', $ids);
