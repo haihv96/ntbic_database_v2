@@ -28,11 +28,6 @@ class CreateEsProductsIndex extends Migration
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['icu_folding', 'lowercase'],
                                 ],
-                                'name_analyzer' => [
-                                    'tokenizer' => 'standard',
-                                    'char_filter' => ['html_strip'],
-                                    'filter' => ['icu_folding', 'lowercase'],
-                                ],
                             ],
                         ],
                     ],
@@ -43,12 +38,12 @@ class CreateEsProductsIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'name' => ['type' => 'text','analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
                             'base_technology_category_id' => ['type' => 'integer'],
                             'highlights' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'description' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'transfer_description' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'results' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'description' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'transfer_description' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'results' => ['type' => 'text','analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
                         ]
                     ]
                 ]

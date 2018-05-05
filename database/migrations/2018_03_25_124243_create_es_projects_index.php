@@ -28,11 +28,6 @@ class CreateEsProjectsIndex extends Migration
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['icu_folding', 'lowercase'],
                                 ],
-                                'name_analyzer' => [
-                                    'tokenizer' => 'standard',
-                                    'char_filter' => ['html_strip'],
-                                    'filter' => ['icu_folding', 'lowercase'],
-                                ],
                             ],
                         ],
                     ],
@@ -43,15 +38,15 @@ class CreateEsProjectsIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'name' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
                             'project_code' => ['type' => 'text'],
                             'specialization_id' => ['type' => 'integer'],
-                            'operator' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'author' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'highlights' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'description' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'transfer_description' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
-                            'results' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'operator' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'author' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'highlights' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'description' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'transfer_description' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'results' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
                         ]
                     ]
                 ]

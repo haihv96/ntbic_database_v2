@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\RawProfile;
+use App\Models\Profile;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
 
@@ -12,6 +13,7 @@ class CrawlProfiles extends Command
     protected $signature = 'crawl:profiles';
     protected $description = 'crawl profile from khoahoctot.vn';
     protected $crawlRequestService;
+    protected $break = false;
 
     public function __construct(CrawlRequestServiceInterface $crawlRequestService)
     {
@@ -24,6 +26,7 @@ class CrawlProfiles extends Command
         $start = $this->crawlRequestService->getXpath('http://khoahoctot.vn/index.php?lg=vi&com=profiles&fun=search&q=');
         $pages = $start->query('(//div[@class="pages"]/a)[last()]')->item(0)->nodeValue * 15;
         for ($index = 0; $index <= $pages; $index += 15) {
+            if ($this->break) break;
             $url = "http://khoahoctot.vn/?com=profiles&fun=search&catid=0&fieldid=0&disnt=0&type=&field=0&q=&page=$index";
             $this->parseProfiles($url);
         }
@@ -35,6 +38,10 @@ class CrawlProfiles extends Command
         $profiles = $profilesXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody/tr');
         foreach ($profiles as $profile) {
             $profileUrl = trim($profilesXpath->query('./td[5]/a/@href', $profile)->item(0)->nodeValue);
+            if (!$this->checkUrlAvail($profileUrl)) {
+                $this->break = true;
+                break;
+            }
             $province = trim($profilesXpath->query('./td[8]', $profile)->item(0)->nodeValue);
             $profileInfo = $this->parseProfile($profileUrl);
             $profileInfo['province'] = $province;
@@ -109,4 +116,9 @@ class CrawlProfiles extends Command
             'research_for', 'research_joined', 'research_results', 'image');
     }
 
+    private function checkUrlAvail($url)
+    {
+        return RawProfile::where('url', $url)->get()->isEmpty()
+            && Profile::where('url', $url)->get()->isEmpty();
+    }
 }

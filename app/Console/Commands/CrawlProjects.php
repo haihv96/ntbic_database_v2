@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\RawProject;
+use App\Models\Project;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
 
@@ -11,6 +12,7 @@ class CrawlProjects extends Command
     protected $signature = 'crawl:projects';
     protected $description = 'crawl projects from khoahoctot.vn';
     protected $crawlRequestService;
+    protected $break = false;
 
     public function __construct(CrawlRequestServiceInterface $crawlRequestService)
     {
@@ -23,6 +25,7 @@ class CrawlProjects extends Command
         $start = $this->crawlRequestService->getXpath('http://khoahoctot.vn/index.php?lg=vi&com=projects&fun=search&q=');
         $pages = $start->query('(//div[@class="pages"]/a)[last()]')->item(0)->nodeValue * 30;
         for ($index = 0; $index <= $pages; $index += 30) {
+            if ($this->break) break;
             $url = "http://khoahoctot.vn/?com=projects&fun=search&catid=0&fieldid=&disnt=0&type=&field=0&q=&page=$index";
             $this->parseProjects($url);
         }
@@ -34,6 +37,10 @@ class CrawlProjects extends Command
         $projectUrls = $projectsXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody/tr/td[4]/a/@href');
         foreach ($projectUrls as $url) {
             $url = $url->nodeValue;
+            if (!$this->checkUrlAvail($url)) {
+                $this->break = true;
+                break;
+            }
             $projectXpath = $this->crawlRequestService->getXpath($url);
             $name = trim($projectXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/div[2]')->item(0)->nodeValue);
             $body = $projectXpath->query('//*[@class="archives_list"]/tbody')->item(0);
@@ -64,5 +71,11 @@ class CrawlProjects extends Command
                     'description', 'transfer_description', 'results')
             );
         }
+    }
+
+    private function checkUrlAvail($url)
+    {
+        return RawProject::where('url', $url)->get()->isEmpty()
+            && Project::where('url', $url)->get()->isEmpty();
     }
 }

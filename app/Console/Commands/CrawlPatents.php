@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\RawPatent;
+use App\Models\Patent;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
 
@@ -12,6 +13,7 @@ class CrawlPatents extends Command
     protected $signature = 'crawl:patents';
     protected $description = 'crawl patents from khoahoctot.vn';
     protected $crawlRequestService;
+    protected $break = false;
 
     public function __construct(CrawlRequestServiceInterface $crawlRequestService)
     {
@@ -24,6 +26,7 @@ class CrawlPatents extends Command
         $start = $this->crawlRequestService->getXpath('http://khoahoctot.vn/index.php?lg=vi&com=invents&fun=search&q=');
         $pages = $start->query('(//div[@class="pages"]/a)[last()]')->item(0)->nodeValue * 30;
         for ($index = 0; $index <= $pages; $index += 30) {
+            if ($this->break) break;
             $url = "http://khoahoctot.vn/?com=invents&fun=search&catid=0&type=&q=&page=$index";
             $this->parsePatents($url);
         }
@@ -35,6 +38,10 @@ class CrawlPatents extends Command
         $patentUrls = $patentsXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody/tr/td[4]/a/@href');
         foreach ($patentUrls as $url) {
             $url = $url->nodeValue;
+            if (!$this->checkUrlAvail($url)) {
+                $this->break = true;
+                break;
+            }
             $patentXpath = $this->crawlRequestService->getXpath($url);
             $name = trim($patentXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[1]/tbody/tr/td/div[2]')->item(0)->nodeValue);
             $body = $patentXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[2]/tbody')->item(0);
@@ -78,5 +85,11 @@ class CrawlPatents extends Command
             }
 
         }
+    }
+
+    private function checkUrlAvail($url)
+    {
+        return RawPatent::where('url', $url)->get()->isEmpty()
+            && Patent::where('url', $url)->get()->isEmpty();
     }
 }

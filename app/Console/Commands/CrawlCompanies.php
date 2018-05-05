@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\RawCompany;
+use App\Models\Company;
 use Illuminate\Console\Command;
 use App\Services\CrawlRequest\CrawlRequestServiceInterface;
 
@@ -12,6 +13,7 @@ class CrawlCompanies extends Command
     protected $signature = 'crawl:companies';
     protected $description = 'crawl companies from khoahoctot.vn';
     protected $crawlRequestService;
+    protected $break = false;
 
     public function __construct(CrawlRequestServiceInterface $crawlRequestService)
     {
@@ -24,6 +26,7 @@ class CrawlCompanies extends Command
         $start = $this->crawlRequestService->getXpath('http://khoahoctot.vn/index.php?lg=vi&com=business&fun=search&q=');
         $pages = $start->query('(//div[@class="pages"]/a)[last()]')->item(0)->nodeValue * 15;
         for ($index = 0; $index <= $pages; $index += 15) {
+            if ($this->break) break;
             $url = "http://khoahoctot.vn/?com=business&fun=search&catid=0&fieldid=0&disnt=0&type=&rate=&transfer=&field=0&q=&page=$index";
             $this->parseCompanies($url);
         }
@@ -35,6 +38,10 @@ class CrawlCompanies extends Command
         $companyUrls = $companiesXpath->query('//*[@id="wrapper"]/div[4]/div[2]/table/tbody/tr/td[5]/a/@href');
         foreach ($companyUrls as $url) {
             $url = $url->nodeValue;
+            if (!$this->checkUrlAvail($url)) {
+                $this->break = true;
+                break;
+            }
             $companyXpath = $this->crawlRequestService->getXpath($url);
             $body1 = $companyXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[2]')->item(0);
             $imagePath = $companyXpath->query('//*[@id="wrapper"]/div[5]/div[2]/div[2]/table[1]/tbody/tr/td[1]/img/@src')->item(0)->nodeValue;
@@ -127,6 +134,12 @@ class CrawlCompanies extends Command
             case 2:
                 return 'Muốn mua công nghệ để phát triển năng lực sản xuất và kinh doanh';
         }
+    }
+
+    private function checkUrlAvail($url)
+    {
+        return RawCompany::where('url', $url)->get()->isEmpty()
+            && Company::where('url', $url)->get()->isEmpty();
     }
 }
 
