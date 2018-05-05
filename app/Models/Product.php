@@ -24,7 +24,7 @@ class Product extends BaseModel implements HasMedia
     protected $esTypeName = 'products';
     protected $esAttributes = [
         'name', 'base_technology_category_id', 'highlights',
-        'description', 'transfer_description', 'results'
+        'description', 'results'
     ];
 
     public function attrNames()

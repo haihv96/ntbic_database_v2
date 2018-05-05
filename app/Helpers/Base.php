@@ -2,7 +2,7 @@
 
 function strToPath($str)
 {
-    $str = trim($str);
+    $str = clearDoubleWhitespace(trim($str));
     $vi = mbStrSplit(' âấầậẩẫéèẽẹẻêếềểệễăắằẳặẵáàảạãđýỳỵỷỹúùụũủưứừửữựíìịỉĩóòõọỏôốồộổỗơởợờỡớÂẤẦẬẨẪÉÈẼẸẺÊẾỀẺỆỄĂĂẰẲẶẴÁÀẢẠÃĐÝỲỴỶỸÚÙỤŨỦƯỨỪỬỰỮÍÌỊỈĨÓÒÕỌỎÔỐỒỘỔỖƠỞỢỜỠỚ');
     $en = mbStrSplit('-aaaaaaeeeeeeeeeeeaaaaaaaaaaadyyyyyuuuuuuuuuuuiiiiioooooooooooooooooaaaaaaeeeeeeeeeeeaaaaaaaaaaadyyyyyuuuuuuuuuuuiiiiiooooooooooooooooo');
     return trim(preg_replace('/[^0-9A-Za-z-]/', '', strtolower(str_replace($vi, $en, $str))), '-');
@@ -11,6 +11,14 @@ function strToPath($str)
 function strNormalize($str)
 {
     return str_replace('-', '', strToPath($str));
+}
+
+function clearDoubleWhitespace($string){
+    $str = $string;
+    do {
+        $str = str_replace('  ', ' ', $str);
+    } while(strpos($str, '  '));
+    return $str;
 }
 
 function mbStrSplit($str)

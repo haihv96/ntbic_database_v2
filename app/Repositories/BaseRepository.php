@@ -134,4 +134,12 @@ abstract class BaseRepository implements BaseInterface
         }
         return $results;
     }
+
+    public function findInSet($column, $values)
+    {
+        $values = is_array($values) ? $values : [$values];
+        $valuesString = implode(',', $values);
+        return $this->model->whereIn('id', $values)
+            ->orderByRaw("FIND_IN_SET($column, '$valuesString')");
+    }
 }

@@ -30,7 +30,7 @@ class Patent extends BaseModel implements HasMedia
     protected $esAttributes = [
         'name', 'patent_code', 'base_technology_category_id',
         'patent_type_id', 'owner', 'author', 'highlights',
-        'description', 'market_application'
+        'description',
     ];
 
     public function attrNames()

@@ -27,7 +27,7 @@ class Project extends BaseModel
 
     protected $esAttributes =[
         'name', 'project_code', 'specialization_id', 'operator',
-        'author', 'highlights', 'description', 'transfer_description', 'results'
+        'author', 'highlights', 'description', 'results'
     ];
 
     public function attrNames()

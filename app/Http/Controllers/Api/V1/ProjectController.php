@@ -31,11 +31,15 @@ class ProjectController extends Controller
             $results = $this->recordRepository
                 ->filters(compact('specialization_id'));
         } else {
+            $fields = [
+                'vi' => ['name.vi', 'project_code.vi', 'operator.vi', 'author.vi', 'highlights.vi', 'description.vi', 'results.vi'],
+                'en' => ['name.en', 'project_code.en', 'operator.en', 'author.en', 'highlights.en', 'description.en', 'results.en']
+            ];
             $ids = $this->elasticSearchService->search(
-                'projects', 'projects', $queryString, ['name'],
+                'projects', 'projects', $queryString, $fields,
                 compact('specialization_id')
             );
-            $results = $this->recordRepository->whereIn('id', $ids);
+            $results = $this->recordRepository->findInSet('id', $ids);
         }
         return ProjectListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()

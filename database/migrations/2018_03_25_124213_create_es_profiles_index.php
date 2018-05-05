@@ -23,12 +23,12 @@ class CreateEsProfilesIndex extends Migration
                     'index' => [
                         'analysis' => [
                             'analyzer' => [
-                                'text_analyzer' => [
+                                'vn_analyzer' => [
                                     'tokenizer' => 'vi_tokenizer',
                                     'char_filter' => ['html_strip'],
-                                    'filter' => ['icu_folding', 'lowercase'],
+                                    'filter' => ['lowercase'],
                                 ],
-                                'name_analyzer' => [
+                                'standard_analyzer' => [
                                     'tokenizer' => 'standard',
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['icu_folding', 'lowercase'],
@@ -43,16 +43,38 @@ class CreateEsProfilesIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'text', 'analyzer' => 'name_analyzer'],
+                            'name' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
                             'province_id' => ['type' => 'integer'],
                             'academic_title_id' => ['type' => 'integer'],
-                            'specialization' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'agency' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'research_for' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'research_joined' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'research_results' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'specialization' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'agency' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'research_for' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer'],
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                ]
+                            ],
                         ]
-                    ]
+                    ],
                 ]
             ],
             'client' => ['ignore' => [400, 404]]

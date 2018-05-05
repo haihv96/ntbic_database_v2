@@ -23,8 +23,13 @@ class CreateEsPatentsIndex extends Migration
                     'index' => [
                         'analysis' => [
                             'analyzer' => [
-                                'text_analyzer' => [
+                                'vn_analyzer' => [
                                     'tokenizer' => 'vi_tokenizer',
+                                    'char_filter' => ['html_strip'],
+                                    'filter' => ['lowercase'],
+                                ],
+                                'standard_analyzer' => [
+                                    'tokenizer' => 'standard',
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['icu_folding', 'lowercase'],
                                 ],
@@ -38,15 +43,44 @@ class CreateEsPatentsIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'name' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
                             'patent_code' => ['type' => 'text'],
                             'base_technology_category_id' => ['type' => 'integer'],
                             'patent_type_id' => ['type' => 'integer'],
-                            'owner' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'author' => ['type' => 'text','analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'highlights' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'description' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'market_application' => ['type' => 'text','analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'owner' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'author' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'highlights' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'description' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
                         ]
                     ]
                 ]

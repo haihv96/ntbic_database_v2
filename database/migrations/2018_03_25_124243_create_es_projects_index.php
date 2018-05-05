@@ -23,8 +23,13 @@ class CreateEsProjectsIndex extends Migration
                     'index' => [
                         'analysis' => [
                             'analyzer' => [
-                                'text_analyzer' => [
+                                'vn_analyzer' => [
                                     'tokenizer' => 'vi_tokenizer',
+                                    'char_filter' => ['html_strip'],
+                                    'filter' => ['lowercase'],
+                                ],
+                                'standard_analyzer' => [
+                                    'tokenizer' => 'standard',
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['icu_folding', 'lowercase'],
                                 ],
@@ -38,15 +43,50 @@ class CreateEsProjectsIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'name' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
                             'project_code' => ['type' => 'text'],
                             'specialization_id' => ['type' => 'integer'],
-                            'operator' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'author' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'highlights' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'description' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'transfer_description' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
-                            'results' => ['type' => 'text', 'analyzer' => 'text_analyzer', 'search_analyzer' => 'text_analyzer'],
+                            'operator' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'author' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'highlights' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'description' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
+                            'results' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+                                ]
+                            ],
                         ]
                     ]
                 ]

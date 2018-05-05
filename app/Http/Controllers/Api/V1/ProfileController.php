@@ -33,11 +33,15 @@ class ProfileController extends Controller
             $results = $this->recordRepository
                 ->filters(compact('academic_title_id', 'province_id'));
         } else {
+            $fields = [
+                'vi' => ['name.vi', 'research_for.vi', 'specialization.vi', 'agency.vi'],
+                'en' => ['name.en', 'research_for.en', 'specialization.en', 'agency.en']
+            ];
             $ids = $this->elasticSearchService->search(
-                'profiles', 'profiles', $queryString, ['name', 'research_for', 'agency'],
+                'profiles', 'profiles', $queryString, $fields,
                 compact('academic_title_id', 'province_id')
             );
-            $results = $this->recordRepository->whereIn('id', $ids);
+            $results = $this->recordRepository->findInSet('id', $ids);
         }
         return ProfileListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()

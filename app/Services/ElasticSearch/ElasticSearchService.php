@@ -28,8 +28,29 @@ class ElasticSearchService implements ElasticSearchServiceInterface
                         'must' => [
                             'multi_match' => [
                                 'query' => $query,
-                                'fields' => $fields,
-                                'operator' => 'and'
+                                'fields' => $fields['en'],
+                                'operator' => 'and',
+                                'boost' => 100,
+                            ]
+                        ],
+                        'should' => [
+                            'bool' => [
+                                'must' => [
+                                    'multi_match' => [
+                                        'query' => $query,
+                                        'fields' => $fields['vi'],
+                                        'operator' => 'or',
+                                        'boost' => 200,
+                                    ]
+                                ],
+                                'should' => [
+                                    'multi_match' => [
+                                        'query' => $query,
+                                        'fields' => $fields['vi'],
+                                        'operator' => 'and',
+                                        'boost' => 300
+                                    ],
+                                ],
                             ]
                         ],
                     ],

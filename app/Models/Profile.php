@@ -32,7 +32,7 @@ class Profile extends BaseModel implements HasMediaConversions
 
     protected $esAttributes = [
         'name', 'province_id', 'academic_title_id', 'specialization',
-        'agency', 'research_for', 'research_joined', 'research_results'
+        'agency', 'research_for'
     ];
 
     public function registerMediaConversions(Media $media = null)

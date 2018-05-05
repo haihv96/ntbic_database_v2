@@ -27,8 +27,7 @@ class Company extends BaseModel implements HasMedia
     protected $esAttributes = [
         'name', 'base_technology_category_id', 'province_id', 'headquarters',
         'company_code', 'founder', 'industry', 'research_for',
-        'technology_highlight', 'technology_using',
-        'technology_transfer', 'results', 'products'
+        'technology_highlight', 'technology_using', 'results', 'products'
     ];
 
     public function attrNames()

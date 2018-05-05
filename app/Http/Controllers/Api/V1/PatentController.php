@@ -32,11 +32,15 @@ class PatentController extends Controller
             $results = $this->recordRepository
                 ->filters(compact('base_technology_category_id', 'patent_type_id'));
         } else {
+            $fields = [
+                'vi' => ['name.vi', 'patent_code.vi', 'owner.vi', 'author.vi', 'highlights.vi', 'description.vi', 'market_application.vi'],
+                'en' => ['name.en', 'patent_code.en', 'owner.en', 'author.en', 'highlights.en', 'description.en', 'market_application.en']
+            ];
             $ids = $this->elasticSearchService->search(
-                'patents', 'patents', $queryString, ['name'],
+                'patents', 'patents', $queryString, $fields,
                 compact('base_technology_category_id', 'patent_type_id')
             );
-            $results = $this->recordRepository->whereIn('id', $ids);
+            $results = $this->recordRepository->findInSet('id', $ids);
         }
         return PatentListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()

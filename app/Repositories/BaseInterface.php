@@ -41,4 +41,6 @@ interface BaseInterface
     public function getListRecord($ids);
 
     public function filters($data);
+
+    public function findInSet($column, $values);
 }

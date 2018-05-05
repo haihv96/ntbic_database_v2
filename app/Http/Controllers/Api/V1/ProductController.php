@@ -31,11 +31,15 @@ class ProductController extends Controller
             $results = $this->recordRepository
                 ->filters(compact('base_technology_category_id'));
         } else {
+            $fields = [
+                'vi' => ['name.vi', 'highlights.vi', 'description.vi', 'results.vi'],
+                'en' => ['name.en', 'highlights.en', 'description.en', 'results.en'],
+            ];
             $ids = $this->elasticSearchService->search(
-                'products', 'products', $queryString, ['name'],
+                'products', 'products', $queryString, $fields,
                 compact('base_technology_category_id')
             );
-            $results = $this->recordRepository->whereIn('id', $ids);
+            $results = $this->recordRepository->findInSet('id', $ids);
         }
         return ProductListResource::collection($results->paginate($perPage)->appends($request->query()))
             ->response()

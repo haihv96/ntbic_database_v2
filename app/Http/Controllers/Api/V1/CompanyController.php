@@ -32,8 +32,17 @@ class CompanyController extends Controller
             $results = $this->recordRepository
                 ->filters(compact('base_technology_category_id', 'province_id'));
         } else {
+
+            $fields = [
+                'vi' => ['name', 'headquarters', 'company_code', 'founder', 'industry',
+                    'research_for', 'technology_highlight', 'technology_using', 'results', 'products'
+                ],
+                'en' => ['name', 'headquarters', 'company_code', 'founder', 'industry',
+                    'research_for', 'technology_highlight', 'technology_using', 'results', 'products'
+                ]
+            ];
             $ids = $this->elasticSearchService->search(
-                'companies', 'companies', $queryString, ['name'],
+                'companies', 'companies', $queryString, $fields,
                 compact('base_technology_category_id', 'province_id')
             );
             $results = $this->recordRepository->whereIn('id', $ids);
