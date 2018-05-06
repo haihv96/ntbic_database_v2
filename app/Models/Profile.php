@@ -13,6 +13,7 @@ class Profile extends BaseModel implements HasMediaConversions
     protected $table = 'profiles';
     protected $fillable = [
         'url',
+        'path',
         'studies_or_papers',
         'name',
         'province_id',

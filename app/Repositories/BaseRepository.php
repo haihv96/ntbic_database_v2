@@ -16,6 +16,11 @@ abstract class BaseRepository implements BaseInterface
         $this->model = $model;
     }
 
+    public function getModel()
+    {
+        return $this->model;
+    }
+
     public function all()
     {
         return $this->model->all();

@@ -20,6 +20,9 @@ class RecordController extends Controller
     protected $viewShow = null;
     protected $viewRecord = null;
     protected $viewEdit = null;
+    protected $viewCreate = null;
+    protected $storeSuccessMessage = 'Store record success !';
+    protected $storeErrorMessage = 'Create record error !';
     protected $updateSuccessMessage = 'Update record success !';
     protected $updateErrorMessage = 'Update record error !';
     protected $destroySuccessMessage = 'Delete record success !';
@@ -58,6 +61,49 @@ class RecordController extends Controller
         ], 200);
     }
 
+    public function create()
+    {
+        return response()->json([
+            'data' => view($this->viewCreate, [
+                'record' => $this->recordRepository->getModel()
+            ])->render(),
+        ], 200);
+    }
+
+    public function storeRecord($validStoreRequest, Closure $callback = null)
+    {
+        try {
+            try {
+                DB::beginTransaction();
+                $attrCreate = $validStoreRequest->all();
+                $record = $this->recordRepository
+                    ->create(
+                        array_merge(
+                            $attrCreate,
+                            ['path' => substr(strToPath($attrCreate['name']), 0, 250)]
+                        )
+                    );
+                $callback && $callback($record);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'data' => null,
+                    'message' => $this->storeErrorMessage
+                ], 500);
+            }
+            return response()->json([
+                'data' => null,
+                'message' => $this->storeSuccessMessage
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => null,
+                'message' => $this->storeErrorMessage
+            ], 500);
+        }
+    }
+
     public function edit($id)
     {
         $data = method_exists($this->recordRepository, 'editQuery') ?
@@ -73,8 +119,18 @@ class RecordController extends Controller
     {
         try {
             $record = $this->recordRepository->find($id);
-            $record->update($validUpdateRequest->all());
-            $callback && $callback($record);
+            try {
+                DB::beginTransaction();
+                $record->update($validUpdateRequest->all());
+                $callback && $callback($record);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'data' => null,
+                    'message' => $this->updateErrorMessage
+                ], 500);
+            }
             $data = method_exists($this->recordRepository, 'updatedQuery') ?
                 $this->recordRepository->updatedQuery($id) : $record;
             return response()->json([
