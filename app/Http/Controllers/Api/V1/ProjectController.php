@@ -11,6 +11,7 @@ use App\Repositories\Project\ProjectInterface;
 
 class ProjectController extends Controller
 {
+    use EsTrait;
     protected $recordRepository, $elasticSearchService;
 
     public function __construct(
@@ -24,24 +25,29 @@ class ProjectController extends Controller
 
     public function index(Request $request)
     {
+        $page = $request->get('page');
         $perPage = $request->get('per_page');
+        $perPage = $perPage ? $perPage : 15;
         $queryString = $request->get('query');
         $specialization_id = $request->get('specialization_id');
         if (empty($queryString)) {
             $results = $this->recordRepository
-                ->filters(compact('specialization_id'));
+                ->filters(compact('specialization_id'))
+                ->paginate($perPage)->appends($request->query());
+            $pages = $results->lastPage();
         } else {
-            $fields = [
-                'vi' => ['name.vi', 'project_code.vi', 'operator.vi', 'author.vi', 'highlights.vi', 'description.vi', 'results.vi'],
-                'en' => ['name.en', 'project_code.en', 'operator.en', 'author.en', 'highlights.en', 'description.en', 'results.en']
-            ];
-            $ids = $this->elasticSearchService->search(
+            $fields = ['name', 'project_code', 'operator', 'author', 'highlights', 'description', 'results'];
+            $esPaginate = ['from' => ($page ? (integer)($page) - 1 : 0) * $perPage, 'size' => $perPage];
+            $esResults = $this->elasticSearchService->search(
                 'projects', 'projects', $queryString, $fields,
-                compact('specialization_id')
+                compact('specialization_id'), $esPaginate
             );
-            $results = $this->recordRepository->findInSet('id', $ids);
+            $results = $this->recordRepository->findInSet('id', $esResults['id'])->paginate($perPage, ['*'], 'page', 1)->appends($request->query());
+            $results = $this->appendHighlightIntoResults($results, $esResults);
+            $pages = ceil($esResults['total'] / $perPage);
         }
-        return ProjectListResource::collection($results->paginate($perPage)->appends($request->query()))
+        return ProjectListResource::collection($results)
+            ->additional(compact('pages'))
             ->response()
             ->setStatusCode(200);
     }

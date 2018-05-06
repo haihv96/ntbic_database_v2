@@ -15,13 +15,19 @@ class CompanyListResource extends Resource
     public function toArray($request)
     {
         $media = $this->getFirstMediaUrl('logo');
-        return [
+        $result = [
             'id' => $this->id,
             'name' => $this->name,
             'logo' => url($media ? $media : 'images/no_logo.png'),
             'base_technology_category' => $this->baseTechnologyCategory->name,
-            'province' => $this->province->name,
-            'headquarters' => $this->headquarters
         ];
+
+        foreach (['headquarters', 'company_code', 'founder', 'industry', 'research_for',
+                     'technology_highlight', 'technology_using', 'results', 'products'] as $attr) {
+            if (is_array($this->{$attr})) {
+                $result[$attr] = $this->{$attr};
+            }
+        }
+        return $result;
     }
 }

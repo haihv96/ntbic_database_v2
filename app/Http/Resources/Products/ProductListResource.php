@@ -15,13 +15,17 @@ class ProductListResource extends Resource
     public function toArray($request)
     {
         $media = $this->getFirstMediaUrl('thumb');
-
-        return [
+        $result = [
             'id' => $this->id,
             'name' => $this->name,
             'thumb' => url($media ? $media : 'images/nophoto.jpg'),
             'base_technology_category' => $this->baseTechnologyCategory->name,
-            'highlights' => $this->hightlights
         ];
+        foreach (['highlights', 'description', 'results'] as $attr) {
+            if (is_array($this->{$attr})) {
+                $result[$attr] = $this->{$attr};
+            }
+        }
+        return $result;
     }
 }

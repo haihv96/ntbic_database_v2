@@ -14,6 +14,14 @@ class CreateEsPatentsIndex extends Migration
 
     public function up()
     {
+        $fieldText = [
+            'type' => 'text',
+            'fields' => [
+                'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                'vi_standard' => ['type' => 'text', 'analyzer' => 'vn_standard_analyzer', 'search_analyzer' => 'vn_standard_analyzer'],
+                'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+            ]
+        ];
         $this->esClient->indices()->create([
             'index' => 'patents',
             'body' => [
@@ -25,6 +33,11 @@ class CreateEsPatentsIndex extends Migration
                             'analyzer' => [
                                 'vn_analyzer' => [
                                     'tokenizer' => 'vi_tokenizer',
+                                    'char_filter' => ['html_strip'],
+                                    'filter' => ['lowercase'],
+                                ],
+                                'vn_standard_analyzer' => [
+                                    'tokenizer' => 'standard',
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['lowercase'],
                                 ],
@@ -43,44 +56,14 @@ class CreateEsPatentsIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
+                            'name' => $fieldText,
                             'patent_code' => ['type' => 'text'],
                             'base_technology_category_id' => ['type' => 'integer'],
                             'patent_type_id' => ['type' => 'integer'],
-                            'owner' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'author' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'highlights' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'description' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
+                            'owner' => $fieldText,
+                            'author' => $fieldText,
+                            'highlights' => $fieldText,
+                            'description' => $fieldText,
                         ]
                     ]
                 ]

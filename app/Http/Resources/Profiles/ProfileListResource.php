@@ -15,14 +15,19 @@ class ProfileListResource extends Resource
     public function toArray($request)
     {
         $media = $this->getFirstMediaUrl('avatar');
-        return [
+        $result = [
             'id' => $this->id,
             'name' => $this->name,
             'academic_title' => $this->academicTitle->name,
             'image' => url($media ? $media : 'images/anon_user.png'),
             'agency' => $this->agency,
-            'province' => $this->province->name,
-            'research_for' => $this->research_for
         ];
+        foreach (['specialization', 'agency', 'research_for',
+                     'research_joined', 'research_results'] as $attr) {
+            if (is_array($this->{$attr})) {
+                $result[$attr] = $this->{$attr};
+            }
+        }
+        return $result;
     }
 }

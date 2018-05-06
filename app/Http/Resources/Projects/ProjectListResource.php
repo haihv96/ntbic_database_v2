@@ -12,15 +12,20 @@ class ProjectListResource extends Resource
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
+
     public function toArray($request)
     {
-        return [
+        $result = [
             'id' => $this->id,
             'name' => $this->name,
             'specialization' => $this->specialization->name,
-            'project_code' => $this->project_code,
             'author' => $this->author,
-            'close_date' => $this->close_date
         ];
+        foreach (['description', 'highlights', 'results', 'operator'] as $attr) {
+            if (is_array($this->{$attr})) {
+                $result[$attr] = $this->{$attr};
+            }
+        }
+        return $result;
     }
 }

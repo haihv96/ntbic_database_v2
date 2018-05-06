@@ -6,7 +6,7 @@ use Elasticsearch\ClientBuilder;
 
 class ElasticSearchService implements ElasticSearchServiceInterface
 {
-    public function search($index, $type, $query, $fields, $filters = [])
+    public function search($index, $type, $query, $fields, $filters = [], $esPaginate)
     {
         $filterParams = [];
         foreach ($filters as $key => $value) {
@@ -18,49 +18,99 @@ class ElasticSearchService implements ElasticSearchServiceInterface
                 ];
             }
         }
-
         $params = [
             'index' => $index,
             'type' => $type,
             'body' => [
+                'from' => $esPaginate['from'],
+                'size' => $esPaginate['size'],
                 'query' => [
                     'bool' => [
-                        'must' => [
-                            'multi_match' => [
-                                'query' => $query,
-                                'fields' => $fields['en'],
-                                'operator' => 'and',
-                                'boost' => 100,
-                            ]
-                        ],
                         'should' => [
-                            'bool' => [
-                                'must' => [
-                                    'multi_match' => [
-                                        'query' => $query,
-                                        'fields' => $fields['vi'],
-                                        'operator' => 'or',
-                                        'boost' => 200,
-                                    ]
+                            [
+                                'multi_match' => [
+                                    'query' => $query,
+                                    'fields' => $this->getSubField($fields, 'en'),
+                                    'operator' => 'and',
+                                    'boost' => 1,
+                                ]
+                            ],
+                            [
+                                'multi_match' => [
+                                    'query' => $query,
+                                    'fields' => $this->getSubField($fields, 'vi_standard'),
+                                    'operator' => 'or',
+                                    'boost' => 10,
                                 ],
-                                'should' => [
-                                    'multi_match' => [
-                                        'query' => $query,
-                                        'fields' => $fields['vi'],
-                                        'operator' => 'and',
-                                        'boost' => 300
-                                    ],
+                            ],
+                            [
+                                'multi_match' => [
+                                    'query' => $query,
+                                    'fields' => $this->getSubField($fields, 'vi'),
+                                    'operator' => 'or',
+                                    'boost' => 100,
                                 ],
-                            ]
+                            ],
+                            [
+                                'multi_match' => [
+                                    'query' => $query,
+                                    'fields' => $this->getSubField($fields, 'vi_standard'),
+                                    'operator' => 'and',
+                                    'boost' => 1000,
+                                ],
+                            ],
+                            [
+                                'multi_match' => [
+                                    'query' => $query,
+                                    'fields' => $this->getSubField($fields, 'vi'),
+                                    'operator' => 'and',
+                                    'boost' => 10000
+                                ],
+                            ],
                         ],
-                    ],
+                    ]
                 ],
-            ]
+                'highlight' => [
+                    'fields' => $this->getHighlightFields($fields),
+                    'require_field_match' => false,
+                    'fragment_size' => 80,
+                    'number_of_fragments' => 2,
+                    'pre_tags' => ['<span class="es-highlight">'],
+                    'post_tags' => ['</span>'],
+                ],
+            ],
         ];
         empty($filterParams) || $params['body']['query']['bool']['filter'] = $filterParams;
         $results = ClientBuilder::create()->build()->search($params);
-        return collect($results['hits']['hits'])->map(function ($value) {
-            return $value['_id'];
-        })->all();
+        return $this->getIdAndHighlight($results);
+    }
+
+    private function getSubField($fields, $subName)
+    {
+        return collect($fields)->map(function ($value) use ($subName) {
+            return "$value.$subName";
+        });
+    }
+
+    private function getHighlightFields($fields)
+    {
+        $results = [];
+        foreach ($fields as $field) {
+            $results[$field] = new \stdClass();
+        }
+        return $results;
+    }
+
+    private function getIdAndHighlight($results)
+    {
+        return [
+            'id' => collect($results['hits']['hits'])->map(function ($value) {
+                return $value['_id'];
+            })->all(),
+            'highlight' => collect($results['hits']['hits'])->map(function ($value) {
+                return array_key_exists('highlight', $value) ? $value['highlight'] : null;
+            })->all(),
+            'total' => $results['hits']['total']
+        ];
     }
 }

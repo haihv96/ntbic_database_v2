@@ -14,6 +14,14 @@ class CreateEsProfilesIndex extends Migration
 
     public function up()
     {
+        $fieldText = [
+            'type' => 'text',
+            'fields' => [
+                'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                'vi_standard' => ['type' => 'text', 'analyzer' => 'vn_standard_analyzer', 'search_analyzer' => 'vn_standard_analyzer'],
+                'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+            ]
+        ];
         $this->esClient->indices()->create([
             'index' => 'profiles',
             'body' => [
@@ -25,6 +33,11 @@ class CreateEsProfilesIndex extends Migration
                             'analyzer' => [
                                 'vn_analyzer' => [
                                     'tokenizer' => 'vi_tokenizer',
+                                    'char_filter' => ['html_strip'],
+                                    'filter' => ['lowercase'],
+                                ],
+                                'vn_standard_analyzer' => [
+                                    'tokenizer' => 'standard',
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['lowercase'],
                                 ],
@@ -43,36 +56,14 @@ class CreateEsProfilesIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
+                            'name' => $fieldText,
                             'province_id' => ['type' => 'integer'],
                             'academic_title_id' => ['type' => 'integer'],
-                            'specialization' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'agency' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'research_for' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer'],
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                ]
-                            ],
+                            'specialization' => $fieldText,
+                            'agency' => $fieldText,
+                            'research_for' => $fieldText,
+                            'research_joined' => $fieldText,
+                            'research_results' => $fieldText,
                         ]
                     ],
                 ]

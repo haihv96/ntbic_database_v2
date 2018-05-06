@@ -14,13 +14,17 @@ class PatentListResource extends Resource
      */
     public function toArray($request)
     {
-        return [
+        $result = [
             'id' => $this->id,
             'name' => $this->name,
             'base_technology_category' => $this->baseTechnologyCategory->name,
-            'patent_code' => $this->patent_code,
-            'author' => $this->author,
-            'public_date' => $this->public_date
+
         ];
+        foreach (['patent_code', 'owner', 'author', 'highlights', 'description'] as $attr) {
+            if (is_array($this->{$attr})) {
+                $result[$attr] = $this->{$attr};
+            }
+        }
+        return $result;
     }
 }

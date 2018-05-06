@@ -14,6 +14,14 @@ class CreateEsCompaniesIndex extends Migration
 
     public function up()
     {
+        $fieldText = [
+            'type' => 'text',
+            'fields' => [
+                'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
+                'vi_standard' => ['type' => 'text', 'analyzer' => 'vn_standard_analyzer', 'search_analyzer' => 'vn_standard_analyzer'],
+                'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
+            ]
+        ];
         $this->esClient->indices()->create([
             'index' => 'companies',
             'body' => [
@@ -25,6 +33,11 @@ class CreateEsCompaniesIndex extends Migration
                             'analyzer' => [
                                 'vn_analyzer' => [
                                     'tokenizer' => 'vi_tokenizer',
+                                    'char_filter' => ['html_strip'],
+                                    'filter' => ['lowercase'],
+                                ],
+                                'vn_standard_analyzer' => [
+                                    'tokenizer' => 'standard',
                                     'char_filter' => ['html_strip'],
                                     'filter' => ['lowercase'],
                                 ],
@@ -43,63 +56,16 @@ class CreateEsCompaniesIndex extends Migration
                         '_source' => ['enabled' => true],
                         'properties' => [
                             'id' => ['type' => 'integer'],
-                            'name' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ], 'base_technology_category_id' => ['type' => 'integer'],
+                            'name' => $fieldText,
+                            'base_technology_category_id' => ['type' => 'integer'],
                             'province_id' => ['type' => 'integer'],
-                            'headquarters' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'founder' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'industry' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'research_for' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'technology_highlight' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'technology_using' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
-                            'products' => [
-                                'type' => 'text',
-                                'fields' => [
-                                    'vi' => ['type' => 'text', 'analyzer' => 'vn_analyzer', 'search_analyzer' => 'vn_analyzer'],
-                                    'en' => ['type' => 'text', 'analyzer' => 'standard_analyzer', 'search_analyzer' => 'standard_analyzer']
-                                ]
-                            ],
+                            'headquarters' => $fieldText,
+                            'founder' => $fieldText,
+                            'industry' => $fieldText,
+                            'research_for' => $fieldText,
+                            'technology_highlight' => $fieldText,
+                            'technology_using' => $fieldText,
+                            'products' => $fieldText,
                         ]
                     ]
                 ]
