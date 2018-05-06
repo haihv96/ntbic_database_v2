@@ -20,8 +20,10 @@ class ProductListResource extends Resource
             'name' => $this->name,
             'thumb' => url($media ? $media : 'images/nophoto.jpg'),
             'base_technology_category' => $this->baseTechnologyCategory->name,
+            'highlights' => $this->highlights,
+            'description' => $this->description,
         ];
-        foreach (['highlights', 'description', 'results'] as $attr) {
+        foreach (['results'] as $attr) {
             if (is_array($this->{$attr})) {
                 $result[$attr] = $this->{$attr};
             }

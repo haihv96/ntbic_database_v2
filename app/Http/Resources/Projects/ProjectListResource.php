@@ -20,8 +20,10 @@ class ProjectListResource extends Resource
             'name' => $this->name,
             'specialization' => $this->specialization->name,
             'author' => $this->author,
+            'description' => $this->description,
+            'highlights' => $this->highlights,
         ];
-        foreach (['description', 'highlights', 'results', 'operator'] as $attr) {
+        foreach (['results', 'operator'] as $attr) {
             if (is_array($this->{$attr})) {
                 $result[$attr] = $this->{$attr};
             }

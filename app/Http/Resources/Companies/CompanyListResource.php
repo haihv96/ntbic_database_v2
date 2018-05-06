@@ -20,6 +20,8 @@ class CompanyListResource extends Resource
             'name' => $this->name,
             'logo' => url($media ? $media : 'images/no_logo.png'),
             'base_technology_category' => $this->baseTechnologyCategory->name,
+            'founder' => $this->founder,
+            'industry' => $this->industry,
         ];
 
         foreach (['headquarters', 'company_code', 'founder', 'industry', 'research_for',

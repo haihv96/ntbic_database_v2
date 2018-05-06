@@ -21,9 +21,10 @@ class ProfileListResource extends Resource
             'academic_title' => $this->academicTitle->name,
             'image' => url($media ? $media : 'images/anon_user.png'),
             'agency' => $this->agency,
+            'province' => $this->province->name,
+            'specialization' => $this->specialization
         ];
-        foreach (['specialization', 'agency', 'research_for',
-                     'research_joined', 'research_results'] as $attr) {
+        foreach (['research_for', 'research_joined', 'research_results'] as $attr) {
             if (is_array($this->{$attr})) {
                 $result[$attr] = $this->{$attr};
             }
