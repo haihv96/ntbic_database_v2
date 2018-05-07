@@ -16,6 +16,14 @@ class PatentController extends RecordController
         $this->viewShow = 'management.patents.show';
         $this->viewRecord = 'management.patents.record';
         $this->viewEdit = 'management.patents.edit';
+        $this->viewCreate = 'management.patents.create';
+    }
+
+    public function store(UpdatePatent $validStoreRequest)
+    {
+        return $this->storeRecord($validStoreRequest, function ($record) {
+            $record->esIndexing();
+        });
     }
 
     public function update(UpdatePatent $validUpdateRequest, $id)

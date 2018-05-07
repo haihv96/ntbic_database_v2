@@ -21,7 +21,7 @@ class CreateCompaniesTable extends Migration
                 ->references('id')
                 ->on('base_technology_categories')
                 ->onDelete('cascade');
-            $table->string('url', 500)->unique();
+            $table->string('url', 500)->nullable();
             $table->text('name');
             $table->string('path');
             $table->string('last_update')->nullable();

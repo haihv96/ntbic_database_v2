@@ -17,7 +17,7 @@ class CreateProfilesTable extends Migration
             $table->increments('id');
             $table->integer('academic_title_id')->unsigned();
             $table->integer('province_id')->unsigned();
-            $table->string('url', 500)->unique();
+            $table->string('url', 500)->nullable();
             $table->string('path');
             $table->string('name');
             $table->integer('studies_or_papers')->nullable();

@@ -25,7 +25,7 @@ class CreatePatentsTable extends Migration
                 ->references('id')
                 ->on('patent_types')
                 ->onDelete('cascade');
-            $table->string('url', 500)->unique();
+            $table->string('url', 500)->nullable();
             $table->text('name');
             $table->string('path');
             $table->string('patent_code')->nullable();

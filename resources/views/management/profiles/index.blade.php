@@ -52,7 +52,7 @@
       'title' => 'Create Profile',
       'titleBg' => 'blue',
       'class' => 'modal-lg modal-loadable modal-long'
-  ])
+    ])
     @include('shared.modal', [
         'id' => 'show-record',
         'title' => 'View Profile',

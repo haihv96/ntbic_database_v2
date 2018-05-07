@@ -16,18 +16,26 @@ class ProductController extends RecordController
         $this->viewShow = 'management.products.show';
         $this->viewRecord = 'management.products.record';
         $this->viewEdit = 'management.products.edit';
+        $this->viewCreate = 'management.products.create';
+    }
+
+    public function store(UpdateProduct $validStoreRequest)
+    {
+        return $this->storeRecord($validStoreRequest, function ($record) {
+            $record->esIndexing();
+        });
     }
 
     public function update(UpdateProduct $validUpdateRequest, $id)
     {
-        return $this->updateRecord($validUpdateRequest, $id, function($record){
+        return $this->updateRecord($validUpdateRequest, $id, function ($record) {
             $record->esUpdate();
         });
     }
 
     public function destroy($ids, Closure $callback = null)
     {
-        return parent::destroy($ids, function($record){
+        return parent::destroy($ids, function ($record) {
             $record->esDelete();
         });
     }

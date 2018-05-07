@@ -17,6 +17,14 @@ class ProjectController extends RecordController
         $this->viewShow = 'management.projects.show';
         $this->viewRecord = 'management.projects.record';
         $this->viewEdit = 'management.projects.edit';
+        $this->viewCreate = 'management.projects.create';
+    }
+
+    public function store(UpdateProject $validStoreRequest)
+    {
+        return $this->storeRecord($validStoreRequest, function ($record) {
+            $record->esIndexing();
+        });
     }
 
     public function update(UpdateProject $validUpdateRequest, $id)

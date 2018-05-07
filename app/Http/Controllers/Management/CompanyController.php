@@ -16,8 +16,15 @@ class CompanyController extends RecordController
         $this->viewShow = 'management.companies.show';
         $this->viewRecord = 'management.companies.record';
         $this->viewEdit = 'management.companies.edit';
+        $this->viewCreate = 'management.companies.create';
     }
 
+    public function store(UpdateCompany $validStoreRequest)
+    {
+        return $this->storeRecord($validStoreRequest, function ($record) {
+            $record->esIndexing();
+        });
+    }
 
     public function update(UpdateCompany $validUpdateRequest, $id)
     {

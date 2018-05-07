@@ -8,6 +8,7 @@ class Project extends BaseModel
 
     protected $fillable = [
         'url',
+        'path',
         'name',
         'project_code',
         'specialization_id',

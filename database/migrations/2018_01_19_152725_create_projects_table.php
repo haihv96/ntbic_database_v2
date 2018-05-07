@@ -20,7 +20,7 @@ class CreateProjectsTable extends Migration
                 ->references('id')
                 ->on('specializations')
                 ->onDelete('cascade');
-            $table->string('url', 500)->unique();
+            $table->string('url', 500)->nullable();
             $table->text('name');
             $table->string('path');
             $table->string('project_code')->nullable();

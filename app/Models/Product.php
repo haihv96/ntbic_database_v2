@@ -12,6 +12,7 @@ class Product extends BaseModel implements HasMedia
     protected $table = 'products';
     protected $fillable = [
         'url',
+        'path',
         'name',
         'base_technology_category_id',
         'highlights',

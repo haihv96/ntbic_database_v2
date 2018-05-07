@@ -11,6 +11,7 @@ class Patent extends BaseModel implements HasMedia
     protected $table = 'patents';
     protected $fillable = [
         'url',
+        'path',
         'name',
         'patent_code',
         'base_technology_category_id',

@@ -11,7 +11,7 @@ class Company extends BaseModel implements HasMedia
 
     protected $table = 'companies';
     protected $fillable = [
-        'url', 'name', 'last_update', 'base_technology_category_id', 'province_id',
+        'url', 'path', 'name', 'last_update', 'base_technology_category_id', 'province_id',
         'headquarters', 'email', 'phone', 'fax', 'website', 'company_code',
         'tax_code', 'type', 'founded', 'founder', 'founder_phone', 'founder_email',
         'founder_address', 'industry', 'tax_information', 'company_branch',

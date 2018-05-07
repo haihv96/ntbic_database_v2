@@ -22,6 +22,7 @@
                 <div class="row toolkit">
                     <div class="col-xs-6">
                         <div class="row">
+                            @include('management.products.helpers.create')
                             @include('management.products.helpers.delete_selected')
                         </div>
                     </div>
@@ -46,6 +47,12 @@
             </div>
         </div>
     </div>
+    @include('shared.modal', [
+        'id' => 'create-record',
+        'title' => 'Create Product',
+        'titleBg' => 'blue',
+        'class' => 'modal-lg modal-loadable modal-long'
+    ])
     @include('shared.modal', [
         'id' => 'show-record',
         'title' => 'View Product',
