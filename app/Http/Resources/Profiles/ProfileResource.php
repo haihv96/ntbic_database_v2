@@ -17,9 +17,9 @@ class ProfileResource extends Resource
         $media = $this->getFirstMediaUrl('avatar');
         return [
             'id' => $this->id,
+            'image' => url($media ? $media : 'images/anon_user.png'),
             'name' => $this->name,
             'academic_title' => $this->academicTitle->name,
-            'image' => url($media ? $media : 'images/anon_user.png'),
             'agency' => $this->agency,
             'birthday' => $this->birthday,
             'research_for' => $this->research_for,

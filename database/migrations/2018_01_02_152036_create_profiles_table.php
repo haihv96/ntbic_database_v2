@@ -30,7 +30,7 @@ class CreateProfilesTable extends Migration
                 ->on('provinces')
                 ->onDelete('cascade')->nullable();
             $table->string('birthday')->nullable();
-            $table->text('specialization');
+            $table->text('specialization')->nullable();
             $table->text('agency')->nullable();
             $table->text('agency_address')->nullable();
             $table->text('research_for')->nullable();

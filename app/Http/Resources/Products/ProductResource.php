@@ -17,8 +17,8 @@ class ProductResource extends Resource
         $media = $this->getFirstMediaUrl('thumb');
         return [
             'id' => $this->id,
-            'name' => $this->name,
             'thumb' => url($media ? $media : 'images/nophoto.jpg'),
+            'name' => $this->name,
             'base_technology_category' => $this->baseTechnologyCategory->name,
             'highlights' => $this->highlights,
             'description' => $this->description,

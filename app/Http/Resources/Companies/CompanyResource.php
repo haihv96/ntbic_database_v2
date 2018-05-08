@@ -17,10 +17,10 @@ class CompanyResource extends Resource
         $media = $this->getFirstMediaUrl('logo');
         return [
             'id' => $this->id,
-            'name' => $this->name,
             'logo' => url($media ? $media : 'images/no_logo.png'),
+            'name' => $this->name,
             'last_update' => $this->last_update,
-            'base_technology_category' => $this->baseTechnologyCategory,
+            'base_technology_category' => $this->baseTechnologyCategory->name,
             'province' => $this->province,
             'headquarters' => $this->headquarters,
             'email' => $this->email,

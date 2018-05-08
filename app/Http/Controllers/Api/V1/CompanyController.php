@@ -31,11 +31,13 @@ class CompanyController extends Controller
         $queryString = $request->get('query');
         $base_technology_category_id = $request->get('base_technology_category_id');
         $province_id = $request->get('province_id');
+        $time = -microtime(true);
         if (empty($queryString)) {
             $results = $this->recordRepository
                 ->filters(compact('base_technology_category_id', 'province_id'))
                 ->paginate($perPage)->appends($request->query());
             $pages = $results->lastPage();
+            $total = $results->total();
         } else {
             $fields = ['name', 'headquarters', 'company_code', 'founder', 'industry',
                 'research_for', 'technology_highlight', 'technology_using',
@@ -50,9 +52,11 @@ class CompanyController extends Controller
             $results = $this->recordRepository->findInSet('id', $esResults['id'])->paginate($perPage, ['*'], 'page', 1)->appends($request->query());
             $results = $this->appendHighlightIntoResults($results, $esResults);
             $pages = ceil($esResults['total'] / $perPage);
+            $total = $esResults['total'];
         }
+        $time += microtime(true);
         return CompanyListResource::collection($results)
-            ->additional(compact('pages'))
+            ->additional(compact('pages', 'total', 'time'))
             ->response()
             ->setStatusCode(200);
     }

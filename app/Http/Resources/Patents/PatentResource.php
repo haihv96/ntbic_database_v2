@@ -17,11 +17,11 @@ class PatentResource extends Resource
         $media = $this->getFirstMediaUrl('image');
         return [
             'id' => $this->id,
+            'image' => url($media ? $media : 'images/nophoto.jpg'),
             'name' => $this->name,
-            'image' => url($media ? $media : 'you may update this at moment'),
             'patent_code' => $this->patent_code,
-            'base_technology_category' => $this->baseTechnologyCategory,
-            'patent_type' => $this->patentType,
+            'base_technology_category' => $this->baseTechnologyCategory->name,
+            'patent_type' => $this->patentType->name,
             'public_date' => $this->public_date,
             'provide_date' => $this->provide_date,
             'owner' => $this->owner,

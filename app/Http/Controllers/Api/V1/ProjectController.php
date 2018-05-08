@@ -30,11 +30,13 @@ class ProjectController extends Controller
         $perPage = $perPage ? $perPage : 15;
         $queryString = $request->get('query');
         $specialization_id = $request->get('specialization_id');
+        $time = -microtime(true);
         if (empty($queryString)) {
             $results = $this->recordRepository
                 ->filters(compact('specialization_id'))
                 ->paginate($perPage)->appends($request->query());
             $pages = $results->lastPage();
+            $total = $results->total();
         } else {
             $fields = ['name', 'project_code', 'operator', 'author', 'highlights', 'description', 'results'];
             $esPaginate = ['from' => ($page ? (integer)($page) - 1 : 0) * $perPage, 'size' => $perPage];
@@ -45,9 +47,11 @@ class ProjectController extends Controller
             $results = $this->recordRepository->findInSet('id', $esResults['id'])->paginate($perPage, ['*'], 'page', 1)->appends($request->query());
             $results = $this->appendHighlightIntoResults($results, $esResults);
             $pages = ceil($esResults['total'] / $perPage);
+            $total = $esResults['total'];
         }
+        $time += microtime(true);
         return ProjectListResource::collection($results)
-            ->additional(compact('pages'))
+            ->additional(compact('pages', 'total', 'time'))
             ->response()
             ->setStatusCode(200);
     }

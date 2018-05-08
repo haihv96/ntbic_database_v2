@@ -55,6 +55,7 @@ class CrawlProducts extends Command
             $base_technology_category = $this->getContent($productXpath->query('./tr[2]/td', $body)->item(0));
             $highlights = convertHtmlToText($productXpath->query('./tr[3]/td/div[2]', $body)->item(0));
             $description = convertHtmlToText($productXpath->query('./tr[4]/td/div[2]', $body)->item(0));
+            $description = str_replace('src="/media/products/', 'src="http://khoahoctot.vn/media/products/', $description);
             $transfer_description = convertHtmlToText($productXpath->query('./tr[5]/td/div[2]', $body)->item(0));
             $results = convertHtmlToText($productXpath->query('./tr[6]/td/div[2]', $body)->item(0));
 
